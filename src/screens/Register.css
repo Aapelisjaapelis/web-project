@@ -12,10 +12,11 @@ form {
 
 label {
     margin-top: 16px;
-    font-size: 24px;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 input {
     margin-top: 8px;
-    font-size: 24px;
+    font-size: 16px;
 }
