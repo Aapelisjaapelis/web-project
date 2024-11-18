@@ -1,9 +1,8 @@
-import "./Register.css"
-import Navbar from "../components/Navbar.js"
 import React from "react"
+import Navbar from "../components/Navbar.js"
+import "./Register.css"
 
 function Register() {
-
   return (
     <>
         <Navbar/>
