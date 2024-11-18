@@ -12,7 +12,7 @@ function Navbar() {
     return (
         <nav>
 
-            <button onClick={showDropdownMenu}>Menu</button>
+            <button id="menuButton" onClick={showDropdownMenu}>Menu</button>
 
             <ul className={menu ? "show" : ""}>
                 <li>
