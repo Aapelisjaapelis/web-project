@@ -34,10 +34,10 @@ function Navbar() {
             
             <ul className={menu ? "show" : ""}>
                 <li>
-                    <Link to="">Log in</Link>
+                    <Link to="/login">Log in</Link>
                 </li>
                 <li>
-                    <Link to="">Sign up</Link>
+                    <Link to="/signup">Sign up</Link>
                 </li>
             </ul>
 

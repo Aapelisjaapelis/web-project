@@ -1,6 +1,9 @@
 import React, { useState } from "react"
+import axios from "axios"
 import Navbar from "../components/Navbar.js"
 import "./Register.css"
+
+const url = process.env.REACT_APP_API_URL
 
 function Register() {
   const [user, setUser] = useState({
@@ -9,8 +12,15 @@ function Register() {
     password: ""
   })
   
-  const handleClick = () => {
+  const handleClick = async () => {
+    const headers = {headers: {"Content-Type": "application/json"}}
 
+    try {
+      await axios.post(url + "/user/register", user, headers)
+      setUser({username: "", email: "", password: ""})
+    } catch(error) {
+        alert(error)
+    }
   }
 
   return (
