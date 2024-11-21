@@ -1,26 +1,16 @@
-import React, { useState } from "react"
+import React, { useContext } from "react"
 import { useNavigate } from "react-router-dom"
-import axios from "axios"
+import { UserContext } from "../context/UserContext.js"
 import Navbar from "../components/Navbar.js"
 import "./Register.css"
 
-const url = process.env.REACT_APP_API_URL
-
 function Register() {
-  const [user, setUser] = useState({
-    username: "",
-    email: "",
-    password: ""
-  })
-
+  const {user, setUser, signUp} = useContext(UserContext)
   const navigate = useNavigate()
   
   const handleClick = async () => {
-    const headers = {headers: {"Content-Type": "application/json"}}
-
     try {
-      await axios.post(url + "/user/register", user, headers)
-      setUser({username: "", email: "", password: ""})
+      await signUp()
       navigate("/login")
     } catch(error) {
       const errorMessage = error.response && error.response.data ? error.response.data.message : error

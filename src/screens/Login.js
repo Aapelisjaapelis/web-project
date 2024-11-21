@@ -15,6 +15,7 @@ function Login() {
                 <label>Password:</label>
                 <input type="password"/>
             </form>
+            <button id="signInButton">Sign in</button>
         </div>
     </>
   )
