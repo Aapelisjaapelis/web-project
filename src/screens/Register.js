@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import Navbar from "../components/Navbar.js"
 import "./Register.css"
@@ -11,6 +12,8 @@ function Register() {
     email: "",
     password: ""
   })
+
+  const navigate = useNavigate()
   
   const handleClick = async () => {
     const headers = {headers: {"Content-Type": "application/json"}}
@@ -18,8 +21,10 @@ function Register() {
     try {
       await axios.post(url + "/user/register", user, headers)
       setUser({username: "", email: "", password: ""})
+      navigate("/login")
     } catch(error) {
-        alert(error)
+      const errorMessage = error.response && error.response.data ? error.response.data.message : error
+      alert(errorMessage)
     }
   }
 
