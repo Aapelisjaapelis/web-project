@@ -16,19 +16,19 @@ function Navbar() {
 
             <ul className={menu ? "show" : ""}>
                 <li>
-                    <Link to="">Public movie list</Link>
+                    <Link to="/">Public movie list</Link>
                 </li>
                 <li>
-                    <Link to="">Finnkino showtimes</Link>
+                    <Link to="/finnkinoshowtimes">Finnkino showtimes</Link>
                 </li>
                 <li>
-                    <Link to="">Groups</Link>
+                    <Link to="/groupspage">Groups</Link>
                 </li>
                 <li>
-                    <Link to="">Favorites</Link>
+                    <Link to="/favoritemovieslist">Favorites</Link>
                 </li>
                 <li>
-                    <Link to="">Profile</Link>
+                    <Link to="/profile">Profile</Link>
                 </li>
             </ul>
             
