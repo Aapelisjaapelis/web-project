@@ -1,8 +1,9 @@
-import { hash } from "bcrypt"
+import { hash, compare } from "bcrypt"
 import validator from "validator"
 import { createUser, selectUserByEmail, selectUserByUsername } from "../models/user.js"
+import jwt from "jsonwebtoken"
 
-const userRegistration = async(req,res,next) => {
+const userRegistration = async(req, res, next) => {
     try {
         const usernameFromDb = await selectUserByUsername(req.body.username)
         const emailFromDb = await selectUserByEmail(req.body.email)
@@ -36,13 +37,42 @@ const userRegistration = async(req,res,next) => {
             error.statusCode = 400
             return next(error)
         }
-        
-        const hashedPassword = await hash(req.body.password, 10)
-        await createUser(req.body.username, req.body.email, hashedPassword)
-        return res.status(201).json({message: "User created"})
+
+        else {
+            const hashedPassword = await hash(req.body.password, 10)
+            const userFromDb = await createUser(req.body.username, req.body.email, hashedPassword)
+            const user = userFromDb.rows[0]
+            return res.status(201).json({id: user.account_id, username: user.username, email: user.email})
+        }  
     }   catch (error) {
         return next(error)
     }
 }
 
-export { userRegistration }
+const userLogin = async(req, res, next) => {
+    try {
+        const emailFromDb = await selectUserByEmail(req.body.email)
+        const user = emailFromDb.rows[0]
+
+        if (emailFromDb.rowCount === 0) {
+            const error = new Error("Invalid credentials")
+            error.statusCode = 401
+            return next(error)
+        }
+
+        else if (!await compare(req.body.password, user.password)) {
+            const error = new Error("Invalid credentials")
+            error.statusCode = 401
+            return next(error)
+        }
+
+        else {
+            const token = jwt.sign(req.body.email, process.env.JWT_SECRET_KEY)
+            return res.status(200).json({id: user.account_id, username: user.username, email: user.email, token: token})
+        }
+    }   catch (error) {
+        return next(error)
+    }
+}
+
+export { userRegistration, userLogin }
