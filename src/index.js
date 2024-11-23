@@ -22,11 +22,11 @@ root.render(
           <Route path="/" element={<PublicMoviesList/>}></Route>
           <Route path="/signup" element={<Register/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
+          <Route path="/finnkinoshowtimes" element={<FinnkinoShowtimes/>}></Route>
           <Route element={<ProtectedRoute/>}>
             <Route path="/favoritemovieslist" element={<FavoriteMoviesList/>}></Route>
             <Route path="/groupspage" element={<GroupsPage/>}></Route>
             <Route path="/profile" element={<Profile/>}></Route>
-            <Route path="/finnkinoshowtimes" element={<FinnkinoShowtimes/>}></Route>
           </Route>
         </Routes>
       </UserProvider>

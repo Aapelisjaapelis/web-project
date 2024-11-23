@@ -1,12 +1,19 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import "./Navbar.css"
+import { useUser } from "../context/useUser" 
 
 function Navbar() {
-    const[menu, setMenu] = useState(false)
+    const [menu, setMenu] = useState(false)
+    const {user, setUser} = useUser()
 
     const showDropdownMenu = () => {
         setMenu(!menu)
+    }
+
+    const handleClick = () => {
+        sessionStorage.removeItem("user")
+        setUser({account_id: "", username: "", email: "", password: "", token: ""})
     }
 
     return (
@@ -33,12 +40,20 @@ function Navbar() {
             </ul>
             
             <ul className={menu ? "show" : ""}>
-                <li>
-                    <Link to="/login">Log in</Link>
-                </li>
-                <li>
-                    <Link to="/signup">Sign up</Link>
-                </li>
+                {user.token ? (
+                    <li>
+                        <Link to="/" onClick={handleClick}>Sign out</Link>
+                    </li>
+                ) : (
+                    <>
+                        <li>
+                            <Link to="/login">Log in</Link>
+                        </li>
+                        <li>
+                            <Link to="/signup">Sign up</Link>
+                        </li>
+                    </>
+                )}
             </ul>
 
         </nav>

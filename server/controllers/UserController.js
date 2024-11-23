@@ -2,11 +2,14 @@ import { hash, compare } from "bcrypt"
 import validator from "validator"
 import { createUser, selectUserByEmail, selectUserByUsername } from "../models/user.js"
 import jwt from "jsonwebtoken"
+import passwordValidator from "password-validator"
 
 const userRegistration = async(req, res, next) => {
     try {
         const usernameFromDb = await selectUserByUsername(req.body.username)
         const emailFromDb = await selectUserByEmail(req.body.email)
+        const schema = new passwordValidator();
+        schema.is().min(8).has().uppercase().has().digits()
 
         if (!req.body.username || req.body.username.length === 0) {
             const error = new Error("Invalid username")
@@ -32,7 +35,7 @@ const userRegistration = async(req, res, next) => {
             return next(error)
         }
 
-        else if (!req.body.password || req.body.password.length === 0) {
+        else if (!req.body.password || !schema.validate(req.body.password)) {
             const error = new Error("Invalid password")
             error.statusCode = 400
             return next(error)

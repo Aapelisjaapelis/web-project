@@ -1,11 +1,11 @@
-import React, { useContext } from "react"
+import React from "react"
 import { useNavigate } from "react-router-dom"
-import { UserContext } from "../context/UserContext.js"
 import Navbar from "../components/Navbar.js"
 import "./Register.css"
+import { useUser } from "../context/useUser.js"
 
 function Register() {
-  const {user, setUser, signUp} = useContext(UserContext)
+  const {user, setUser, signUp} = useUser()
   const navigate = useNavigate()
   
   const handleClick = async () => {
