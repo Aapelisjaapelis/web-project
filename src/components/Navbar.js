@@ -5,15 +5,14 @@ import { useUser } from "../context/useUser"
 
 function Navbar() {
     const [menu, setMenu] = useState(false)
-    const {user, setUser} = useUser()
+    const {user, signOut} = useUser()
 
     const showDropdownMenu = () => {
         setMenu(!menu)
     }
 
     const handleClick = () => {
-        sessionStorage.removeItem("user")
-        setUser({account_id: "", username: "", email: "", password: "", token: ""})
+        signOut()
     }
 
     return (

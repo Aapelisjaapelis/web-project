@@ -9,10 +9,8 @@ export default function UserProvider({children}) {
     const [user, setUser] = useState(userFromSessionStorage ? JSON.parse(userFromSessionStorage) : ({account_id: "", username: "", email: "", password: "", token: ""}))
 
     const signUp = async () => {
-        const headers = {headers: {"Content-Type": "application/json"}}
-
         try {
-          await axios.post(url + "/user/register", user, headers)
+          await axios.post(url + "/user/register", user)
           setUser({username: "", email: "", password: ""})
         } catch(error) {
             throw error
@@ -20,10 +18,8 @@ export default function UserProvider({children}) {
     }
 
     const signIn = async () => {
-        const headers = {headers: {"Content-Type":"application/json"}}
-
         try {
-            const response = await axios.post(url + "/user/login", user, headers)
+            const response = await axios.post(url + "/user/login", user)
             setUser(response.data)
             sessionStorage.setItem("user", JSON.stringify(response.data))
         } catch(error) {
@@ -32,8 +28,13 @@ export default function UserProvider({children}) {
         }
     }
 
+    const signOut = () => {
+        sessionStorage.removeItem("user")
+        setUser({account_id: "", username: "", email: "", password: "", token: ""})
+    }
+
     return (
-        <UserContext.Provider value={{user, setUser, signUp, signIn}}>
+        <UserContext.Provider value={{user, setUser, signUp, signIn, signOut}}>
             {children}
         </UserContext.Provider>
     )
