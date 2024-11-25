@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended: false}))
 
 app.use("/user", userRouter)
 
-app.use((err, req, res, next) => {
+app.use((err, req, res, next) => {              // A global error handler 
     const statusCode = err.statusCode || 500
     res.status(statusCode).json({
         message: err.message
