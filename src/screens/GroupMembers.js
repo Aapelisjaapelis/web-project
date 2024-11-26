@@ -6,11 +6,12 @@ import Navbar from "../components/Navbar.js";
 
 function GroupMembers () {
     return (
-    <div >
+    <div className="group-body">
         <Navbar/>
+        <div>
         <h1 >Group name</h1>
-        <button onClick={event =>  window.location.href='/SpecificGroupPage'}>Group page</button>
-        <button onClick={e => handleCreateClick()} >Join requests</button>
+        <button className="info-button" onClick={event =>  window.location.href='/SpecificGroupPage'}>Group page</button>
+        <button className="info-button" onClick={e => handleCreateClick()} >Join requests</button>
 
         <table id="groupTable">
                 <thead>
@@ -39,7 +40,7 @@ function GroupMembers () {
                     ))}
                 </tbody>
             </table>
-
+            </div>
     </div>
     )
 }

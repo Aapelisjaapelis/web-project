@@ -1,22 +1,23 @@
-div {
+.logindiv {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 50px;
 }
 
-form {
+.loginform {
     display: flex;
     flex-direction: column;
 }
 
-label {
+.loginlabel {
     margin-top: 16px;
     font-size: 16px;
     font-weight: bold;
+    color: white;
 }
 
-input {
+.logininput {
     margin-top: 8px;
     font-size: 16px;
 }
