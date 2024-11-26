@@ -1,11 +1,14 @@
 {
+
+  "type": "module",
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "devStart": "nodemon index.js"
+    "testStart": "cross-env NODE_ENV=test node index.js",
+    "devStart": "cross-env NODE_ENV=development nodemon index.js"
+
   },
   "keywords": [],
   "author": "",
@@ -21,5 +24,10 @@
     "password-validator": "^5.3.0",
     "pg": "^8.13.1",
     "validator": "^13.12.0"
+
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+
   }
 }

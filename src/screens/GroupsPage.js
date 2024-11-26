@@ -68,5 +68,4 @@ const handleCreateClick = () => {
     }
     };
 
-
 export default GroupsPage;

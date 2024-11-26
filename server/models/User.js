@@ -1,6 +1,5 @@
 import { pool } from "../helpers/database.js";
 
-
 const createUser = async (username, email, hashedPassword) => {
     return await pool.query("insert into account (username, email, password, is_public) values ($1, $2, $3, $4) returning *", [username, email, hashedPassword, "false"])
 }
@@ -14,3 +13,4 @@ const selectUserByUsername = async (username) => {
 }
 
 export { createUser, selectUserByEmail, selectUserByUsername }
+

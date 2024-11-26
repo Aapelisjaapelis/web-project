@@ -16,6 +16,7 @@ import GroupMy from "./screens/GroupMy.js";
 import SpecificGroupPage from "./screens/SpecificGroupPage.js"
 import GroupMembers from "./screens/GroupMembers.js"
 
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -26,10 +27,6 @@ root.render(
           <Route path="/signup" element={<Register/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/finnkinoshowtimes" element={<FinnkinoShowtimes/>}></Route>
-
-
-
-
           <Route element={<ProtectedRoute/>}>
             <Route path="/favoritemovieslist" element={<FavoriteMoviesList/>}></Route>
             <Route path="/profile" element={<Profile/>}></Route>
@@ -37,6 +34,8 @@ root.render(
             <Route path="/GroupMy" element={<GroupMy/>}></Route>
             <Route path="/SpecificGroupPage" element={<SpecificGroupPage/>}></Route>
             <Route path="/GroupMembers" element={<GroupMembers/>}></Route>
+
+
           </Route>
         </Routes>
       </UserProvider>
