@@ -1,0 +1,70 @@
+body nav {
+    left: 0; /* Varmistaa vasemman reunan sijoittamisen */
+    right: 0; /* Pitää sen ikkunan leveyden mukaisena */
+    margin: 0 auto; /* Keskitys vain, jos marginaalit sallitaan */
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+li {
+    list-style: none;
+    padding: 8px;
+    border: 1px solid #000000;
+}
+
+a {
+    text-decoration: none;
+    white-space: nowrap;
+    color: #000000;
+    padding: 8px;
+    font-size: 24px;
+}
+
+#menuButton {
+    display: none;
+}
+
+@media (max-width: 1250px) {
+    #menuButton {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        font-size: 24px;
+        padding: 8px;
+        background-color: #ffffff;
+        border: 1px solid #000000;
+    }
+
+    nav {
+        flex-direction: column;
+    }
+
+    ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    ul.show {
+        display: flex;
+    }
+
+    li {
+        text-align: center;
+        width: 100%;
+    }
+}
