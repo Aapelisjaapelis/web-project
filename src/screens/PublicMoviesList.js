@@ -56,9 +56,9 @@ function PublicMoviesList() {
   }, [])
 
   return (
-    <Navbar />
 
     <div id="container">
+      <Navbar />
       <h1>Movies</h1>
       <div className="searchForm">
         <label>Search for Movies: </label>
