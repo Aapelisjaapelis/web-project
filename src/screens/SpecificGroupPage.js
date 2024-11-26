@@ -6,12 +6,12 @@ import Navbar from "../components/Navbar.js"
 function SpecificGroupPage () {
     return (
 
-    <div >
+    <div className="group-body">
         <Navbar/>
 
-        
+        <div>
         <h1 >Group Name esim RyhmäRämä</h1>
-        <button onClick={e =>  window.location.href='/GroupsPage'}>All Groups</button>
+        <button className="info-button" onClick={e =>  window.location.href='/GroupsPage'}>All Groups</button>
 
         <table id="groupTable">
                 <thead>
@@ -36,9 +36,9 @@ function SpecificGroupPage () {
                 </tbody>
             </table>
 
-            <button onClick={e =>  window.location.href='/GroupMembers'}>Show members</button>
+            <button className="info-button" onClick={e =>  window.location.href='/GroupMembers'}>Show members</button>
 
-
+        </div>
     </div>
     )
 }

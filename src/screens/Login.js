@@ -22,13 +22,13 @@ function Login() {
     <>
         <Navbar/>
 
-        <div>
+        <div className="logindiv">
             <h1>Sign in</h1>
-            <form>
-                <label>Email:</label>
-                <input type="email" value={user.email} onChange={e => setUser({...user, email: e.target.value})}/>
-                <label>Password:</label>
-                <input type="password" value={user.password} onChange={e => setUser({...user, password: e.target.value})}/>
+            <form className="loginform">
+                <label className="loginlabel">Email:</label>
+                <input className="logininput" type="email" value={user.email} onChange={e => setUser({...user, email: e.target.value})}/>
+                <label className="loginlabel" >Password:</label>
+                <input className="logininput" type="password" value={user.password} onChange={e => setUser({...user, password: e.target.value})}/>
             </form>
             <button id="signInButton" onClick={handleClick}>Sign in</button>
         </div>
