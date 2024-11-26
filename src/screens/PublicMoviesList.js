@@ -57,6 +57,7 @@ function PublicMoviesList() {
 
   return (
     <Navbar />
+
     <div id="container">
       <h1>Movies</h1>
       <div className="searchForm">
@@ -72,6 +73,7 @@ function PublicMoviesList() {
       </div>
       <Movies />
     </div>
+
   );
 }
 

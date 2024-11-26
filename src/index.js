@@ -12,6 +12,10 @@ import Profile from "./screens/Profile.js"
 import FinnkinoShowtimes from "./screens/FinnkinoShowtimes.js"
 import UserProvider from "./context/UserProvider.js"
 import ProtectedRoute from "./components/ProtectedRoute.js"
+import GroupMy from "./screens/GroupMy.js";
+import SpecificGroupPage from "./screens/SpecificGroupPage.js"
+import GroupMembers from "./screens/GroupMembers.js"
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -25,8 +29,13 @@ root.render(
           <Route path="/finnkinoshowtimes" element={<FinnkinoShowtimes/>}></Route>
           <Route element={<ProtectedRoute/>}>
             <Route path="/favoritemovieslist" element={<FavoriteMoviesList/>}></Route>
-            <Route path="/groupspage" element={<GroupsPage/>}></Route>
             <Route path="/profile" element={<Profile/>}></Route>
+            <Route path="/GroupsPage" element={<GroupsPage/>}></Route>
+            <Route path="/GroupMy" element={<GroupMy/>}></Route>
+            <Route path="/SpecificGroupPage" element={<SpecificGroupPage/>}></Route>
+            <Route path="/GroupMembers" element={<GroupMembers/>}></Route>
+
+
           </Route>
         </Routes>
       </UserProvider>
