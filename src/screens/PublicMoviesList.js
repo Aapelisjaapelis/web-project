@@ -1,5 +1,6 @@
 import './PublicMoviesList.css';
 import { useEffect, useState } from 'react';
+import Navbar from "../components/Navbar.js"
 
 function PublicMoviesList() {
   const [movies, setMovies] = useState([])
@@ -55,6 +56,7 @@ function PublicMoviesList() {
   }, [])
 
   return (
+    <Navbar />
     <div id="container">
       <h1>Movies</h1>
       <div className="searchForm">
@@ -74,5 +76,3 @@ function PublicMoviesList() {
 }
 
 export default PublicMoviesList;
-
-
