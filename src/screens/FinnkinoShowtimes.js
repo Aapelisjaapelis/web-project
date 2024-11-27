@@ -65,7 +65,8 @@ function FinnkinoShowtimes() {
   },[parseXML]);
 
   return (
-    <div>
+    <>
+      <h1>Finnkino Showtimes</h1>
       <select onChange={e => setArea(e.target.value)}>
         {
           areas.map(area => (
@@ -73,16 +74,13 @@ function FinnkinoShowtimes() {
           ))
         }
       </select>
-      <h1>Finnkino Showtimes</h1>
-
         {
           showtimes.map(showtime => (
             
             <div key={showtime.ID}>{new Date(showtime.dttmShowStart).getHours()}:{new Date(showtime.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtime.Title}</div>
           ))
         }
-      
-    </div>
+    </>
   );
 };
 
