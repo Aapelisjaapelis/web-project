@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import PublicMoviesList from './screens/PublicMoviesList';
 import reportWebVitals from './reportWebVitals';
+import FinnkinoShowtimes from './screens/FinnkinoShowtimes';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <PublicMoviesList />
+    <FinnkinoShowtimes />
   </React.StrictMode>
 );
 
