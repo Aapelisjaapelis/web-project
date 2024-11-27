@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "./FinnkinoShowtimes.css";
+import FinnkinoShowtimes from "../screens/FinnkinoShowtimes";
 
-function FinnkinoShowtimes() {
-  const [showtimes, setShowtimes] = useState([]);
+function TheatreDropdown() {
+  const [areaId, setAreaId] = useState([]);
   const [areas, setAreas] = useState([]);
 
   const xmlToJson = useCallback((node) => {
@@ -34,6 +34,7 @@ function FinnkinoShowtimes() {
     return (xmlToJson(xmlDoc));
   },[xmlToJson]);
 
+  
   useEffect(() => {
     fetch("https://www.finnkino.fi/xml/TheatreAreas/")
       .then(response => response.text())
@@ -46,42 +47,18 @@ function FinnkinoShowtimes() {
         console.log(error)
       })
   },[parseXML]);
-  
-  const setArea = useCallback((value) => {
-    fetch("https://www.finnkino.fi/xml/Schedule/?area=" + value)
-      .then(response => response.text())
-      .then(xml => {
-        const json = parseXML(xml);
-        //console.log(json.Schedule.Shows.Show);
-        setShowtimes(json.Schedule.Shows.Show);
-        /* let st = json.Schedule.Shows.Show[0];
-        let utcst = new Date(st.dttmShowStart);
-        console.log(utcst.getHours());
-        console.log(utcst.getMinutes()); */
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  },[parseXML]);
 
   return (
-    <>
-      <h1>Finnkino Showtimes</h1>
-      <select onChange={e => setArea(e.target.value)}>
+    <div>
+      <select>
         {
           areas.map(area => (
-            <option key={area.ID} value={area.ID}>{area.Name}</option>
+            <option key={area.ID}>{area.Name}</option>
           ))
         }
       </select>
-        {
-          showtimes.map(showtime => (
-            
-            <div key={showtime.ID}>{new Date(showtime.dttmShowStart).getHours()}:{new Date(showtime.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtime.Title}</div>
-          ))
-        }
-    </>
+    </div>
   );
 };
 
-export default FinnkinoShowtimes;
+export default TheatreDropdown;
