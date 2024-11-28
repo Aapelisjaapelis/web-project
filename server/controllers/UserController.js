@@ -46,7 +46,7 @@ const userRegistration = async(req, res, next) => {
             const userFromDb = await createUser(req.body.username, req.body.email, hashedPassword)
             const user = userFromDb.rows[0]
             return res.status(201).json({id: user.account_id, username: user.username, email: user.email})
-        }  
+        }
     }   catch (error) {
         return next(error)
     }
