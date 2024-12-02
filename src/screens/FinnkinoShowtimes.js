@@ -4,8 +4,8 @@ import "./FinnkinoShowtimes.css";
 function FinnkinoShowtimes() {
   const [showtimes, setShowtimes] = useState([]);
   const [areas, setAreas] = useState([]);
-  const [areaID, setAreaID] = useState([]);
-  const [date, setDate] = useState([]);
+  const [areaID, setAreaID] = useState("");
+  const [date, setDate] = useState("");
 
   const url = "https://www.finnkino.fi/xml/Schedule/?area=" + areaID + "&dt=" + date;
 
@@ -51,18 +51,16 @@ function FinnkinoShowtimes() {
       })
   },[parseXML]);
 
-  const onChangeHandler = (value) => {
-    if (value.length > 4) {
-      setDate(value);
-      console.log(url);
-    } else {
+  const changeArea = (value) => {
       setAreaID(value);
-      console.log(url);
-    }
-    getShowtimes();
+  }
+
+  const onChangeDate = (value) => {
+      const formattedDate = value.split("-").reverse().join(".");
+      setDate(formattedDate)
   }
   
-  const getShowtimes = useCallback(() => {
+  const getShowtimes = () => {
     console.log(url);
     fetch(url)
       .then(response => response.text())
@@ -73,19 +71,21 @@ function FinnkinoShowtimes() {
       .catch(error => {
         console.log(error)
       })
-  },[parseXML, url]);
+  }
 
   return (
     <>
       <h1>Finnkino Showtimes</h1>
-      <select onChange={e => onChangeHandler(e.target.value)}>
+      <select onChange={e => changeArea(e.target.value)}>
         {
         areas.map(area => (
           <option key={area.ID} value={area.ID}>{area.Name}</option>
         ))
         }
       </select>
-      <input type="date" onChange={e => onChangeHandler(e.target.value)} />
+      <input type="date" onChange={e => onChangeDate(e.target.value)} />
+
+      <button id="searchButton" onClick={() => getShowtimes(url)}>Search</button>
 
         {
           showtimes.map(showtime => (
