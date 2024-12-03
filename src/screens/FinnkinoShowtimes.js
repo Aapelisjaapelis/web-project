@@ -4,6 +4,10 @@ import "./FinnkinoShowtimes.css";
 function FinnkinoShowtimes() {
   const [showtimes, setShowtimes] = useState([]);
   const [areas, setAreas] = useState([]);
+  const [areaID, setAreaID] = useState("");
+  const [date, setDate] = useState("");
+
+  const url = "https://www.finnkino.fi/xml/Schedule/?area=" + areaID + "&dt=" + date;
 
   const xmlToJson = useCallback((node) => {
     const json = {};
@@ -41,47 +45,67 @@ function FinnkinoShowtimes() {
         const json = parseXML(xml);
         console.log(json.TheatreAreas.TheatreArea);
         setAreas(json.TheatreAreas.TheatreArea);
+        getShowtimes();
       })
       .catch(error => {
-        console.log(error)
+        console.log(error);
       })
   },[parseXML]);
+
+  const changeArea = (value) => {
+      setAreaID(value);
+  }
+
+  const changeDate = (value) => {
+      const formattedDate = value.split("-").reverse().join(".");
+      setDate(formattedDate);
+  }
   
-  const setArea = useCallback((value) => {
-    fetch("https://www.finnkino.fi/xml/Schedule/?area=" + value)
+  const getShowtimes = () => {
+    console.log(url);
+    fetch(url)
       .then(response => response.text())
       .then(xml => {
         const json = parseXML(xml);
-        //console.log(json.Schedule.Shows.Show);
         setShowtimes(json.Schedule.Shows.Show);
-        /* let st = json.Schedule.Shows.Show[0];
-        let utcst = new Date(st.dttmShowStart);
-        console.log(utcst.getHours());
-        console.log(utcst.getMinutes()); */
+        console.log(json.Schedule.Shows.Show);
       })
       .catch(error => {
-        console.log(error)
+        console.log(error);
       })
-  },[parseXML]);
+  }
+
+  const CheckShowtimes = () => {
+      if (!showtimes || showtimes.length === 0) {
+        return <div>No showtimes found</div>
+      } else if (typeof(showtimes) === "object" && !Array.isArray(showtimes)) {
+        return <div key={showtimes.ID}>{new Date(showtimes.dttmShowStart).getHours()}:{new Date(showtimes.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtimes.Title}</div>
+      } else {
+        return (
+          showtimes.map(showtime => (
+            <div key={showtime.ID}>{new Date(showtime.dttmShowStart).getHours()}:{new Date(showtime.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtime.Title}</div>
+          ))
+        )
+      }
+    }
 
   return (
     <>
       <h1>Finnkino Showtimes</h1>
-      <select onChange={e => setArea(e.target.value)}>
+      <select onChange={e => changeArea(e.target.value)}>
         {
-          areas.map(area => (
-            <option key={area.ID} value={area.ID}>{area.Name}</option>
-          ))
+        areas.map(area => (
+          <option key={area.ID} value={area.ID}>{area.Name}</option>
+        ))
         }
       </select>
-        {
-          showtimes.map(showtime => (
-            
-            <div key={showtime.ID}>{new Date(showtime.dttmShowStart).getHours()}:{new Date(showtime.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtime.Title}</div>
-          ))
-        }
+      <input type="date" onChange={e => changeDate(e.target.value)} />
+
+      <button id="searchButton" onClick={() => getShowtimes(url)}>Search</button>
+
+      <CheckShowtimes />
     </>
   );
 };
 
-export default FinnkinoShowtimes;
+export default FinnkinoShowtimes; 
