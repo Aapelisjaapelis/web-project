@@ -1,8 +1,21 @@
 import request from "supertest"
 import app from "../index.js"
-import pool from "../helpers/database.js"
+import { pool } from "../helpers/database.js"
 
 describe("Registration", () => {
+    beforeAll(async () => {
+        try {
+            await pool.query("DELETE FROM account");
+            await pool.query("ALTER SEQUENCE account_account_id_seq RESTART");
+        } catch (error) {
+            console.error("Database setup error:", error);
+        }
+    })
+
+    afterAll(async () => {
+        await pool.end();
+    })
+
     it("Should register a user", async () => {
         const response = await request(app)
             .post("/user/register")
