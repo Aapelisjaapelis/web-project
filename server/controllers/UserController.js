@@ -1,6 +1,6 @@
 import { hash, compare } from "bcrypt"
 import validator from "validator"
-import { createUser, selectUserByEmail, selectUserByUsername } from "../models/user.js"
+import { createUser, selectUserByEmail, selectUserByUsername } from "../models/User.js"
 import jwt from "jsonwebtoken"
 import passwordValidator from "password-validator"
 
