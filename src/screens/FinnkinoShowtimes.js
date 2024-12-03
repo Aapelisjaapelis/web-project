@@ -45,6 +45,7 @@ function FinnkinoShowtimes() {
         const json = parseXML(xml);
         console.log(json.TheatreAreas.TheatreArea);
         setAreas(json.TheatreAreas.TheatreArea);
+        getShowtimes();
       })
       .catch(error => {
         console.log(error);
@@ -67,11 +68,26 @@ function FinnkinoShowtimes() {
       .then(xml => {
         const json = parseXML(xml);
         setShowtimes(json.Schedule.Shows.Show);
+        console.log(json.Schedule.Shows.Show);
       })
       .catch(error => {
         console.log(error);
       })
   }
+
+  const CheckShowtimes = () => {
+      if (!showtimes || showtimes.length === 0) {
+        return <div>No showtimes found</div>
+      } else if (typeof(showtimes) === "object" && !Array.isArray(showtimes)) {
+        return <div key={showtimes.ID}>{new Date(showtimes.dttmShowStart).getHours()}:{new Date(showtimes.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtimes.Title}</div>
+      } else {
+        return (
+          showtimes.map(showtime => (
+            <div key={showtime.ID}>{new Date(showtime.dttmShowStart).getHours()}:{new Date(showtime.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtime.Title}</div>
+          ))
+        )
+      }
+    }
 
   return (
     <>
@@ -87,11 +103,7 @@ function FinnkinoShowtimes() {
 
       <button id="searchButton" onClick={() => getShowtimes(url)}>Search</button>
 
-        {
-          showtimes.map(showtime => (
-            <div key={showtime.ID}>{new Date(showtime.dttmShowStart).getHours()}:{new Date(showtime.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtime.Title}</div>
-          ))
-        }
+      <CheckShowtimes />
     </>
   );
 };
