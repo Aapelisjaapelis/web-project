@@ -85,7 +85,7 @@ function FinnkinoShowtimes() {
         ))
         }
       </select>
-      <input type="date" onChange={e => onChangeHandler(e.target.value)} />
+      <input type="date" value={date} onChange={e => onChangeHandler(e.target.value)} />
 
         {
           showtimes.map(showtime => (
@@ -96,4 +96,4 @@ function FinnkinoShowtimes() {
   );
 };
 
-export default FinnkinoShowtimes;
+export default FinnkinoShowtimes; 
