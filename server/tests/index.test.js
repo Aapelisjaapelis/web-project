@@ -4,16 +4,12 @@ import { pool } from "../helpers/database.js"
 
 describe("Registration", () => {
     beforeAll(async () => {
-        try {
-            await pool.query("DELETE FROM account");
-            await pool.query("ALTER SEQUENCE account_account_id_seq RESTART");
-        } catch (error) {
-            console.error("Database setup error:", error);
-        }
+        await pool.query("Delete from account")
+        await pool.query("Alter sequence account_account_id_seq restart")
     })
 
     afterAll(async () => {
-        await pool.end();
+        await pool.end()
     })
 
     it("Should register a user", async () => {
