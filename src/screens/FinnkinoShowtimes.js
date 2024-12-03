@@ -47,7 +47,7 @@ function FinnkinoShowtimes() {
         setAreas(json.TheatreAreas.TheatreArea);
       })
       .catch(error => {
-        console.log(error)
+        console.log(error);
       })
   },[parseXML]);
 
@@ -55,9 +55,9 @@ function FinnkinoShowtimes() {
       setAreaID(value);
   }
 
-  const onChangeDate = (value) => {
+  const changeDate = (value) => {
       const formattedDate = value.split("-").reverse().join(".");
-      setDate(formattedDate)
+      setDate(formattedDate);
   }
   
   const getShowtimes = () => {
@@ -69,7 +69,7 @@ function FinnkinoShowtimes() {
         setShowtimes(json.Schedule.Shows.Show);
       })
       .catch(error => {
-        console.log(error)
+        console.log(error);
       })
   }
 
@@ -83,7 +83,7 @@ function FinnkinoShowtimes() {
         ))
         }
       </select>
-      <input type="date" onChange={e => onChangeDate(e.target.value)} />
+      <input type="date" onChange={e => changeDate(e.target.value)} />
 
       <button id="searchButton" onClick={() => getShowtimes(url)}>Search</button>
 
