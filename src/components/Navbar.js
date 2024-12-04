@@ -36,15 +36,15 @@ function Navbar() {
             
             <ul className={menu ? "show" : ""}>
                 {user.access_token ? (
-                    <li>
+                    <li className="navlist">
                         <Link to="/" onClick={signOut}>Sign out</Link>      {/* Sign out button is displayed when the user is logged in (logged in = when the user has a token) */}
                     </li>
                 ) : (
                     <>
-                        <li>
+                        <li className="navlist">
                             <Link to="/login">Log in</Link>                 {/* Log in button is displayed when the user is not logged in */}
                         </li>
-                        <li>
+                        <li className="navlist">
                             <Link to="/signup">Sign up</Link>               {/* Sign up button is displayed when the user is not logged in */}
                         </li>
                     </>
