@@ -4,5 +4,5 @@ import { useUser } from "../context/useUser";
 
 export default function ProtectedRoute() {
     const { user } = useUser()
-    return user.token ? <Outlet/> : <Navigate to="/login"/>     // Redirect to login page if the user does not have a token
+    return user.access_token ? <Outlet/> : <Navigate to="/login"/>     // Redirect to login page if the user does not have a token
 }

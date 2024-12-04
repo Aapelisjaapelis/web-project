@@ -70,8 +70,13 @@ const userLogin = async(req, res, next) => {
         }
 
         else {
-            const token = jwt.sign(req.body.email, process.env.JWT_SECRET_KEY)                                              // Create a token
-            return res.status(200).json({id: user.account_id, username: user.username, email: user.email, token: token})    // The response includes id, username, email and token
+            return res
+            .authorizationHeader(req.body.email)
+            .status(200)
+            .json({
+                id: user.account_id, 
+                username: user.username, 
+                email: user.email})
         }
     }   catch (error) {
         return next(error)

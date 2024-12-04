@@ -35,7 +35,7 @@ function Navbar() {
             </ul>
             
             <ul className={menu ? "show" : ""}>
-                {user.token ? (
+                {user.access_token ? (
                     <li>
                         <Link to="/" onClick={signOut}>Sign out</Link>      {/* Sign out button is displayed when the user is logged in (logged in = when the user has a token) */}
                     </li>
