@@ -5,6 +5,7 @@ nav {
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 2;
 }
 
 ul {
@@ -14,16 +15,17 @@ ul {
     background-color: #ffffff;
 }
 
-li {
+.navlist {
     list-style: none;
     padding: 8px;
     border: 1px solid #000000;
 }
 
-a {
+nav a {
     text-decoration: none;
     white-space: nowrap;
     color: #000000;
+
     padding: 24px;
     font-size: 24px;
 }
@@ -61,4 +63,6 @@ a {
         text-align: center;
         width: 100%;
     }
+
 }
+

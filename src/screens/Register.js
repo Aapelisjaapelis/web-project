@@ -22,15 +22,15 @@ function Register() {
     <>
         <Navbar/>
 
-        <div>
+        <div className="registerdiv">
             <h1>Sign up</h1>
-            <form>
-                <label>Username:</label>
-                <input type="text" value={user.username} onChange={e => setUser({...user, username: e.target.value})}/>
-                <label>Email:</label>
-                <input type="email" value={user.email} onChange={e => setUser({...user, email: e.target.value})}/>
-                <label>Password:</label>
-                <input type="password" value={user.password} onChange={e => setUser({...user, password: e.target.value})}/>
+            <form className="registerfrom">
+                <label className="registerlabel">Username:</label>
+                <input className="registerinput" type="text" value={user.username} onChange={e => setUser({...user, username: e.target.value})}/>
+                <label className="registerlabel">Email:</label>
+                <input className="registerinput" type="email" value={user.email} onChange={e => setUser({...user, email: e.target.value})}/>
+                <label className="registerlabel">Password:</label>
+                <input className="registerinput" type="password" value={user.password} onChange={e => setUser({...user, password: e.target.value})}/>
             </form>
             <button id="signUpButton" onClick={handleClick}>Sign up</button>
         </div>
@@ -39,3 +39,4 @@ function Register() {
 }
 
 export default Register
+

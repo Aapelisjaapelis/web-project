@@ -1,0 +1,114 @@
+body {
+    background-color: rgb(0, 0, 0);
+}
+
+h1 {
+    text-align: center;
+    color: white;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+#container {
+    margin-top: 70px;
+}
+
+/* Styles for movie posters */
+.imagecontainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.imagebox {
+    color: white;
+    margin: 10px;
+    font-size: 1.2em;
+    max-width: 300px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.imagebox p {
+    text-align: center;
+    margin: 5px;
+}
+
+/* Zoom of the photos */
+.imagezoombox {
+    width: 100%;
+    height: 75%;
+    overflow: hidden;
+}
+
+.imagebox .imagezoombox img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s;
+}
+
+.imagebox .imagezoombox img:hover {
+    transform: scale(1.3);
+}
+
+.imagebox:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Search form */
+.searchForm {
+    margin: auto;
+    padding: 10px;
+}
+
+.searchForm label {
+    color: white;
+    margin: 10px;
+}
+
+.searchForm .textSearch {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    border-radius: 3px;
+    width: 290px;
+}
+
+.searchForm .releaseYear {
+    margin-right: 10px;
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    border-radius: 3px;
+    width: 50px;
+}
+
+/* Filter dropdown */
+.dropdownContainer {
+    display: inline-block;
+}
+
+.dropdownContainer button {
+    margin-right: 10px;
+}
+
+/* Submit button */
+.searchForm button {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    border-radius: 3px;
+}
+
+.searchForm button:hover {
+    background-color: rgb(59, 59, 59);
+}
+
+.searchForm button:active {
+    background-color: rgb(104, 104, 104);
+}

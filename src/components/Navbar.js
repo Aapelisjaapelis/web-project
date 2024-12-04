@@ -17,19 +17,19 @@ function Navbar() {
             <button id="menuButton" onClick={showDropdownMenu}>Menu</button>    {/* Menu button is displayed when the maximum width of the screen is 1250px */}
 
             <ul className={menu ? "show" : ""}>
-                <li>
+                <li className="navlist">
                     <Link to="/">Public movie list</Link>
                 </li>
-                <li>
+                <li className="navlist">
                     <Link to="/finnkinoshowtimes">Finnkino showtimes</Link>
                 </li>
-                <li>
+                <li className="navlist">
                     <Link to="/groupspage">Groups</Link>
                 </li>
-                <li>
+                <li className="navlist">
                     <Link to="/favoritemovieslist">Favorites</Link>
                 </li>
-                <li>
+                <li className="navlist"> 
                     <Link to="/profile">Profile</Link>
                 </li>
             </ul>

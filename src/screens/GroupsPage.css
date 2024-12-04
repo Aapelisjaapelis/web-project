@@ -1,0 +1,58 @@
+.group-body {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 100vh; 
+    margin: 0; 
+    text-align: right;
+}
+
+
+#groupTable {
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    width: 100%;
+    font-family: Arial, sans-serif;
+
+
+}
+#groupTable th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#groupTable th {
+    background-color: #f4f4f4;
+}
+
+#groupTable tr:nth-child(odd) {
+    background-color: #444141;
+}
+
+#groupTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+#groupTable tr:hover {
+    background-color: #ff00cc;
+}
+
+.info-button {
+    background-color: #444141;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px 23px;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: none;
+    margin-left: 5px;
+}
+
+.info-button:hover {
+    background-image: linear-gradient(90deg, #53cbef 0%, #dcc66c 50%, #ffa3b6 75%, #53cbef 100%);
+    animation: slidernbw 5s linear infinite;
+    color: #000;
+}
