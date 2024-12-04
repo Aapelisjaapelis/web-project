@@ -11,7 +11,7 @@ function Register() {
   const handleClick = async () => {
     try {
       await signUp()
-      navigate("/login")
+      navigate("/login")  // Navigate to login page after a successful registration
     } catch(error) {
       const errorMessage = error.response.data.message ? error.response.data.message : error
       alert(errorMessage)
