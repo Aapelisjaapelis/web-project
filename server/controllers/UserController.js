@@ -3,6 +3,7 @@ import validator from "validator"
 import { createUser, selectUserByEmail, selectUserByUsername } from "../models/user.js"
 import jwt from "jsonwebtoken"
 import passwordValidator from "password-validator"
+import ChangePassword from "../../src/screens/ChangePassword.js"
 
 const userRegistration = async(req, res, next) => {
     try {
@@ -83,6 +84,36 @@ const userLogin = async(req, res, next) => {
     }
 }
 
+const userChangePassword = async(req, res, next) => {
+    const emailFromDb = await selectUserByEmail(req.body.email)
+    const user = emailFromDb.rows[0]
+    const schema = new passwordValidator();
+    schema.is().min(8).has().uppercase().has().digits()
 
-export { userRegistration, userLogin }
+    try {
+        if (!await compare(req.body.oldPassword, user.password)) {
+            const error = new Error("Wrong password")
+            error.statusCode = 401
+            return next(error)
+        }
+
+        else if (!req.body.password || !schema.validate(req.body.password)) {
+            const error = new Error("Invalid password")
+            error.statusCode = 400
+            return next(error)
+        }
+
+        else {
+            const hashedPassword = await hash(req.body.password, 10)
+            const userFromDb = await changePassword(hashedPassword, user.username)
+            const token = jwt.sign(user.email, process.env.JWT_SECRET_KEY)
+            return res.status(200).json({id: user.account_id, username: user.username, email: user.email, token: token})
+        }
+    }   catch (error) {
+        return next(error)
+    }
+}
+
+
+export { userRegistration, userLogin, userChangePassword }
 

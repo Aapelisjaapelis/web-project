@@ -6,7 +6,7 @@ const url = process.env.REACT_APP_API_URL
 
 export default function UserProvider({children}) {
     const userFromSessionStorage = sessionStorage.getItem("user")
-    const [user, setUser] = useState(userFromSessionStorage ? JSON.parse(userFromSessionStorage) : ({id: "", username: "", email: "", password: "", access_token: ""}))
+    const [user, setUser] = useState(userFromSessionStorage ? JSON.parse(userFromSessionStorage) : ({id: "", username: "", email: "", password: "", access_token: "", oldPassword: ""}))
 
     const signUp = async () => {
         try {
@@ -49,8 +49,19 @@ export default function UserProvider({children}) {
         setUser({id: "", username: "", email: "", password: "", access_token: ""})
     }
 
+    const changePassword = async () => {
+        try {
+            const response = await axios.post(url + "/user/changePassword", user)
+            setUser(response.data)
+            sessionStorage.setItem("user", JSON.stringify(response.data))
+        } catch(error) {
+            setUser({password: "", oldPassword: ""})
+            throw error
+        }
+    }
+
     return (
-        <UserContext.Provider value={{user, setUser, signUp, signIn, signOut, updateToken}}>
+        <UserContext.Provider value={{user, setUser, signUp, signIn, signOut, changePassword, updateToken}}>
             {children}
         </UserContext.Provider>
     )
