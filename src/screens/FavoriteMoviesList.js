@@ -5,6 +5,7 @@ import axios from "axios"
 import Navbar from "../components/Navbar.js"
 
 const url = process.env.REACT_APP_API_URL
+const bearerToken = process.env.BEARERTOKEN
 
 function FavoriteMoviesList() {
   const {user} = useUser();
@@ -42,7 +43,7 @@ function FavoriteMoviesList() {
       url: "https://api.themoviedb.org/3/movie/" + id,
       headers: {
         accept: "application/json",
-        Authorization: process.env.BEARER
+        Authorization: bearerToken
       }
     }
     
@@ -57,6 +58,7 @@ function FavoriteMoviesList() {
     })
 
     setMovieInfo(movieInfoList)
+    console.log(movieInfo)
   }
 
   return (
