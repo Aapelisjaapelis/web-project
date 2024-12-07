@@ -76,8 +76,15 @@ export default function UserProvider({children}) {
         }
     }
 
+    const deleteAccount = async () => {
+
+        await axios.delete(url + "/user/deleteAccount/" + user.id)
+        sessionStorage.clear()
+        setUser({id: "", username: "", email: "", password: "", access_token: ""})
+    }
+
     return (
-        <UserContext.Provider value={{user, setUser, signUp, signIn, signOut, changePassword, changeEmail, updateToken}}>
+        <UserContext.Provider value={{user, setUser, signUp, signIn, signOut, changePassword, changeEmail, deleteAccount, updateToken}}>
             {children}
         </UserContext.Provider>
     )

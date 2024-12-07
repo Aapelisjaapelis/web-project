@@ -11,6 +11,7 @@ function ChangeEmail() {
   const handleClick = async () => {
     try {
       await changeEmail()
+      alert("Email changed successfully")
       navigate("/profile")
     } catch(error) {
       const errorMessage = error.response.data.message ? error.response.data.message : error

@@ -11,6 +11,7 @@ function ChangePassword() {
   const handleClick = async () => {
     try {
       await changePassword()
+      alert("Password changed successfully")
       navigate("/profile")
     } catch(error) {
       const errorMessage = error.response.data.message ? error.response.data.message : error

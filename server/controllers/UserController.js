@@ -1,6 +1,6 @@
 import { hash, compare } from "bcrypt"
 import validator from "validator"
-import { createUser, selectUserByEmail, selectUserByUsername, changePassword, changeEmail } from "../models/user.js"
+import { createUser, selectUserByEmail, selectUserByUsername, changePassword, changeEmail, deleteAccount } from "../models/user.js"
 import jwt from "jsonwebtoken"
 import passwordValidator from "password-validator"
 
@@ -154,6 +154,15 @@ const userChangeEmail = async(req, res, next) => {
     }
 }
 
+const userDeleteAccount = async(req, res, next) => {
+    try {
 
-export { userRegistration, userLogin, userChangePassword, userChangeEmail }
+
+    }   catch (error) {
+        return next(error)
+    }
+}
+
+
+export { userRegistration, userLogin, userChangePassword, userChangeEmail, userDeleteAccount }
 
