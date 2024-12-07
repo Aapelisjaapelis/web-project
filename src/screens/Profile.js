@@ -19,7 +19,7 @@ function Profile() {
       <h2>{user.username}</h2>
       <input />
       <button className="changePassword" onClick={e =>  navigate('/changePassword')}>Change password</button>
-      <button>Change email address</button>
+      <button className="changeEmail" onClick={e =>  navigate('/changeEmail')}>Change email address</button>
       <button>Delete account</button>
     </>
   );

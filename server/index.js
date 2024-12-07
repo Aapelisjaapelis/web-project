@@ -23,7 +23,6 @@ app.use((req,res,next) => {
 
 app.use("/user", userRouter)
 app.use("/group", groupRouter)
-app.use("/profile", profileRouter)
 
 app.use((err, req, res, next) => {              // A global error handler 
     const statusCode = err.statusCode || 500

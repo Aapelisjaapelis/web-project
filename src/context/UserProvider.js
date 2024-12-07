@@ -52,16 +52,32 @@ export default function UserProvider({children}) {
     const changePassword = async () => {
         try {
             const response = await axios.post(url + "/user/changePassword", user)
-            setUser(response.data)
-            sessionStorage.setItem("user", JSON.stringify(response.data))
+            const token = readAuthorizationHeader(response)
+            const userData = { id: response.data.id, username: response.data.username, email: response.data.email, access_token: token}
+            setUser(userData)
+            sessionStorage.setItem("user", JSON.stringify(userData))  
         } catch(error) {
-            setUser({password: "", oldPassword: ""})
+            setUser({...user, password: "", oldPassword: ""})
+            throw error
+        }
+    }
+
+    const changeEmail = async () => {
+        try {
+            console.log(user)
+            const response = await axios.post(url + "/user/changeEmail", user)
+            const token = readAuthorizationHeader(response)
+            const userData = {...user, email: response.data.email, access_token: token}
+            setUser(userData)
+            console.log(user)
+            sessionStorage.setItem("user", JSON.stringify(userData))
+        } catch(error) {
             throw error
         }
     }
 
     return (
-        <UserContext.Provider value={{user, setUser, signUp, signIn, signOut, changePassword, updateToken}}>
+        <UserContext.Provider value={{user, setUser, signUp, signIn, signOut, changePassword, changeEmail, updateToken}}>
             {children}
         </UserContext.Provider>
     )
