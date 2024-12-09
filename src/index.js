@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./screens/Register.js";
 import Login from "./screens/Login.js";
 import PublicMoviesList from "./screens/PublicMoviesList.js"
+import SpecificMoviePage from "./screens/SpecificMoviePage.js";
 import FavoriteMoviesList from "./screens/FavoriteMoviesList.js"
 import GroupsPage from "./screens/GroupsPage.js"
 import Profile from "./screens/Profile.js"
@@ -24,6 +25,7 @@ root.render(
       <UserProvider>
         <Routes>
           <Route path="/" element={<PublicMoviesList/>}></Route>
+          <Route path="/specificmovie" element={<SpecificMoviePage/>}></Route>
           <Route path="/signup" element={<Register/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/finnkinoshowtimes" element={<FinnkinoShowtimes/>}></Route>
