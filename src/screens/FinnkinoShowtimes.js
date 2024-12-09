@@ -76,18 +76,18 @@ function FinnkinoShowtimes() {
   }
 
   const CheckShowtimes = () => {
-      if (!showtimes || showtimes.length === 0) {
-        return <div>No showtimes found</div>
-      } else if (typeof(showtimes) === "object" && !Array.isArray(showtimes)) {
-        return <div key={showtimes.ID}>{new Date(showtimes.dttmShowStart).getHours()}:{new Date(showtimes.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtimes.Title}</div>
-      } else {
-        return (
-          showtimes.map(showtime => (
-            <div key={showtime.ID}>{new Date(showtime.dttmShowStart).getHours()}:{new Date(showtime.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtime.Title}</div>
-          ))
-        )
-      }
+    if (!showtimes || showtimes.length === 0) {
+      return <div>No showtimes found</div>
+    } else if (typeof(showtimes) === "object" && !Array.isArray(showtimes)) {
+      return <div key={showtimes.ID}>{new Date(showtimes.dttmShowStart).getHours()}:{new Date(showtimes.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtimes.Title}</div>
+    } else {
+      return (
+        showtimes.map(showtime => (
+          <div key={showtime.ID}>{new Date(showtime.dttmShowStart).getHours()}:{new Date(showtime.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtime.Title}</div>
+        ))
+      )
     }
+  }
 
   return (
     <>

@@ -5,7 +5,15 @@ const createUser = async (username, email, hashedPassword) => {
 }
 
 const changePassword = async (hashedPassword, username) => {
-    return await pool.query("update account set password = $1 where username = $2", [hashedPassword, username])
+    return await pool.query("update account set password = $1 where username = $2 returning *", [hashedPassword, username])
+}
+
+const deleteAccount = async (id) => {
+    return await pool.query("call deleteAccount($1)", [id])
+}
+
+const changeEmail = async (email, username) => {
+    return await pool.query("update account set email = $1 where username = $2 returning *", [email, username])
 }
 
 const selectUserByEmail = async (email) => {
@@ -16,5 +24,5 @@ const selectUserByUsername = async (username) => {
     return await pool.query("select * from account where username = $1", [username])
 }
 
-export { createUser, selectUserByEmail, selectUserByUsername, changePassword }
+export { createUser, selectUserByEmail, selectUserByUsername, changePassword, changeEmail, deleteAccount }
 
