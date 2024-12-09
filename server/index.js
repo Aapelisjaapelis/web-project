@@ -34,3 +34,4 @@ app.use((err, req, res, next) => {              // A global error handler
 
 app.listen(port)
 
+export default app
