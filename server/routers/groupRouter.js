@@ -4,11 +4,11 @@ import { getGroups, getMyGroups, getMembers, removeMember, postNewGroup } from '
 
 const router = Router()
 
-router.get('/getGroups', getGroups)
-router.get('/MyGroups/:id', getMyGroups)
-router.get('/Members/:id', getMembers)
-router.delete('/deleteMembers',removeMember)
-router.post('/createGroup',postNewGroup)
+router.get('/getGroups', auth, getGroups)
+router.get('/MyGroups/:id', auth, getMyGroups)
+router.get('/Members/:id', auth, getMembers)
+router.delete('/deleteMembers',auth, removeMember)
+router.post('/createGroup', auth, postNewGroup)
 
 
 
