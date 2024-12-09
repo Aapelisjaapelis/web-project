@@ -1,3 +1,22 @@
 #favoritesContainer {
     margin-top: 70px;
 }
+
+#favoriteMoviesList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style-type: none;
+    background-color: transparent;
+}
+
+.favoriteMoviesItem {
+    margin: 10px;
+    padding: 10px;
+    color: black;
+    background-color: white;
+}
+
+.removeFavoriteButton {
+    margin-left: 16px;
+}

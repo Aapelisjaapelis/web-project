@@ -25,6 +25,7 @@ create table favorites (
     id serial primary key,
     account_id serial not null,
     movie_id int not null,
+    movie_name varchar(100) not null,
     foreign key (account_id) references account(account_id)
 );
 
