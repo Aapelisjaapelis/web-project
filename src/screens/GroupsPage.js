@@ -20,14 +20,16 @@ function GroupsPage () {
 
     const navigate = useNavigate();
 
-    const {user} = useUser();
+    const {user, updateToken} = useUser();
     const [groups, setGroups] = useState([])
 
 
     useEffect(() => {
-      axios.get(url+'/group/getGroups')
+        const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+        axios.get(url+'/group/getGroups', headers)
         .then(response => {
             setGroups(response.data)
+            updateToken(response)
         }).catch(error => {
           alert(error.response.data.error ? error.response.data.error : error)
         })
@@ -35,9 +37,11 @@ function GroupsPage () {
 
 
 const reloadPage = () => {
-    axios.get(url+'/group/getGroups')
+    const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+    axios.get(url+'/group/getGroups', headers)
     .then(response => {
         setGroups(response.data)
+        updateToken(response)
     }).catch(error => {
       alert(error.response.data.error ? error.response.data.error : error)
     })
@@ -54,14 +58,16 @@ const handleCreateClick = ( ) => {
     if (newGroup === null || newGroup === "") {
         alert("Group name is insufficient");
     } else {
+        const headers = {headers: {Authorization: "Bearer " + user.access_token}}
         axios.post(url+'/group/createGroup',{
             id1: newGroup, 
             id2: newDesc, 
             id3: user.id 
 
-        })
+        }, headers)
         .then(response => {
             reloadPage()
+            updateToken(response)
             
             alert("You have succesfully created a New group"+response)
         }).catch(error => {

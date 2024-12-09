@@ -38,9 +38,9 @@ export default function UserProvider({children}) {
     }
 
     const readAuthorizationHeader = (response) => {
-        if (response.headers.get("Authorization") &&
-            response.headers.get("Authorization").split(" ")[0] === "Bearer") {
-            return response.headers.get("Authorization").split(" ")[1]
+        if (response.headers.get("authorization") &&
+            response.headers.get("authorization").split(" ")[0] === "Bearer") {
+            return response.headers.get("authorization").split(" ")[1]
         }
     }
 
@@ -51,11 +51,9 @@ export default function UserProvider({children}) {
 
     const changePassword = async () => {
         try {
-            const response = await axios.post(url + "/user/changePassword", user)
-            const token = readAuthorizationHeader(response)
-            const userData = { id: response.data.id, username: response.data.username, email: response.data.email, access_token: token}
-            setUser(userData)
-            sessionStorage.setItem("user", JSON.stringify(userData))  
+            const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+            const response = await axios.post(url + "/user/changePassword", user, headers)
+            updateToken(response)
         } catch(error) {
             setUser({...user, password: "", oldPassword: ""})
             throw error
@@ -64,13 +62,11 @@ export default function UserProvider({children}) {
 
     const changeEmail = async () => {
         try {
-            console.log(user)
-            const response = await axios.post(url + "/user/changeEmail", user)
-            const token = readAuthorizationHeader(response)
-            const userData = {...user, email: response.data.email, access_token: token}
+            const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+            const response = await axios.post(url + "/user/changeEmail", user, headers)
+            const userData = {...user, email: response.data.email}
             setUser(userData)
-            console.log(user)
-            sessionStorage.setItem("user", JSON.stringify(userData))
+            updateToken(response)
         } catch(error) {
             throw error
         }
