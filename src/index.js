@@ -15,6 +15,7 @@ import ProtectedRoute from "./components/ProtectedRoute.js"
 import GroupMy from "./screens/GroupMy.js";
 import SpecificGroupPage from "./screens/SpecificGroupPage.js"
 import GroupMembers from "./screens/GroupMembers.js"
+import ChangePassword from "./screens/ChangePassword.js"
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -34,7 +35,7 @@ root.render(
             <Route path="/GroupMy" element={<GroupMy/>}></Route>
             <Route path="/SpecificGroupPage" element={<SpecificGroupPage/>}></Route>
             <Route path="/GroupMembers" element={<GroupMembers/>}></Route>
-
+            <Route path="/ChangePassword" element={<ChangePassword/>}></Route>
 
           </Route>
         </Routes>
