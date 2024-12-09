@@ -30,6 +30,8 @@ function FavoriteMoviesList() {
     })
   }
 
+  // Logic for removing a movie from favorites
+  /*
   const removeFavoriteMovie = (movieId) => {
     axios
       .delete(url + "/favorites/removeFavorite/" + user.id + "/" + movieId)
@@ -41,6 +43,22 @@ function FavoriteMoviesList() {
         console.log(error)
       })
   }
+  */
+
+  const FavMovies = () => {
+    return (
+      <div className='imagecontainer'>
+        { favMovies && favMovies.map(favMovie => (
+          <div key={favMovie.movie_id} className="imagebox">
+            <div className="imagezoombox">
+              <img src={'https://image.tmdb.org/t/p/w500' + favMovie.poster_path} alt='Movie poster' onerror="this.onerror=null; this.src='Default.jpg'"></img>
+            </div>
+            <p>{favMovie.movie_name}</p>
+          </div>
+        ))}
+      </div>
+    )
+  }
 
   return (
     <>
@@ -48,6 +66,19 @@ function FavoriteMoviesList() {
 
       <div id='favoritesContainer'>
         <h1>Favorite movies</h1>
+        <FavMovies />
+      </div>
+    </>
+  )
+}
+
+export default FavoriteMoviesList
+
+
+
+
+// This might be pointless because the style from PublicMoviesList.css could be used
+/*
         <ul id='favoriteMoviesList'>
           {
             favMovies.map(favMovie => (
@@ -58,9 +89,5 @@ function FavoriteMoviesList() {
             ))
           }
         </ul>
-      </div>
-    </>
-  )
-}
 
-export default FavoriteMoviesList;
+*/
