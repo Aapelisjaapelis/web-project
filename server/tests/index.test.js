@@ -1,6 +1,7 @@
 import request from "supertest"
 import app from "../index.js"
 import { pool } from "../helpers/database.js"
+import { hash } from 'bcrypt'
 
 describe("Registration", () => {
     beforeAll(async () => {
@@ -11,7 +12,6 @@ describe("Registration", () => {
     afterAll(async () => {
         await pool.query("Delete from account")
         await pool.query("Alter sequence account_account_id_seq restart")
-        await pool.end()
     })
 
     it("Should register a user", async () => {
@@ -96,4 +96,49 @@ describe("Registration", () => {
         expect(response.statusCode).toBe(400)
         expect(response.body.message).toBe("Invalid password")
     })
+})
+
+
+describe("Login", () => {
+
+    beforeAll(async () => {
+
+        const username = "TestUser";
+        const email = "testi@testi.com";
+        const password = "Testitesti1";
+        hash(password, 10, async(error, hashedPassword) => {
+            await pool.query("insert into account (username, email, password, is_public) values ($1, $2, $3, $4)", 
+                [username, email, hashedPassword, "false"]);
+        });
+    });
+
+    afterAll(async () => {
+
+    })
+
+    it("Should not allow a login with a wrong password", async () => {
+        const response = await request(app)
+            .post("/user/login")
+            .send({email: "testi@testi.com", password: "Testitesti2"})
+
+        expect(response.statusCode).toBe(401)
+        expect(response.body.message).toBe("Invalid password")
+    })   
+
+    it("Should not allow a login with a wrong email", async () => {
+        const response = await request(app)
+            .post("/user/login")
+            .send({email: "randomemail@email.com", password: "Testitesti1"})
+
+        expect(response.statusCode).toBe(401)
+        expect(response.body.message).toBe("Invalid email")
+    })   
+
+    it("Should succesfully login with correct credentials", async () => {
+        const response = await request(app)
+            .post("/user/login")
+            .send({email: "testi@testi.com", password: "Testitesti1"})
+
+        expect(response.statusCode).toBe(200)
+    })   
 })
