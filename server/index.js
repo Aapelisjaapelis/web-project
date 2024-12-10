@@ -1,6 +1,7 @@
 import express from "express"
 import cors from "cors"
 import userRouter from "./routers/userRouter.js"
+import movieRouter from "./routers/movieRouter.js"
 import jwt from "jsonwebtoken"
 import groupRouter from "./routers/groupRouter.js"
 import profileRouter from "./routers/profileRouter.js"
@@ -22,6 +23,7 @@ app.use((req,res,next) => {
 })
 
 app.use("/user", userRouter)
+app.use("/movie", movieRouter)
 app.use("/group", groupRouter)
 
 app.use((err, req, res, next) => {              // A global error handler 
