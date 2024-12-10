@@ -1,5 +1,5 @@
 import { emptyOrRows } from '../helpers/utils.js'
-import { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests } from '../models/Groupmodel.js'
+import { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests, selectGroupMovies } from '../models/Groupmodel.js'
 
 const getGroups = async (req,res,next) => {
     try {
@@ -13,6 +13,9 @@ const getGroups = async (req,res,next) => {
 const getMyGroups = async (req,res,next) => {
     try {
         const result = await selectGroupByMe(req.params.id)
+
+        // return on nimi ja path
+        
         
         return res.status(200).json(emptyOrRows(result))
     } catch (error){
@@ -29,6 +32,17 @@ const getMembers = async (req,res,next) => {
         return next (error)
     }
 }
+
+const getMoviesForGroup = async (req,res,next) => {
+    try {
+        const result = await selectGroupMovies(req.params.id)
+        
+        return res.status(200).json(emptyOrRows(result))
+    } catch (error){
+        return next (error)
+    }
+}
+
 
 
 const postjoinrequest = async (req,res,next) => {
@@ -100,4 +114,4 @@ const removeMember = async (req,res,next) => {
 }
 
 
-export { getGroups,getMyGroups,getMembers, removeMember,postNewGroup, postjoinrequest }
+export { getGroups,getMyGroups,getMembers, removeMember,postNewGroup, postjoinrequest, getMoviesForGroup }

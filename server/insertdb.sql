@@ -21,3 +21,7 @@ insert into account_moviegroup (account_id, moviegroup_id, is_admin) values('3',
 
 
 insert into account_moviegroup (account_id, moviegroup_id, is_admin) values('1', '4', 'True');
+
+
+INSERT INTO group_movies(moviegroup_id, movie_name, finnkino_id, finnkino_eventid) VALUES (1, 'Solo Leveling ReAwakening','2148101' ,'304845');
+INSERT INTO group_movies(moviegroup_id, movie_name, finnkino_id, finnkino_eventid) VALUES (1, 'Viimeiset päivät','2148051','304764' );

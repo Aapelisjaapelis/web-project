@@ -11,6 +11,10 @@ const selectAllMembers = async (id) => {
     return await pool.query('SELECT a.* FROM account_moviegroup amg JOIN account a ON amg.account_id = a.account_id WHERE amg.moviegroup_id = $1;', [id])
 }
 
+const selectGroupMovies = async (groupId) => {
+    return await pool.query ( 'SELECT movie_name, finnkino_movie_id, finnkino_time_id FROM group_movies WHERE moviegroup_id = $1 ', [groupId])
+}
+
 const deleteMember = async (id1, id2) => {
     return await pool.query('DELETE FROM account_moviegroup WHERE moviegroup_id = $1 AND account_id = $2;', [id1, id2])
 
@@ -36,4 +40,4 @@ const getJoinRequests = async(groupId) => {
     return await pool.query('SELECT account_id FROM group_invites WHERE moviegroup_id = $1',[groupId])
 }
 
-export { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests }
+export { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests,selectGroupMovies }
