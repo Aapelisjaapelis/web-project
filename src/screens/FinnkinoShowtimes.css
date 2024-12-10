@@ -1,4 +1,89 @@
-div {
+.showtimes-body {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin: 50px;
+  }
+
+.Showtimeslist {
+    align-items: left; 
+    margin-left:50px;
+    margin-top: 50px;
+}
+
+.timeformovie {
     color: white;
-    background-color: black;
+    font-family: Arial, sans-serif;
+    margin-bottom: 5px;
+}
+
+.selectCatalog {
+    margin-right: 5px;
+    font-size: 16px;
+    color: white;
+    background-color: #444141;
+    border-radius: 4px;
+
+}
+
+.selectCatalog::-webkit-scrollbar {
+    width: 10px;
+}
+.selectCatalog::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.selectCatalog::-webkit-scrollbar-thumb {
+    background: #888;
+}
+.selectCatalog::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+
+.dateChanger {
+    margin-right: 5px;
+    font-size: 16px;
+    color: white;
+    background-color: #444141;
+    border-radius: 4px;
+}
+
+.showtime-Button {
+    padding: 5px 11px;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    z-index: 1;
+    background: #444141;
+    position: relative;
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+    transition: all 250ms;
+    overflow: hidden;
+    letter-spacing: 1px;
+    margin-top: 5px;
+    margin-left: 5px;
+
+}
+
+.showtime-Button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    border-radius: 15px;
+    background-color: #212121;
+    z-index: -1;
+    transition: all 250ms
+}
+
+.showtime-Button:hover {
+    color: #e8e8e8;
+   }
+   
+.showtime-Button:hover::before {
+    width: 100%;
 }

@@ -23,7 +23,7 @@ function SpecificGroupPage () {
         <Navbar/>
 
         <div>
-        <h1 >{group?.group_name || "No data recieved"}</h1>
+        <h1 >{group?.group_name || "No name recieved"}</h1>
         <button className="info-button" onClick={e =>  window.location.href='/GroupsPage'}>All Groups</button>
 
         <table id="groupTable">
