@@ -4,21 +4,17 @@ import "./Navbar.css"
 import { useUser } from "../context/useUser" 
 
 function Navbar() {
-    const [menu, setMenu] = useState(false)
+    const [menu, setMenu] = useState(false)     // State variable for the dropdown menu
     const {user, signOut} = useUser()
 
     const showDropdownMenu = () => {
-        setMenu(!menu)
-    }
-
-    const handleClick = () => {
-        signOut()
+        setMenu(!menu)                          // Toggle between false (dropdown menu closed) and true (dropdown menu open)
     }
 
     return (
         <nav>
 
-            <button id="menuButton" onClick={showDropdownMenu}>Menu</button>
+            <button id="menuButton" onClick={showDropdownMenu}>Menu</button>    {/* Menu button is displayed when the maximum width of the screen is 1250px */}
 
             <ul className={menu ? "show" : ""}>
                 <li className="navlist">
@@ -39,17 +35,17 @@ function Navbar() {
             </ul>
             
             <ul className={menu ? "show" : ""}>
-                {user.token ? (
+                {user.access_token ? (
                     <li className="navlist">
-                        <Link to="/" onClick={handleClick}>Sign out</Link>
+                        <Link to="/" onClick={signOut}>Sign out</Link>      {/* Sign out button is displayed when the user is logged in (logged in = when the user has a token) */}
                     </li>
                 ) : (
                     <>
                         <li className="navlist">
-                            <Link to="/login">Log in</Link>
+                            <Link to="/login">Log in</Link>                 {/* Log in button is displayed when the user is not logged in */}
                         </li>
                         <li className="navlist">
-                            <Link to="/signup">Sign up</Link>
+                            <Link to="/signup">Sign up</Link>               {/* Sign up button is displayed when the user is not logged in */}
                         </li>
                     </>
                 )}
@@ -59,6 +55,4 @@ function Navbar() {
     )
 }
 
-
 export default Navbar
-

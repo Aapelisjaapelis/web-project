@@ -16,7 +16,9 @@ create table account (
 
 create table moviegroup (
     id serial primary key,
-    group_name varchar(50) not null
+    group_name varchar(50) not null,
+    group_desc varchar(255)
+
 );
 
 create table favorites (

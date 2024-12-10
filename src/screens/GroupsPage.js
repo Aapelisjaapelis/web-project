@@ -1,40 +1,135 @@
 import React from "react";
 import "./GroupsPage.css";
-
 import Navbar from "../components/Navbar.js";
+import axios from "axios";
+
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+
+
+
+import { useUser } from "../context/useUser.js";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
+
+const url = 'http://localhost:3001'
 
 
 function GroupsPage () {
+
+    const navigate = useNavigate();
+
+    const {user, updateToken} = useUser();
+    const [groups, setGroups] = useState([])
+
+
+    useEffect(() => {
+        const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+        axios.get(url+'/group/getGroups', headers)
+        .then(response => {
+            setGroups(response.data)
+            updateToken(response)
+        }).catch(error => {
+          alert(error.response.data.error ? error.response.data.error : error)
+        })
+      }, [])
+
+
+const reloadPage = () => {
+    const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+    axios.get(url+'/group/getGroups', headers)
+    .then(response => {
+        setGroups(response.data)
+        updateToken(response)
+    }).catch(error => {
+      alert(error.response.data.error ? error.response.data.error : error)
+    })
+
+}
+
+      
+const handleCreateClick = ( ) => {
+
+    const newGroup = document.getElementById('newGroup').value
+    const newDesc = document.getElementById('newDesc').value
+
+
+    if (newGroup === null || newGroup === "") {
+        alert("Group name is insufficient");
+    } else {
+        const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+        axios.post(url+'/group/createGroup',{
+            id1: newGroup, 
+            id2: newDesc, 
+            id3: user.id 
+
+        }, headers)
+        .then(response => {
+            reloadPage()
+            updateToken(response)
+            
+            alert("You have succesfully created a New group"+response)
+        }).catch(error => {
+          alert("Something went wrong")
+        })
+    }
+    };
+
     return (
     <>
     <Navbar/>
     <div className="group-body" >
         <div>
-        <h1 >Groups</h1>
-        <button className="info-button" onClick={event =>  window.location.href='/GroupMy'}>My Groups</button>
-        <button className="info-button" onClick={e => handleCreateClick()} >Greate group</button>
+        <h1 >All Groups</h1>
+        <button className="info-button" onClick={e =>  navigate('/GroupMy')}>My Groups</button>
+        <Popup trigger=
+            {<button className="info-button">Create group</button>}
+        modal nested>
+        {
+                    close => (
+                        <div className='modal'>
+                            <div className='content'>
+                                <form>
+                                    <label for="newGroup">Please enter Group Name:</label>
+                                    <br/>
+                                    <input type="text" id="newGroup" name="newGroup"/><br/>
+                                    <label for="newDesc">Please enter a description for the group:</label><br/>
+                                    <input type="text" id="newDesc" name="newDesc" /><br/><br/>
+                                   
+                                </form> 
+
+                            </div>
+                            <div>
+                                <button className="info-button" onClick={e => handleCreateClick()}>
+                                        Submit
+                                </button>
+                            </div>
+                        </div>
+                    )
+                }
+            </Popup>
+
+
         <table id="groupTable">
                 <thead>
                     <tr>
                         <th>Ryhmän nimi</th>
                         <th>Ryhmän kuvaus</th>
-                        <th>Jäsenten määrä</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {groups.map(group => (
                         <tr key={group.id}>
-                            <td>{group.name}</td>
-                            <td>{group.description}</td>
-                            <td>{group.members_count}</td>
+                            <td>{group.group_name}</td>
+                            <td>{group.group_desc}</td>
                             <th>
                             <button 
-                                    onClick={() => handleButtonClick(group)} 
+                                    onClick={() => handleButtonClick()} 
                                     className="info-button">
                                     Liity
                                 </button>
-
                             </th>
                         </tr>
                     ))}
@@ -46,28 +141,11 @@ function GroupsPage () {
     )
 }
 
-const groups = [
-    { id:1, name: "Elokuva nauttijat", description: "Ryhmä elokuvista kiinnostuneille", members_count: 10 },
-    { id:2, name: "Kauhunystävät", description: "Kauhua joka päivä vuodesta", members_count: 15 },
-    { id:3, name: "Fantasy geek", description: "emt", members_count: 25 },
-    { id:4, name: "Indiana Jones leffat", description: "For action lovers", members_count: 5 },
-
-];
 
 
-const handleButtonClick = (group) => {
+const handleButtonClick = () => {
     alert(`Olet nyt liittynyt ryhmään`);
 };
 
-const handleCreateClick = () => {
-    let person = prompt("Please enter Group Name");
-    if (person === null || person === "") {
-        console.log("Ei toimi");
-        alert("Something went wrönk");
-    } else {
-        console.log(person+" HEi!");
-        alert("You have succesfully greated a new group!");
-    }
-    };
 
 export default GroupsPage;
