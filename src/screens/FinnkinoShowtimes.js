@@ -89,7 +89,6 @@ function FinnkinoShowtimes() {
         )
       }
     }
-
     return (
       <>
         <Navbar/>
@@ -115,7 +114,6 @@ function FinnkinoShowtimes() {
         </div>
       </>
     );
-}
-
+  }
 
 export default FinnkinoShowtimes; 
