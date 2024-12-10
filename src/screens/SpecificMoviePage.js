@@ -20,7 +20,8 @@ function SpecificMoviePage() {
     const [ownRatingGiven, setOwnRatingGiven] = useState(false)
     const [othersReviews, setOthersReviews] = useState([])
     const [allReviews, setAllReviews] = useState([])
-    const { user } = useUser()
+    const [isFavorite, setIsFavorite] = useState("yes")
+    const { user, updateToken } = useUser()
 
     useEffect(() => {
         const url = 'https://api.themoviedb.org/3/movie/' + movieId + '?language=en-US';
@@ -181,10 +182,52 @@ function SpecificMoviePage() {
         }
     }
 
+    const handleFavoriteClick = () => {
+        const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+
+        axios
+          .post(url + "/favorites/addFavorite", {
+            id: user.id,
+            movie_id: movieId,
+            movie_name: movieInfo.title,
+            poster_path: movieInfo.poster_path
+          }, headers)
+          .then(response => {
+            updateToken(response)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+    }
+
+    /*useEffect(() => {
+        if(user.access_token){
+            isMovieInFavorites()
+        }
+    }, [])*/
+    
+    /*const isMovieInFavorites = () => {
+        axios
+          .get(url + "/favorites/isMovieFavorite/" + user.id + "/" + movieId)
+          .then(response => {
+            console.log(response.data.favorite)
+            if (response.data.favorite === "yes") {
+                setIsFavorite("yes")
+            }
+            else if (response.data.favorite === "no") {
+                setIsFavorite("no")
+            }
+          })
+          .catch(error => {
+            console.log(error)
+        })
+    }*/
+
     return (
         <>
             <Navbar />
             <div id="container">
+      {/*      {isFavorite ? <p>IS FAVORITE</p> : <button id="addFavoriteButton" onClick={handleFavoriteClick}>Add</button>}*/}
                     <h1>{movieInfo.title}</h1>
                     <div className="flex-container">
                         <div className="left-side">

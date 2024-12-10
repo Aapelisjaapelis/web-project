@@ -4,4 +4,3 @@ const emptyOrRows = (result) => {
 }
 
 export { emptyOrRows}
-

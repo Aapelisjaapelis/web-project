@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react'
 import { useUser } from "../context/useUser.js"
 import axios from "axios"
 import Navbar from "../components/Navbar.js"
+import { useNavigate } from 'react-router-dom'
 
 const url = process.env.REACT_APP_API_URL     // The url is taken from .env
 
 function FavoriteMoviesList() {
   const {user} = useUser();
   const [favMovies, setFavMovies] = useState([])      // A list of objects with id and name being the only properties (favMovies.movie_id and favMovies.movie_name)
+  const navigate = useNavigate();
 
   useEffect(() => {
     getFavMoviesId()                                  // First, a function containing a get request is called
@@ -49,7 +51,7 @@ function FavoriteMoviesList() {
     return (
       <div className='imagecontainer'>
         { favMovies && favMovies.map(favMovie => (
-          <div key={favMovie.movie_id} className="imagebox">
+          <div key={favMovie.movie_id} className="imagebox" onClick={e => navigate('/specificmovie', {state: {id: favMovie.movie_id}})}>
             <div className="imagezoombox">
               <img src={'https://image.tmdb.org/t/p/w500' + favMovie.poster_path} alt='Movie poster' onerror="this.onerror=null; this.src='Default.jpg'"></img>
             </div>
