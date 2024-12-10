@@ -4,6 +4,8 @@ import userRouter from "./routers/userRouter.js"
 import movieRouter from "./routers/movieRouter.js"
 import jwt from "jsonwebtoken"
 import groupRouter from "./routers/groupRouter.js"
+
+import favoritesRouter from "./routers/favoritesRouter.js"
 import profileRouter from "./routers/profileRouter.js"
 
 const port = process.env.PORT
@@ -25,6 +27,7 @@ app.use((req,res,next) => {
 app.use("/user", userRouter)
 app.use("/movie", movieRouter)
 app.use("/group", groupRouter)
+app.use("/favorites", favoritesRouter)
 
 app.use((err, req, res, next) => {              // A global error handler 
     const statusCode = err.statusCode || 500
