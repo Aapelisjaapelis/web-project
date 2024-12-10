@@ -143,12 +143,13 @@ function SpecificMoviePage() {
                 }
             }
             //alert(ratingValue + ' ' + ratingText)
+            const headers = {headers: {Authorization: "Bearer " + user.access_token}}
             axios.post(url + '/movie/createReview',{
                 movieId: movieId,
                 ratingText: ratingText,
                 ratingNumber: ratingValue,
                 userId: user.id
-            })
+            }, headers)
             .then(response => {
                 setOthersReviews([...othersReviews, {id:response.data.id, account_id:user.id, movie_id:movieId, rating:ratingValue, review_text:ratingText}])
                 document.getElementById('ownRating').innerHTML = `<p>Review successfully sent</p>`
@@ -168,11 +169,12 @@ function SpecificMoviePage() {
                 }
             }
             //alert(ratingValue + ' ' + ratingText)
+            const headers = {headers: {Authorization: "Bearer " + user.access_token}}
             axios.put(url + '/movie/updateReview',{
                 id: givenRating.id,
                 ratingText: ratingText,
                 ratingNumber: ratingValue
-            })
+            }, headers)
             .then(response => {
                 alert('Review successfully edited.')
             })

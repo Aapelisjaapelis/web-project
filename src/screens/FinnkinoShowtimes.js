@@ -116,7 +116,4 @@ function FinnkinoShowtimes() {
     );
   }
 
-
-
-
 export default FinnkinoShowtimes; 
