@@ -1,0 +1,152 @@
+.left-side p  {
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+h3 {
+  color: white;
+  margin-bottom: 5px;
+}
+
+h2 {
+  color: white;
+}
+
+/* Flexbox and content */
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 20px;
+}
+
+.left-side {
+  flex: 20%;
+  margin: 10px;
+}
+
+.middle {
+  flex: 60%;
+  margin: 10px;
+}
+
+.middle p {
+  color: white;
+  font-size: 1.2em;
+}
+
+.middle h2 {
+  color: white;
+}
+
+.right-side {
+  flex: 20%;
+  margin: 10px;
+}
+
+/* Review stars */
+.checked {
+  color: orange;
+}
+
+.unchecked {
+  color: white;
+}
+
+#starRating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+/* Review form */
+#ratings {
+  margin: 10px;
+  padding: 5px;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+#clickableStars {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#userBox textarea {
+  background-color: black;
+  border: 1px solid white;
+  color: white;
+  max-width: 90%;
+  display: inline;
+  margin-left: 5px;
+}
+
+#userBox svg {
+  display: inline;
+}
+
+.ratingButton {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.ratingButton:hover {
+  background-color: rgb(59, 59, 59);
+}
+
+.ratingButton:active {
+  background-color: rgb(104, 104, 104);
+}
+
+#otherRatings {
+  color: white;
+}
+
+.otherReviewBox {
+  border: 1px solid white;
+  margin: 2px;
+  padding: 5px;
+}
+
+.otherReviewBox p {
+  margin-top: 2px;
+}
+
+#ownRating p {
+  color: white;
+}
+
+#ownRating h3 {
+  text-align: center;
+}
+
+.timestamp {
+  color: rgb(163, 163, 163);
+  font-size: 0.6em;
+}
+
+.username {
+  display: inline;
+  margin-left: 5px;
+}
+
+
+/* Responsive flexbox */
+@media (max-width: 1000px) {
+  .flex-container {
+    flex-direction: column;
+  }
+
+  .left-side, .middle, .right-side {
+    align-self: center;
+    flex: 100%;
+  }
+}

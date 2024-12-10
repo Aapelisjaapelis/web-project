@@ -88,6 +88,27 @@ img {
     width: 50px;
 }
 
+.searchForm ul {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    background-color: black;
+}
+
+.searchForm ul li {
+    width: 3em;
+    color:rgb(104, 104, 104);
+}
+
+.searchForm li.selected {
+    color: white;
+}
+
+.errorText {
+    color: white;
+    text-align: center;
+}
+
 /* Filter dropdown */
 .dropdownContainer {
     display: inline-block;
@@ -95,6 +116,40 @@ img {
 
 .dropdownContainer button {
     margin-right: 10px;
+}
+
+.none {
+    display: none;
+}
+
+.hidden {
+    visibility: hidden
+}
+
+.visible {
+    display: inline-block;
+    visibility: visible;
+}
+
+#genreFilters {
+    border: 1px solid white;
+    background-color: rgba(0, 0, 0, 0.7);
+    margin-top: 40px;
+    width: 160px;
+    z-index: 1;
+    left: 0;
+    position: absolute;
+}
+
+#genreFilters input {
+    font-size: 1em;
+    height: 20px;
+    width: 20px;
+}
+
+.genreDiv {
+    position: relative;
+    display: inline-block;
 }
 
 /* Submit button */
