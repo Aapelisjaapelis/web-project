@@ -24,4 +24,16 @@ const addNewMember = async (userId, groupId, admin ) => {
     return await pool.query('INSERT INTO account_moviegroup(account_id, moviegroup_id, is_admin) values($1,$2,$3)',[userId,groupId,admin])
 }
 
-export { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember }
+const checkIfMember = async (userId, groupId) => {
+    return await pool.query('SELECT 1 FROM account_moviegroup WHERE account_id = $1 AND moviegroup_id = $2',[userId, groupId])
+}
+
+const joinGroup = async(userId, groupId) => {
+    return await pool.query('INSERT INTO group_invites (admin_accepted, user_accepted,account_id, moviegroup_id) VALUES (False, True, $1, $2)',[userId, groupId])
+}
+
+const getJoinRequests = async(groupId) => {
+    return await pool.query('SELECT account_id FROM group_invites WHERE moviegroup_id = $1',[groupId])
+}
+
+export { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests }

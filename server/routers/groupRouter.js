@@ -1,14 +1,16 @@
 import { Router } from "express"
 import { auth } from '../helpers/auth.js'
-import { getGroups, getMyGroups, getMembers, removeMember, postNewGroup } from '../controllers/groupController.js'
+import { getGroups, getMyGroups, getMembers, removeMember, postNewGroup, postjoinrequest } from '../controllers/groupController.js'
 
 const router = Router()
 
-router.get('/getGroups', auth, getGroups)
-router.get('/MyGroups/:id', auth, getMyGroups)
-router.get('/Members/:id', auth, getMembers)
-router.delete('/deleteMembers',auth, removeMember)
-router.post('/createGroup', auth, postNewGroup)
+router.get('/getGroups', getGroups)
+router.get('/MyGroups/:id', getMyGroups)
+router.get('/Members/:id', getMembers)
+router.delete('/deleteMembers',removeMember)
+router.post('/createGroup',postNewGroup)
+router.post('/joinGroup',postjoinrequest)
+
 
 
 
