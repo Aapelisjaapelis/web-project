@@ -11,7 +11,6 @@ const selectAllMembers = async (id) => {
     return await pool.query('SELECT a.* FROM account_moviegroup amg JOIN account a ON amg.account_id = a.account_id WHERE amg.moviegroup_id = $1;', [id])
 }
 
-
 const deleteMember = async (id1, id2) => {
     return await pool.query('DELETE FROM account_moviegroup WHERE moviegroup_id = $1 AND account_id = $2;', [id1, id2])
 

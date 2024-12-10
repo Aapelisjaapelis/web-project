@@ -1,21 +1,22 @@
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken"
 
-const { verify } = jwt
-const authorizationRequired = 'Authorization required'
-const invalidCredentials = 'Invalid credentials'
-
-const auth = (req,res,next) => {
-    if(!req.headers.authorization) {
-        res.statusMessage = authorizationRequired
-        res.status(401).json({message: authorizationRequired})
+const auth = (req, res, next) => {
+    if (!req.headers.authorization) {
+        const error = new Error("Unauthorized")
+        error.statusCode = 401
+        return next(error)
     } else {
         try {
-            const token = req.headers.authorization
-            jwt.verify(token,process.env.JWT_SECRET_KEY)
+            const authHeader = req.headers.authorization
+            const access_token = authHeader.split(" ")[1]
+
+            const decodedUser = jwt.verify(access_token, process.env.JWT_SECRET_KEY)
+            res.authorizationHeader(decodedUser.email)
             next()
         } catch (err) {
-            res.statusMessage = invalidCredentials
-            res.status(403).json({message: invalidCredentials})
+            const error = new Error("Unauthorized")
+            error.statusCode = 401
+            return next(error)
         }
     }
 }

@@ -5,6 +5,7 @@ import axios from "axios";
 
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useUser } from "../context/useUser.js";
 
 
 const url = 'http://localhost:3001'
@@ -17,11 +18,14 @@ function GroupMembers () {
     const group = location.state;
 
     const [members, setMembers] = useState([])
+    const {user, updateToken} = useUser()
 
     useEffect(() => {
-      axios.get(url+'/group/Members/'+group.id)
+      const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+      axios.get(url + '/group/Members/' + group.id, headers)
         .then(response => {
             setMembers(response.data)
+            updateToken(response)
         }).catch(error => {
           alert(error.response.data.error ? error.response.data.error : error)
         })
@@ -30,14 +34,16 @@ function GroupMembers () {
 
     
     const deleteMember = (groupID, memberId) => {
-        
-        axios.delete(url+'/group/deleteMembers', {
-          params: { id1: groupID, id2: memberId }
+
+        axios.delete(url + '/group/deleteMembers', {
+          params: { id1: groupID, id2: memberId },
+          headers: {Authorization: "Bearer " + user.access_token}
         }
         )
         .then(response =>{
           const withoutRemoved = members.filter((member)=> member.account_id !== memberId)
           setMembers(withoutRemoved)
+          updateToken(response)
           alert("Member removed succesfully!")
         }).catch(error => {
           alert(error.response.data.error ? error.response.data.error : error)
