@@ -1,9 +1,10 @@
-#addFavoriteButton {
+#addFavoriteButton {    /* This needs to be edited */
   color: aliceblue;
 }
 
-
-
+#removeFavoriteButton { /* This needs to be edited */
+  color: aliceblue;
+}
 
 .left-side p  {
   color: white;

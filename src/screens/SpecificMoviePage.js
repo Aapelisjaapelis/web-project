@@ -20,7 +20,7 @@ function SpecificMoviePage() {
     const [ownRatingGiven, setOwnRatingGiven] = useState(false)
     const [othersReviews, setOthersReviews] = useState([])
     const [allReviews, setAllReviews] = useState([])
-    const [isFavorite, setIsFavorite] = useState("yes")
+    const [isFavorite, setIsFavorite] = useState(null)
     const { user, updateToken } = useUser()
 
     useEffect(() => {
@@ -182,7 +182,28 @@ function SpecificMoviePage() {
         }
     }
 
-    const handleFavoriteClick = () => {
+    useEffect(() => {
+        if (user.access_token) {
+            const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+
+            axios
+              .get(url + "/favorites/isMovieFavorite/" + user.id + "/" + movieId, headers)
+              .then(response => {
+                if (response.data.favorite === "yes") {
+                    setIsFavorite(true)
+                    updateToken(response)
+                } else {
+                    setIsFavorite(false)
+                    updateToken(response)
+                }
+            })
+              .catch(error => {
+                console.log(error)
+            })
+        }
+    }, [])
+
+    const handleAddFavoriteClick = () => {
         const headers = {headers: {Authorization: "Bearer " + user.access_token}}
 
         axios
@@ -193,6 +214,7 @@ function SpecificMoviePage() {
             poster_path: movieInfo.poster_path
           }, headers)
           .then(response => {
+            setIsFavorite(true)
             updateToken(response)
           })
           .catch(error => {
@@ -200,34 +222,41 @@ function SpecificMoviePage() {
           })
     }
 
-    /*useEffect(() => {
-        if(user.access_token){
-            isMovieInFavorites()
-        }
-    }, [])*/
-    
-    /*const isMovieInFavorites = () => {
+    const handleRemoveFavoriteClick = () => {
+        const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+
         axios
-          .get(url + "/favorites/isMovieFavorite/" + user.id + "/" + movieId)
+          .delete(url + "/favorites/removeFavorite/" + user.id + "/" + movieId, headers)
           .then(response => {
-            console.log(response.data.favorite)
-            if (response.data.favorite === "yes") {
-                setIsFavorite("yes")
-            }
-            else if (response.data.favorite === "no") {
-                setIsFavorite("no")
-            }
+            setIsFavorite(false)
+            updateToken(response)
           })
           .catch(error => {
-            console.log(error)
-        })
-    }*/
+            console.error(error)
+          })
+    }
+
+    const AddOrRemoveButton = () => {
+        if (!user.access_token) {
+            return null
+        }
+        
+        return (
+            <>
+                {isFavorite ? (
+                    <button id="removeFavoriteButton" onClick={handleRemoveFavoriteClick}>Remove from favorites</button>
+                ) : (
+                    <button id="addFavoriteButton" onClick={handleAddFavoriteClick}>Add to Favorites</button>
+                )}
+            </>
+        )        
+    }
 
     return (
         <>
             <Navbar />
             <div id="container">
-      {/*      {isFavorite ? <p>IS FAVORITE</p> : <button id="addFavoriteButton" onClick={handleFavoriteClick}>Add</button>}*/}
+                <AddOrRemoveButton />
                     <h1>{movieInfo.title}</h1>
                     <div className="flex-container">
                         <div className="left-side">
