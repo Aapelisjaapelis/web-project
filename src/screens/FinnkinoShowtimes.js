@@ -89,33 +89,34 @@ function FinnkinoShowtimes() {
         )
       }
     }
-  }
-
-  return (
-    <>
-      <Navbar/>
-      <div className="showtimes-body">
-        <div>
-          <h1>Finnkino Showtimes</h1>
-          <select className="selectCatalog"onChange={e => changeArea(e.target.value)}>
-            {
-            areas.map(area => (
-              <option key={area.ID} value={area.ID}>{area.Name}</option>
-            ))
-            }
-          </select>
-          <input className="dateChanger" type="date" onChange={e => changeDate(e.target.value)} />
-
-          
-          <button className="showtime-Button" id="searchButton" onClick={() => getShowtimes(url)}>Search</button>
-          <div className="Showtimeslist">
-
-          <CheckShowtimes />
+    return (
+      <>
+        <Navbar/>
+        <div className="showtimes-body">
+          <div>
+            <h1>Finnkino Showtimes</h1>
+            <select className="selectCatalog"onChange={e => changeArea(e.target.value)}>
+              {
+              areas.map(area => (
+                <option key={area.ID} value={area.ID}>{area.Name}</option>
+              ))
+              }
+            </select>
+            <input className="dateChanger" type="date" onChange={e => changeDate(e.target.value)} />
+  
+            
+            <button className="showtime-Button" id="searchButton" onClick={() => getShowtimes(url)}>Search</button>
+            <div className="Showtimeslist">
+  
+            <CheckShowtimes />
+            </div>
           </div>
         </div>
-      </div>
-    </>
-  );
-};
+      </>
+    );
+  }
+
+
+
 
 export default FinnkinoShowtimes; 
