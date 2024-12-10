@@ -10,8 +10,8 @@ function Login() {
 
   const handleClick = async () => {
     try {
-      await signIn()
-      navigate("/")
+      await signIn()  
+      navigate("/")   // Navigate to home screen (PublicMoviesList) after a successful login
     } catch(error) {
       const errorMessage = error.response.data.message ? error.response.data.message : error
       alert(errorMessage)

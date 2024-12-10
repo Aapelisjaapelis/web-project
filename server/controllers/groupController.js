@@ -1,5 +1,5 @@
 import { emptyOrRows } from '../helpers/utils.js'
-import { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember } from '../models/Groupmodel.js'
+import { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests } from '../models/Groupmodel.js'
 
 const getGroups = async (req,res,next) => {
     try {
@@ -24,6 +24,34 @@ const getMembers = async (req,res,next) => {
     try {
         const result = await selectAllMembers(req.params.id)
         
+        return res.status(200).json(emptyOrRows(result))
+    } catch (error){
+        return next (error)
+    }
+}
+
+
+const postjoinrequest = async (req,res,next) => {
+    try {
+        const userId = req.body.id1;
+        const groupId = req.body.id2;        
+
+        const isMember = await checkIfMember(userId, groupId);
+        if(isMember.rowCount > 0){
+            return res.status(400).json({error: 'You are already a member of this group.'})
+        }
+
+        const accountsIds = await getJoinRequests(groupId);
+        const hasrequest = accountsIds.rows.map(row => row.account_id);
+
+
+
+        if(hasrequest.includes(userId)){
+            return res.status(400).json({error: 'You already have a join request. Wait for admin to respond!'})
+        }
+
+        const result = await joinGroup(userId, groupId )
+
         return res.status(200).json(emptyOrRows(result))
     } catch (error){
         return next (error)
@@ -72,5 +100,4 @@ const removeMember = async (req,res,next) => {
 }
 
 
-
-export { getGroups,getMyGroups,getMembers, removeMember,postNewGroup }
+export { getGroups,getMyGroups,getMembers, removeMember,postNewGroup, postjoinrequest }

@@ -2,8 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center; 
-    height: 100vh; 
-    margin: 0; 
+    margin: 50px;
+
     text-align: right;
 }
 
@@ -35,7 +35,7 @@
     background-color: #f9f9f9;
 }
 #groupTable tr:hover {
-    background-color: #ff00cc;
+    background-color:  rgb(105, 47, 97);
 }
 
 .info-button {
@@ -56,3 +56,147 @@
     animation: slidernbw 5s linear infinite;
     color: #000;
 }
+
+/* From Uiverse.io by OliverZeros */ 
+button {
+    all: unset;
+  }
+  
+.createButton {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 4px;
+    padding: 8px 23px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    letter-spacing: 1px;
+    margin-left: 5px;
+}
+
+.createButton .button-bg {
+    border-color: rgba(255, 208, 116);
+    background-color: #444141;
+}
+
+.createButton .button-inner,
+.createButton .button-inner-hover,
+.createButton .button-inner-static {
+    pointer-events: none;
+    display: block;
+}
+
+.createButton .button-inner {
+    position: relative;
+}
+
+.createButton .button-inner-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: translateY(70%);
+}
+
+.createButton .button-bg {
+    overflow: hidden;
+    border-radius: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(1);
+    transition: transform 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.createButton .button-bg,
+.createButton .button-bg-layer,
+.createButton .button-bg-layers {
+    display: block;
+}
+
+.createButton .button-bg-layers {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    top: -60%;
+    aspect-ratio: 1 / 1;
+    width: max(200%, 10rem);
+}
+
+.createButton .button-bg-layer {
+    border-radius: 9999px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(0);
+}
+
+.createButton .button-bg-layer.-purple {
+    background-color: rgba(163, 116, 255);
+}
+
+.createButton .button-bg-layer.-turquoise {
+    background-color: rgba(23, 241, 209);
+}
+
+.createButton .button-bg-layer.-yellow {
+    --tw-bg-opacity: 1;
+    background-color: rgba(255, 208, 116, var(--tw-bg-opacity));
+}
+
+.createButton:hover .button-inner-static {
+    opacity: 0;
+    transform: translateY(-70%);
+    transition: transform 1.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.3s linear;
+}
+
+.createButton:hover .button-inner-hover {
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform 1.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.createButton:hover .button-bg-layer {
+    transition: transform 1.3s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.3s linear;
+}
+
+.createButton:hover .button-bg-layer-1 {
+    transform: scale(1);
+}
+
+.createButton:hover .button-bg-layer-2 {
+    transition-delay: 0.1s;
+    transform: scale(1);
+}
+
+.createButton:hover .button-bg-layer-3 {
+    transition-delay: 0.2s;
+    transform: scale(1);
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(105, 47, 97); 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(79, 35, 73); 
+  }

@@ -10,7 +10,7 @@ import 'reactjs-popup/dist/index.css';
 
 import { useUser } from "../context/useUser.js";
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const url = 'http://localhost:3001'
@@ -20,14 +20,16 @@ function GroupsPage () {
 
     const navigate = useNavigate();
 
-    const {user} = useUser();
+    const {user, updateToken} = useUser();
     const [groups, setGroups] = useState([])
 
 
     useEffect(() => {
-      axios.get(url+'/group/getGroups')
+        const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+        axios.get(url+'/group/getGroups', headers)
         .then(response => {
             setGroups(response.data)
+            updateToken(response)
         }).catch(error => {
           alert(error.response.data.error ? error.response.data.error : error)
         })
@@ -35,9 +37,11 @@ function GroupsPage () {
 
 
 const reloadPage = () => {
-    axios.get(url+'/group/getGroups')
+    const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+    axios.get(url+'/group/getGroups', headers)
     .then(response => {
         setGroups(response.data)
+        updateToken(response)
     }).catch(error => {
       alert(error.response.data.error ? error.response.data.error : error)
     })
@@ -45,7 +49,7 @@ const reloadPage = () => {
 }
 
       
-const handleCreateClick = ( ) => {
+const handleCreateClick = (close) => {
 
     const newGroup = document.getElementById('newGroup').value
     const newDesc = document.getElementById('newDesc').value
@@ -54,21 +58,43 @@ const handleCreateClick = ( ) => {
     if (newGroup === null || newGroup === "") {
         alert("Group name is insufficient");
     } else {
+        const headers = {headers: {Authorization: "Bearer " + user.access_token}}
         axios.post(url+'/group/createGroup',{
             id1: newGroup, 
             id2: newDesc, 
             id3: user.id 
 
-        })
+        }, headers)
         .then(response => {
             reloadPage()
+
+            close();
+
+            updateToken(response)
+
             
-            alert("You have succesfully created a New group"+response)
+            alert("You have succesfully created a New group "+newGroup)
         }).catch(error => {
           alert("Something went wrong")
+          alert(error.response.data.error ? error.response.data.error : error)
+
         })
     }
     };
+
+    
+const handleButtonClick = (groupId) => {
+    axios.post(url+'/group/joinGroup',{
+        id1: user.id,
+        id2: groupId
+    })
+    .then(response => {
+        alert(`Group join request sent!`);
+    }).catch(error => {
+      alert(error.response.data.error ? error.response.data.error : error)
+    })
+
+};
 
     return (
     <>
@@ -78,7 +104,21 @@ const handleCreateClick = ( ) => {
         <h1 >All Groups</h1>
         <button className="info-button" onClick={e =>  navigate('/GroupMy')}>My Groups</button>
         <Popup trigger=
-            {<button className="info-button">Create group</button>}
+
+                {<button class="createButton">
+                    <span class="button-bg">
+                        <span class="button-bg-layers">
+                            <span class="button-bg-layer button-bg-layer-1 -purple"></span>
+                            <span class="button-bg-layer button-bg-layer-2 -turquoise"></span>
+                            <span class="button-bg-layer button-bg-layer-3 -yellow"></span>
+                        </span>
+                    </span>
+                    <span class="button-inner">
+                        <span class="button-inner-static">Create group</span>
+                        <span class="button-inner-hover">Create group</span>
+                    </span>
+                </button>}
+
         modal nested>
         {
                     close => (
@@ -95,7 +135,7 @@ const handleCreateClick = ( ) => {
 
                             </div>
                             <div>
-                                <button className="info-button" onClick={e => handleCreateClick()}>
+                                <button className="info-button" onClick={e => handleCreateClick(close)}>
                                         Submit
                                 </button>
                             </div>
@@ -120,7 +160,7 @@ const handleCreateClick = ( ) => {
                             <td>{group.group_desc}</td>
                             <th>
                             <button 
-                                    onClick={() => handleButtonClick()} 
+                                    onClick={() => handleButtonClick(group.id)} 
                                     className="info-button">
                                     Liity
                                 </button>
@@ -134,12 +174,6 @@ const handleCreateClick = ( ) => {
     </>
     )
 }
-
-
-
-const handleButtonClick = () => {
-    alert(`Olet nyt liittynyt ryhmään`);
-};
 
 
 export default GroupsPage;

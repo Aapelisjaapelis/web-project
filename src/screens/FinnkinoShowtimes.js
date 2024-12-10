@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./FinnkinoShowtimes.css";
+import Navbar from "../components/Navbar.js"
 
 function FinnkinoShowtimes() {
   const [showtimes, setShowtimes] = useState([]);
@@ -79,31 +80,40 @@ function FinnkinoShowtimes() {
       if (!showtimes || showtimes.length === 0) {
         return <div>No showtimes found</div>
       } else if (typeof(showtimes) === "object" && !Array.isArray(showtimes)) {
-        return <div key={showtimes.ID}>{new Date(showtimes.dttmShowStart).getHours()}:{new Date(showtimes.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtimes.Title}</div>
+        return <div className="timeformovie" key={showtimes.ID}>{new Date(showtimes.dttmShowStart).getHours()}:{new Date(showtimes.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtimes.Title}</div>
       } else {
         return (
           showtimes.map(showtime => (
-            <div key={showtime.ID}>{new Date(showtime.dttmShowStart).getHours()}:{new Date(showtime.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtime.Title}</div>
+            <div className="timeformovie" key={showtime.ID}>{new Date(showtime.dttmShowStart).getHours()}:{new Date(showtime.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtime.Title}</div>
           ))
         )
       }
     }
+  }
 
   return (
     <>
-      <h1>Finnkino Showtimes</h1>
-      <select onChange={e => changeArea(e.target.value)}>
-        {
-        areas.map(area => (
-          <option key={area.ID} value={area.ID}>{area.Name}</option>
-        ))
-        }
-      </select>
-      <input type="date" onChange={e => changeDate(e.target.value)} />
+      <Navbar/>
+      <div className="showtimes-body">
+        <div>
+          <h1>Finnkino Showtimes</h1>
+          <select className="selectCatalog"onChange={e => changeArea(e.target.value)}>
+            {
+            areas.map(area => (
+              <option key={area.ID} value={area.ID}>{area.Name}</option>
+            ))
+            }
+          </select>
+          <input className="dateChanger" type="date" onChange={e => changeDate(e.target.value)} />
 
-      <button id="searchButton" onClick={() => getShowtimes(url)}>Search</button>
+          
+          <button className="showtime-Button" id="searchButton" onClick={() => getShowtimes(url)}>Search</button>
+          <div className="Showtimeslist">
 
-      <CheckShowtimes />
+          <CheckShowtimes />
+          </div>
+        </div>
+      </div>
     </>
   );
 };

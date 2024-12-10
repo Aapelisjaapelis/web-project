@@ -16,12 +16,14 @@ function GroupMy () {
     const navigate = useNavigate();
 
     const [mygroups, setGroups] = useState([])
-    const {user} = useUser()
+    const {user, updateToken} = useUser()
 
     useEffect(() => {
-        axios.get(url+'/group/MyGroups/'+user.id)
+        const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+        axios.get(url + '/group/MyGroups/' + user.id, headers)
           .then(response => {
               setGroups(response.data)
+              updateToken(response)
           }).catch(error => {
             alert(error.response.data.error ? error.response.data.error : error)
           })
