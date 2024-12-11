@@ -4,6 +4,19 @@
     margin-top: 70px;
 }
 
+#noFavoriteMovies {
+    color: white;
+    text-align: center;
+}
+
+.imagecontainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .imagebox {
     color: white;
     margin: 10px;

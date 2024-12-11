@@ -23,7 +23,7 @@ export default function UserProvider({children}) {
             const token = readAuthorizationHeader(response)
             const userData = { id: response.data.id, username: response.data.username, email: response.data.email, access_token: token}
             setUser(userData)
-            sessionStorage.setItem("user", JSON.stringify(userData))                                                                            // Data (id, username, email and token) is stored into session storage
+            sessionStorage.setItem("user", JSON.stringify(userData))                                                                          // Data (id, username, email and token) is stored into session storage
         } catch(error) {
             setUser({email: "", password: ""})                                                                                                  // Clear email and password after a failed login
             throw error

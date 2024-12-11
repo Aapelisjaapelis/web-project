@@ -24,7 +24,6 @@ function FavoriteMoviesList() {
       .then(response => {
         if (response.data.length === 0 || !response.data) {
           updateToken(response)
-          return
         }
         else {
           updateToken(response)
@@ -54,10 +53,10 @@ function FavoriteMoviesList() {
   return (
     <>
       <Navbar />
-
+      
       <div id='favoritesContainer'>
         <h1>Favorite movies</h1>
-        <FavMovies />
+        {favMovies.length !== 0 ? <FavMovies /> : <p id="noFavoriteMovies">No favorite movies</p>}
       </div>
     </>
   )
