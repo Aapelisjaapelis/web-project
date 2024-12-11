@@ -242,13 +242,13 @@ function SpecificMoviePage() {
         }
         
         return (
-            <>
+            <div id="removeOrAddFavoriteMovieDiv">
                 {isFavorite ? (
-                    <button id="removeFavoriteButton" onClick={handleRemoveFavoriteClick}>Remove from favorites</button>
+                    <button class="favoriteMovieButton" onClick={handleRemoveFavoriteClick}>Remove from favorites</button>
                 ) : (
-                    <button id="addFavoriteButton" onClick={handleAddFavoriteClick}>Add to Favorites</button>
+                    <button class="favoriteMovieButton" onClick={handleAddFavoriteClick}>Add to favorites</button>
                 )}
-            </>
+            </div>
         )        
     }
 
@@ -256,11 +256,11 @@ function SpecificMoviePage() {
         <>
             <Navbar />
             <div id="container">
-                <AddOrRemoveButton />
                     <h1>{movieInfo.title}</h1>
                     <div className="flex-container">
                         <div className="left-side">
                             <img src={'https://image.tmdb.org/t/p/w500' + movieInfo.poster_path} alt='Movie poster'></img>
+                            <AddOrRemoveButton />
                             <h3>Release Date</h3>
                             <p>{movieInfo.release_date}</p>
                             <h3>Genres</h3>
