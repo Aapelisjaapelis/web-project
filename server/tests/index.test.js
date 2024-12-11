@@ -1,6 +1,7 @@
 import request from "supertest"
 import app from "../index.js"
 import { pool } from "../helpers/database.js"
+import { hash } from "bcrypt"
 
 describe("Registration", () => {
     beforeAll(async () => {
@@ -11,7 +12,7 @@ describe("Registration", () => {
     afterAll(async () => {
         await pool.query("Delete from account")
         await pool.query("Alter sequence account_account_id_seq restart")
-        await pool.end()
+
     })
 
     it("Should register a user", async () => {
@@ -95,5 +96,140 @@ describe("Registration", () => {
 
         expect(response.statusCode).toBe(400)
         expect(response.body.message).toBe("Invalid password")
+    })
+})
+
+
+describe("Login", () => {
+
+    beforeAll(async () => {
+
+        const username = "TestUser";
+        const email = "testi@testi.com";
+        const password = "Testitesti1";
+        const hashedPassword = await hash(password, 10); // Odotetaan hashin valmistumista
+        await pool.query(
+            "INSERT INTO account (username, email, password, is_public) VALUES ($1, $2, $3, $4)",
+            [username, email, hashedPassword, "false"]
+        );
+    });
+
+    afterAll(async () => {
+        await pool.query("Delete from account")
+        await pool.query("Alter sequence account_account_id_seq restart")
+    })
+
+    it("Should not allow a login with a wrong password", async () => {
+        const response = await request(app)
+            .post("/user/login")
+            .send({email: 'testi@testi.com', password: "Testitesti2"})
+
+        expect(response.statusCode).toBe(401)
+        expect(response.body.message).toBe("Invalid password")
+    })   
+
+    it("Should not allow a login with a wrong email", async () => {
+        const response = await request(app)
+            .post("/user/login")
+            .send({email: "randomemail@email.com", password: "Testitesti1"})
+
+        expect(response.statusCode).toBe(401)
+        expect(response.body.message).toBe("Invalid email")
+    })   
+
+    it("Should succesfully login with correct credentials", async () => {
+        const loginResponse = await request(app)
+            .post("/user/login")
+            .send({email: "testi@testi.com", password: "Testitesti1"})
+
+        const token = loginResponse.headers.authorization;
+
+        const response = await request(app)
+            .get('/group/getGroups')
+            .set('Authorization', `${token}`);
+
+        expect(loginResponse.statusCode).toBe(200)
+        expect(response.statusCode).toBe(200)
+    })   
+})
+
+describe("Reviews", () => {
+    beforeAll(async () => {
+        await pool.query("Delete from review")
+        await pool.query("Alter sequence review_id_seq restart")
+        await pool.query("Delete from account")
+        await pool.query("Alter sequence account_account_id_seq restart")
+
+        const username = "TestUser";
+        const email = "testi@testi.com";
+        const password = "Testitesti1";
+        const hashedPassword = await hash(password, 10); // Odotetaan hashin valmistumista
+        await pool.query(
+            "INSERT INTO account (username, email, password, is_public) VALUES ($1, $2, $3, $4)",
+            [username, email, hashedPassword, "false"]
+        );
+
+        await pool.query(
+            "insert into review (account_id, movie_id, rating, review_text) values ($1, $2, $3, $4) returning *",
+            [1,1,5, 'TestReview']
+        );
+
+    })
+
+    afterAll(async () => {
+        await pool.query("Delete from review")
+        await pool.query("Alter sequence review_id_seq restart")
+        await pool.query("Delete from account")
+        await pool.query("Alter sequence account_account_id_seq restart")
+        await pool.end()
+    })
+
+    it("Should post a review", async () => {
+        const loginResponse = await request(app)
+        .post("/user/login")
+        .send({email: "testi@testi.com", password: "Testitesti1"})
+
+        const token = loginResponse.headers.authorization;
+
+        const response = await request(app)
+            .post("/movie/createReview")
+            .send({movieId: 1, userId: 1, ratingNumber: 4, ratingText: "TestReview2"})
+            .set('Authorization', `${token}`);
+
+        expect(loginResponse.statusCode).toBe(200)
+        expect(response.statusCode).toBe(200)
+        expect(response.body.id).toBe(2)
+    })
+
+    it("Should get all movies reviews", async () => {
+        const loginResponse = await request(app)
+            .post("/user/login")
+            .send({email: "testi@testi.com", password: "Testitesti1"})
+
+        const token = loginResponse.headers.authorization;
+
+        const response = await request(app)
+            .get("/movie/allReviews/1" )
+            .set('Authorization', `${token}`);
+
+        expect(loginResponse.statusCode).toBe(200)
+        expect(response.statusCode).toBe(200)
+    })
+
+    it("Should get all movies reviews", async () => {
+        const loginResponse = await request(app)
+            .post("/user/login")
+            .send({email: "testi@testi.com", password: "Testitesti1"})
+
+        const token = loginResponse.headers.authorization;
+
+        const response = await request(app)
+            .put("/movie/updateReview" )
+            .send({id: 1, ratingNumber: 1, ratingText: "TestR435345"})
+            .set('Authorization', `${token}`);
+
+        expect(loginResponse.statusCode).toBe(200)
+        expect(response.statusCode).toBe(200)
+        expect(response.body.id).toBe(1)
     })
 })
