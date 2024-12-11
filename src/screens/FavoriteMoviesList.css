@@ -1,27 +1,12 @@
+/* Style taken from PublicMoviesList.css */
+
 #favoritesContainer {
     margin-top: 70px;
 }
 
-/* This might be pointless because the style from PublicMoviesList.css could be used
-/*
-#favoriteMoviesList {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    list-style-type: none;
-    background-color: transparent;
-}
-
-.favoriteMoviesItem {
-    margin: 10px;
-    padding: 10px;
-    width: 50%;
-    color: black;
-    background-color: white;
-}
-
-.removeFavoriteButton {
-    margin-left: 16px;
+#noFavoriteMovies {
+    color: white;
+    text-align: center;
 }
 
 .imagecontainer {
@@ -31,7 +16,6 @@
     flex-wrap: wrap;
     justify-content: center;
 }
-*/
 
 .imagebox {
     color: white;

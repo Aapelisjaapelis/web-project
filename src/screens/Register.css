@@ -25,5 +25,6 @@
 #signUpButton {
     font-weight: bold;
     margin-top: 24px;
+    background-color: aqua;
     padding: 4px 8px;
 }
