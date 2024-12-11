@@ -15,6 +15,7 @@ function SpecificGroupPage () {
 
     const [times, setTimes] = useState([]);
     const {user, updateToken} = useUser();
+    const [isAdmin, setIsAdmin] = useState(false);
 
 
     const xmlToJson = useCallback((node) => {
@@ -51,55 +52,67 @@ function SpecificGroupPage () {
         const headers = {headers: {Authorization: "Bearer " + user.access_token}}
         axios.get(url + '/group/GetGroupMovies/' + group.id, headers)
         .then(response => {
-            eioovalia(response.data)
+            setGroupShowTimes(response.data)
             updateToken(response)
         }).catch(error => {
         alert(error.response.data.error ? error.response.data.error : error)
         })
+        isUserAdmin()
+
         
     }, [])
 
 
-    const eioovalia = (databasevalues) => {
+    const setGroupShowTimes = async(databasevalues) => {
         let showtimes = [];
-        
+        if(databasevalues.length > 0){
 
-        for (let i = 0; i < databasevalues.length; i++) {
-            fetch(url2 + databasevalues[i].finnkino_movie_id)
-            .then(response => response.text())
-            .then(xml => {
-                const json = parseXML(xml);
-                
-                for(let j=0; j < json.Schedule.Shows.Show.length; j++) {
+            for (let i = 0; i < databasevalues.length; i++) {
+                let match = false;
+                try {
 
-
-                    if(json.Schedule.Shows.Show[j].ID == databasevalues[i].finnkino_time_id) {
-                        showtimes = {timeforfhow: json.Schedule.Shows.Show[j].dttmShowStart, placeforshow: json.Schedule.Shows.Show[j].TheatreAndAuditorium, name: json.Schedule.Shows.Show[j].Title}
-                        console.log("2"+showtimes);
-                        console.log("i="+i)
-                        console.log("j="+j)
-
-                        if(i >= (databasevalues.length-1) && j >= (json.Schedule.Shows.Show.length-1)){
-                            console.log("3"+showtimes);
-                            setTimes(showtimes);
+                    const response = await fetch(url2 + databasevalues[i].finnkino_movie_id);
+                    const xml = await response.text();
+                    const json = parseXML(xml);
+                    
+                    for(let j=0; j < json.Schedule.Shows.Show.length; j++) {
+                    
+                        if(json.Schedule.Shows.Show[j].ID == databasevalues[i].finnkino_time_id) {
+                            showtimes.push({timeforfhow: json.Schedule.Shows.Show[j].dttmShowStart, placeforshow: json.Schedule.Shows.Show[j].TheatreAndAuditorium, name: json.Schedule.Shows.Show[j].Title})
+                            match = !match;
                         }
-
+                        if( i==(databasevalues.length-1) && j ==(json.Schedule.Shows.Show.length-1) && match == false){
+                            showtimes.push({timeforfhow: "The showtime has ended", placeforshow: '-', name: databasevalues[i].movie_name})
+                        }
                     }
-                    console.log("1"+showtimes);
-
+                }catch(error) {
+                    console.log(error);
                 }
-            })
 
-            .catch(error => {
-            console.log(error);
-            })
-
-
+            }
         }
-        console.log("3"+showtimes);
+        else{
+            showtimes.push({timeforfhow: "Add showtimes by -", placeforshow: '', name: 'You have not added any showtimes'})
+        }
+        setTimes(showtimes);
 
     }
   
+    const isUserAdmin = () => {
+        const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+
+            axios.get(url+'/group/checkAdmin',{
+                params: { id1: user.id, id2: group.id}
+            })
+
+            .then(response => {
+                console.log(response.data[0].is_admin)
+                setIsAdmin(response.data[0].is_admin);
+            }).catch(error => {
+              alert(error.response.data.error ? error.response.data.error : error)
+    
+            })
+    }
         
 
     return (
@@ -133,11 +146,14 @@ function SpecificGroupPage () {
                 </tbody>
             </table>
 
-            <button 
+            {isAdmin === true ? (
+                <button 
                 onClick={() =>  navigate('/GroupMembers',{ state: group})}
                 className="info-button">
                 Show members
-                </button>
+                </button>) : (
+                    <></>
+            )}
 
         </div>
     </div>

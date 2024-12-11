@@ -1,5 +1,5 @@
 import { emptyOrRows } from '../helpers/utils.js'
-import { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests, selectGroupMovies } from '../models/Groupmodel.js'
+import { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests, selectGroupMovies, selectGroupAdminInfo } from '../models/Groupmodel.js'
 
 const getGroups = async (req,res,next) => {
     try {
@@ -36,6 +36,22 @@ const getMembers = async (req,res,next) => {
 const getMoviesForGroup = async (req,res,next) => {
     try {
         const result = await selectGroupMovies(req.params.id)
+        
+        return res.status(200).json(emptyOrRows(result))
+    } catch (error){
+        return next (error)
+    }
+}
+
+
+const getAdminInfo = async (req,res,next) => {
+    try {
+        const userId = req.query.id1;
+        const groupId = req.query.id2;
+  
+ 
+        const result = await selectGroupAdminInfo(userId, groupId)
+
         
         return res.status(200).json(emptyOrRows(result))
     } catch (error){
@@ -114,4 +130,4 @@ const removeMember = async (req,res,next) => {
 }
 
 
-export { getGroups,getMyGroups,getMembers, removeMember,postNewGroup, postjoinrequest, getMoviesForGroup }
+export { getGroups,getMyGroups,getMembers, removeMember,postNewGroup, postjoinrequest, getMoviesForGroup, getAdminInfo }
