@@ -5,8 +5,6 @@ import { hash } from "bcrypt"
 
 describe("Registration", () => {
     beforeAll(async () => {
-        await pool.query("Delete from review")
-        await pool.query("Alter sequence review_id_seq restart")
         await pool.query("Delete from account")
         await pool.query("Alter sequence account_account_id_seq restart")
     })
