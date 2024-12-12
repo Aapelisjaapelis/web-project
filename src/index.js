@@ -16,6 +16,7 @@ import ProtectedRoute from "./components/ProtectedRoute.js"
 import GroupMy from "./screens/GroupMy.js";
 import SpecificGroupPage from "./screens/SpecificGroupPage.js"
 import GroupMembers from "./screens/GroupMembers.js"
+import GroupAddShowtimes from "./screens/GroupAddShowtimes.js";
 import ChangePassword from "./screens/ChangePassword.js"
 import ChangeEmail from "./screens/ChangeEmail.js"	
 
@@ -37,6 +38,7 @@ root.render(
             <Route path="/GroupMy" element={<GroupMy/>}></Route>
             <Route path="/SpecificGroupPage" element={<SpecificGroupPage/>}></Route>
             <Route path="/GroupMembers" element={<GroupMembers/>}></Route>
+            <Route path="/GroupAddShowtimes" element={<GroupAddShowtimes/>}></Route>
             <Route path="/ChangePassword" element={<ChangePassword/>}></Route>
             <Route path="/ChangeEmail" element={<ChangeEmail/>}></Route>
 

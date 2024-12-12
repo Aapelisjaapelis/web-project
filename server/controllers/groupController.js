@@ -1,5 +1,5 @@
 import { emptyOrRows } from '../helpers/utils.js'
-import { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests } from '../models/Groupmodel.js'
+import { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests, addNewGroupShowtime } from '../models/Groupmodel.js'
 
 const getGroups = async (req,res,next) => {
     try {
@@ -99,5 +99,44 @@ const removeMember = async (req,res,next) => {
     }
 }
 
+const postShowTime = async (req,res,next) => {
+    try {
+        const groupId = req.body.groupId;
+        const movieId = req.body.movieId;
+        const finnkinoId = req.body.finnkinoId;
+        const finnkinoMovieId = req.body.finnkinoMovieId;
+        const finnkinoMovieName = req.body.finnkinoMovieName;
 
-export { getGroups,getMyGroups,getMembers, removeMember,postNewGroup, postjoinrequest }
+        if (!finnkinoId || finnkinoId.length === 0) {
+            const error = newError('Showtime id not provided')
+            error.statusCode = 400
+            return next(error)
+        }
+
+        if (!finnkinoMovieId || finnkinoMovieId.length === 0) {
+            const error = newError('Showtime movie id not provided')
+            error.statusCode = 400
+            return next(error)
+        }
+
+        if (!finnkinoMovieName || finnkinoMovieName.length === 0) {
+            const error = newError('Showtime movie name not provided')
+            error.statusCode = 400
+            return next(error)
+        }
+
+        if (!groupId || groupId.length === 0) {
+            const error = newError('Group id not provided')
+            error.statusCode = 400
+            return next(error)
+        }
+
+        const result = await addNewGroupShowtime(groupId, movieId, finnkinoId, finnkinoMovieId, finnkinoMovieName)
+        return res.status(200).json(emptyOrRows({result}))
+    } catch (error) {
+        return next(error)
+    }
+}
+
+
+export { getGroups,getMyGroups,getMembers, removeMember,postNewGroup, postjoinrequest, postShowTime }
