@@ -7,6 +7,26 @@
     text-align: right;
 }
 
+.groupFormSelect {
+    background-color: black;
+    color: white;
+    font-size: 1em;
+}
+
+.white {
+    color: white;
+}
+
+.movieSelectionDiv {
+    color: white;
+    text-align: left;
+}
+
+.movieSelectionDiv input {
+    background-color: black;
+    margin: 5px;
+}
+
 
 #groupTable {
     margin: 20px auto;

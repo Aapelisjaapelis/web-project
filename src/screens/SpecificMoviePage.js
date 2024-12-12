@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+import axios, { all } from 'axios';
 import { useUser } from '../context/useUser.js';
 
 const url = process.env.REACT_APP_API_URL
@@ -90,7 +90,9 @@ function SpecificMoviePage() {
                 ))}
 
                 {(() => {
-                    if(othersReviews.length === 0) {
+                    if(othersReviews.length === 0 && ownRatingGiven) {
+                        return (<p>There are currently no other reviews aside from yours.</p>)
+                    } else if (othersReviews.length === 0 && !ownRatingGiven) {
                         return (<p>There are currently no reviews.</p>)
                     }
                 })()}
@@ -151,7 +153,7 @@ function SpecificMoviePage() {
                 userId: user.id
             }, headers)
             .then(response => {
-                setOthersReviews([...othersReviews, {id:response.data.id, account_id:user.id, movie_id:movieId, rating:ratingValue, review_text:ratingText}])
+                setOthersReviews([...othersReviews, {id:response.data.id, username:user.username, account_id:user.id, movie_id:movieId, rating:ratingValue, review_text:ratingText}])
                 document.getElementById('ownRating').innerHTML = `<p>Review successfully sent</p>`
             })
         } catch (error){
@@ -168,6 +170,13 @@ function SpecificMoviePage() {
                     ratingValue += 1;
                 }
             }
+            
+            let strRatingText = ''
+            if(ratingText.length === 0 || !ratingText) {
+                strRatingText = document.getElementById('userRatingText').value
+                setRatingText(document.getElementById('userRatingText').value)
+            }
+
             //alert(ratingValue + ' ' + ratingText)
             const headers = {headers: {Authorization: "Bearer " + user.access_token}}
             axios.put(url + '/movie/updateReview',{
@@ -177,6 +186,11 @@ function SpecificMoviePage() {
             }, headers)
             .then(response => {
                 alert('Review successfully edited.')
+                for (let j = 0; j < allReviews.length; j++) {
+                    if(allReviews[j].account_id === user.id) {
+                        setAllReviews([...othersReviews, {id:response.data.id, username:user.username, account_id:user.id, movie_id:movieId, rating:ratingValue, review_text:strRatingText}])
+                    }
+                }
             })
         } catch (error){
             
