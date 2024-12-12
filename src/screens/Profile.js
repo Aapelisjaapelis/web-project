@@ -14,6 +14,7 @@ function Profile() {
   return (
     <>
       <Navbar />
+      
       <h1 id="profileHeader">Profile</h1>
       <div id="profile">
 
