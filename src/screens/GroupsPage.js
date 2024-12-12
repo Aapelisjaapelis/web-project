@@ -84,10 +84,12 @@ const handleCreateClick = (close) => {
 
     
 const handleButtonClick = (groupId) => {
+    const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+
     axios.post(url+'/group/joinGroup',{
         id1: user.id,
         id2: groupId
-    })
+    }, headers)
     .then(response => {
         alert(`Group join request sent!`);
     }).catch(error => {
