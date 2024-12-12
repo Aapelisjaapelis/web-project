@@ -10,12 +10,34 @@ const url = process.env.REACT_APP_API_URL   // The url is taken from .env
 
 function Profile() {
   const {user, updateToken} = useUser()
-  const [favMovies, setFavMovies] = useState([])    // A list of objects with id, name and poster path being the properties (favMovies.movie_id, favMovies.movie_name, favMovies.poster_path)
+  const [favMovies, setFavMovies] = useState([])      // A list of objects with id, name and poster path being the properties (favMovies.movie_id, favMovies.movie_name, favMovies.poster_path)
+  const [visibility, setVisibility] = useState(null)
   const navigate = useNavigate()
 
   useEffect(() => {
+    isPublic()
     getFavMovies()
   }, [])
+
+  const isPublic = () => {
+    const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+
+    axios
+      .get(url + "/user/visibility/" + user.id, headers)
+      .then(response => {
+        if (response.data.visibility === "private") {
+          updateToken(response)
+          setVisibility(false)
+        }
+        else {
+          updateToken(response)
+          setVisibility(true)
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
 
   const getFavMovies = () => {
     const headers = {headers: {Authorization: "Bearer " + user.access_token}}
@@ -51,6 +73,36 @@ function Profile() {
     )
   }
 
+  const makePrivate = () => {
+    const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+
+    axios
+      .put(url + "/user/makePrivate", user, headers)
+      .then(response => {
+        updateToken(response)
+        setVisibility(false)
+        alert(response.data.message)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  const makePublic = () => {
+    const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+
+    axios
+      .put(url + "/user/makePublic", user, headers)
+      .then(response => {
+        updateToken(response)
+        setVisibility(true)
+        alert(response.data.message)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
   return (
     <>
       <Navbar />
@@ -82,6 +134,7 @@ function Profile() {
 
         <div id="middleProfile">
           <h2 id="usernameHeader">{user.username}</h2>
+          <button id="visibilityButton" onClick={visibility ? makePrivate : makePublic}>{visibility ? "Make private" : "Make public"}</button>
         </div>
 
         <div id="rightProfile"></div>
@@ -96,4 +149,4 @@ function Profile() {
   )
 }
 
-export default Profile;
+export default Profile
