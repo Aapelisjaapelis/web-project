@@ -45,4 +45,8 @@ const getJoinRequests = async(groupId) => {
     return await pool.query('SELECT account_id FROM group_invites WHERE moviegroup_id = $1',[groupId])
 }
 
-export { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests,selectGroupMovies, selectGroupAdminInfo }
+const addNewGroupShowtime = async(groupId, movieId, finnkinoId, finnkinoMovieId, finnkinoMovieName) => {
+    return await pool.query('INSERT INTO group_movies (moviegroup_id, movie_id, finnkino_time_id, finnkino_movie_id, movie_name) VALUES ($1, $2, $3, $4, $5) returning *',[groupId, movieId, finnkinoId, finnkinoMovieId, finnkinoMovieName])
+}
+export { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests,selectGroupMovies, selectGroupAdminInfo, addNewGroupShowtime }
+

@@ -1,6 +1,6 @@
 import { Router } from "express"
 import { auth } from '../helpers/auth.js'
-import { getGroups, getMyGroups, getMembers, removeMember, postNewGroup, postjoinrequest,getMoviesForGroup, getAdminInfo } from '../controllers/groupController.js'
+import { getGroups, getMyGroups, getMembers, removeMember, postNewGroup, postjoinrequest,getMoviesForGroup, getAdminInfo, postShowTime} from '../controllers/groupController.js'
 
 const router = Router()
 
@@ -12,6 +12,8 @@ router.post('/createGroup',auth,postNewGroup)
 router.post('/joinGroup',auth,postjoinrequest)
 router.get('/GetGroupMovies/:id',auth, getMoviesForGroup)
 router.get('/checkAdmin', getAdminInfo)
+router.post('/addShowtime',auth,postShowTime)
+
 
 
 
