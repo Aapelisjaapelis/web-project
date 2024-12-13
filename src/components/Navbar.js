@@ -26,9 +26,6 @@ function Navbar() {
                 <li className="navlist">
                     <Link to="/groupspage">Groups</Link>
                 </li>
-                <li className="navlist">
-                    <Link to="/favoritemovieslist">Favorites</Link>
-                </li>
                 <li className="navlist"> 
                     <Link to="/profile">Profile</Link>
                 </li>
