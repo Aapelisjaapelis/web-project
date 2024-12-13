@@ -24,4 +24,16 @@ const selectUserByUsername = async (username) => {
     return await pool.query("select * from account where username = $1", [username])
 }
 
-export { createUser, selectUserByEmail, selectUserByUsername, changePassword, changeEmail, deleteAccount }
+const isPublic = async (id) => {
+    return await pool.query("Select is_public from account where account_id = $1", [id])
+}
+
+const setPublic = async (id) => {
+    return await pool.query("Update account set is_public = $1 where account_id = $2", ["true", id])
+}
+
+const setPrivate = async (id) => {
+    return await pool.query("Update account set is_public = $1 where account_id = $2", ["false", id])
+}
+
+export { createUser, selectUserByEmail, selectUserByUsername, changePassword, changeEmail, deleteAccount, isPublic, setPublic, setPrivate }
