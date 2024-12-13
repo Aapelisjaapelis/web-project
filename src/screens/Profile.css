@@ -6,26 +6,54 @@
     display: flex;
 }
 
+.profilebox {
+    border: 1px solid white;
+}
+
 #leftProfile {
-    flex: 20%;
+    flex: 15%;
     margin-top: 30px;
-    margin-left: 10px;
+    margin-left: 25px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#visibilityButton {
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    color: white;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    text-decoration: underline;
+    cursor: pointer
+}
+
+#visibilityButton:hover {
+    color: gray;
 }
 
 #changePassword, #changeEmail, #deleteAccount {
     display: flex;
     flex-direction: column;
     background-color: black;
-    color: white;
-    border: 1px solid white;
-    border-radius: 5px;
+    color: red;
     margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 5px;
+    text-decoration: underline;
+    cursor: pointer 
+}
+
+#deleteAccount:hover, #changePassword:hover, #changeEmail:hover {
+    color:rgb(148, 14, 14);
 }
 
 #middleProfile {
-    flex: 60%;
-    margin-right: 10px;
+    flex: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,34 +64,33 @@
     color: white;
 }
 
-#visibilityButton {
-    background-color: black;
-    color: white;
-    border: 1px solid white;
-    border-radius: 5px;
-    margin-top: 5px;
-    padding: 5px;
-}
-
-#shareFavoritesButton {
-    background-color: black;
-    color: white;
-    border: 1px solid white;
-    border-radius: 5px;
-    margin-top: 5px;
-    padding: 5px;
-}
-
 #rightProfile {
-    flex: 20%;
-}
-
-#favoriteMoviesContainer{
-    margin-top: 100px;
+    flex: 15%;
+    margin-top: 30px;
+    margin-right: 25px;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
 }
 
 #favoriteMoviesHeader {
     text-align: center;
+}
+
+#shareFavoritesButton {
+    display: block;
+    margin: auto;
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 5px;
+}
+
+#shareFavoritesButton:hover {
+    cursor: pointer;
 }
 
 #noFavoriteMovies {
@@ -71,9 +98,25 @@
     text-align: center;
 }
 
+#popupDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+}
+
+#submitDeleteAccount {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 5px;
+}
+
 /* Style taken from PublicMoviesList.css */
 
 .imagecontainer {
+    margin-top: 5px;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -123,20 +166,20 @@
     }
 
     #leftProfile {
-        order: 2;
+        order: 1;
         flex: 100%;
         margin-top: 15px;
         margin-left: 0;
     }
 
     #middleProfile {
-        order: 1;
+        order: 3;
         flex: 100%;
         margin-right: 0;
     }
 
     #rightProfile {
-        order: 3;
+        order: 2;
         flex: 100%;
     }
 }

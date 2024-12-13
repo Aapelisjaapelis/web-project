@@ -108,7 +108,6 @@ function Profile() {
 
     try {
       await navigator.clipboard.writeText(favoritesUrl)
-      //console.log(favoritesUrl)
     } catch (error) {
       console.log(error)
     }
@@ -123,39 +122,41 @@ function Profile() {
       <div id="profile">
 
         <div id="leftProfile">
+          <div className="profilebox">
+          <button id="visibilityButton" onClick={visibility ? makePrivate : makePublic}>{visibility ? "Make private" : "Make public"}</button>
           <button id="changePassword" onClick={e =>  navigate("/changePassword")}>Change password</button>
           <button id="changeEmail" onClick={e =>  navigate("/changeEmail")}>Change email address</button>
+
           <Popup trigger=
                 {<button id="deleteAccount">Delete account</button>}
             modal nested>
             {
                 close => (
-                    <div>
+                    <div id="popupDiv">
                         <div>
                           <label for="newDesc">Are you sure you want to delete your account and all the information related</label><br/>
                         </div>
                         <div>
-                            <button onClick={e => navigate("/profile")}>Submit</button>
+                            <button id="submitDeleteAccount" onClick={e => navigate("/profile")}>Submit</button>
                         </div>
                     </div>
                 )
             }
           </Popup>
+          </div>
         </div>
 
         <div id="middleProfile">
           <h2 id="usernameHeader">Username: {user.username}</h2>
-          <button id="visibilityButton" onClick={visibility ? makePrivate : makePublic}>{visibility ? "Make private" : "Make public"}</button>
-          <button id="shareFavoritesButton" onClick={copyFavoritesUrl}>Get link for favorite movies</button>
+          <div id="favoriteMoviesContainer">
+            <h2 id="favoriteMoviesHeader">Favorite movies</h2>
+            <button id="shareFavoritesButton" onClick={copyFavoritesUrl}>Get link for favorite movies</button>
+            {favMovies.length !== 0 ? <FavMovies /> : <p id="noFavoriteMovies">No favorite movies</p>}
+          </div>
         </div>
 
         <div id="rightProfile"></div>
 
-      </div>
-
-      <div id="favoriteMoviesContainer">
-        <h2 id="favoriteMoviesHeader">Favorite movies</h2>
-        {favMovies.length !== 0 ? <FavMovies /> : <p id="noFavoriteMovies">No favorite movies</p>}
       </div>
     </>
   )
