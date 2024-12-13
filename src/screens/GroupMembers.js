@@ -183,8 +183,8 @@ const changeAdmin = () => {
                       <tbody>
                         {joins.map(join => (
                           <tr key={join.account_id}>
-                            <td>{join.username}</td>
-                            <td>{join.email}</td>
+                            <td data-label="Member">{join.username}</td>
+                            <td data-label="Email" >{join.email}</td>
                             {join.account_id !== 0  ? (
                               <>
                             <td>
@@ -218,7 +218,7 @@ const changeAdmin = () => {
         <table id="groupTable">
           <thead>
             <tr>
-              <th>Member name</th>
+              <th>Member</th>
               <th>Email</th>
               <th></th>
             </tr>
@@ -226,8 +226,8 @@ const changeAdmin = () => {
             <tbody>
               {members.map(member => (
                 <tr key={member.account_id}>
-                  <td>{member.username}</td>
-                  <td>{member.email}</td>
+                  <td data-label="Member" >{member.username}</td>
+                  <td data-label="Email" >{member.email}</td>
                   <td>
                   {user.id === member.account_id ? (
                       "Owner"
@@ -268,9 +268,9 @@ const changeAdmin = () => {
                         {candidates.map(candidate => (
                           candidate.account_id != user.id ? (
                             <tr key={candidate.account_id}>
-                              <td>{candidate.username}</td>
-                              <td>{candidate.email}</td>
-                              <td><input type="radio" value={candidate.account_id} name="selectAdmin" onChange={() => setSelectedCandidate(candidate.account_id)}></input></td>
+                              <td data-label="Username ">{candidate.username}</td>
+                              <td data-label="Email" >{candidate.email}</td>
+                              <td data-label="Select" ><input type="radio" value={candidate.account_id} name="selectAdmin" onChange={() => setSelectedCandidate(candidate.account_id)}></input></td>
                             </tr>
                           ):(
                             null

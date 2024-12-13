@@ -206,7 +206,7 @@ const removeMember = async (req,res,next) => {
 const postShowTime = async (req,res,next) => {
     try {
         const groupId = req.body.groupId;
-        const movieId = req.body.movieId;
+        let movieId = req.body.movieId;
         const finnkinoId = req.body.finnkinoId;
         const finnkinoMovieId = req.body.finnkinoMovieId;
         const finnkinoMovieName = req.body.finnkinoMovieName;
@@ -233,6 +233,10 @@ const postShowTime = async (req,res,next) => {
             const error = newError('Group id not provided')
             error.statusCode = 400
             return next(error)
+        }
+
+        if (!movieId || movieId.length === 0) {
+            movieId = 0
         }
 
         const result = await addNewGroupShowtime(groupId, movieId, finnkinoId, finnkinoMovieId, finnkinoMovieName)

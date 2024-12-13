@@ -150,16 +150,16 @@ const handleButtonClick = (groupId) => {
         <table id="groupTable">
                 <thead>
                     <tr>
-                        <th>Ryhmän nimi</th>
-                        <th>Ryhmän kuvaus</th>
+                        <th>Group name</th>
+                        <th>Group desc</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {groups.map(group => (
                         <tr key={group.id}>
-                            <td>{group.group_name}</td>
-                            <td>{group.group_desc}</td>
+                            <td data-label="Group name" >{group.group_name}</td>
+                            <td data-label="Group desc" >{group.group_desc}</td>
                             <th>
                             <button 
                                     onClick={() => handleButtonClick(group.id)} 

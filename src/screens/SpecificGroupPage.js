@@ -179,9 +179,9 @@ function SpecificGroupPage () {
 
                         <tr key={time.key}>
                         
-                            <td>{time.name}</td>
-                            <td>{time.timeforfhow}</td>
-                            <td>{time.placeforshow}</td>
+                            <td data-label="Movie name" >{time.name}</td>
+                            <td data-label="Showtime">{time.timeforfhow}</td>
+                            <td data-label="Place">{time.placeforshow}</td>
                             {time.key === 0 ?(
                                 <td>
                                 </td>
