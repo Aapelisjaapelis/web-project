@@ -53,11 +53,11 @@ function SpecificGroupPage () {
         axios.get(url + '/group/GetGroupMovies/' + group.id, headers)
         .then(response => {
             setGroupShowTimes(response.data)
+            isUserAdmin()
             updateToken(response)
         }).catch(error => {
         alert(error.response.data.error ? error.response.data.error : error)
         })
-        isUserAdmin()
 
         
     }, [])
@@ -78,11 +78,11 @@ function SpecificGroupPage () {
                     for(let j=0; j < json.Schedule.Shows.Show.length; j++) {
                     
                         if(json.Schedule.Shows.Show[j].ID == databasevalues[i].finnkino_time_id) {
-                            showtimes.push({timeforfhow: json.Schedule.Shows.Show[j].dttmShowStart, placeforshow: json.Schedule.Shows.Show[j].TheatreAndAuditorium, name: json.Schedule.Shows.Show[j].Title})
+                            showtimes.push({key: databasevalues[i].id,timeforfhow: json.Schedule.Shows.Show[j].dttmShowStart, placeforshow: json.Schedule.Shows.Show[j].TheatreAndAuditorium, name: json.Schedule.Shows.Show[j].Title})
                             match = !match;
                         }
-                        if( i==(databasevalues.length-1) && j ==(json.Schedule.Shows.Show.length-1) && match == false){
-                            showtimes.push({timeforfhow: "The showtime has ended", placeforshow: '-', name: databasevalues[i].movie_name})
+                        if(j ==(json.Schedule.Shows.Show.length-1) && match == false){
+                            showtimes.push({key: databasevalues[i].id, timeforfhow: "The showtime has ended", placeforshow: '-', name: databasevalues[i].movie_name})
                         }
                     }
                 }catch(error) {
@@ -92,26 +92,66 @@ function SpecificGroupPage () {
             }
         }
         else{
-            showtimes.push({timeforfhow: "Add showtimes by -", placeforshow: '', name: 'You have not added any showtimes'})
+            showtimes.push({key: 0, timeforfhow: "Add showtimes by -", placeforshow: '', name: 'You have not added any showtimes'})
         }
         setTimes(showtimes);
 
     }
   
     const isUserAdmin = () => {
-        const headers = {headers: {Authorization: "Bearer " + user.access_token}}
 
             axios.get(url+'/group/checkAdmin',{
-                params: { id1: user.id, id2: group.id}
+                params: { id1: user.id, id2: group.id},
+                headers: {Authorization: "Bearer " + user.access_token}
             })
 
             .then(response => {
                 console.log(response.data[0].is_admin)
+                updateToken(response)
                 setIsAdmin(response.data[0].is_admin);
             }).catch(error => {
               alert(error.response.data.error ? error.response.data.error : error)
     
             })
+    }
+
+    const removeShowTime = (groupId, showtimeId) => {
+
+        axios.delete(url + '/group/deleteShowtime', {
+            params: { id1: groupId, id2: showtimeId },
+            headers: {Authorization: "Bearer " + user.access_token}
+          }
+          )
+          .then(response =>{
+            let withoutRemoved = times.filter((time)=> time.key !==showtimeId )
+            if( withoutRemoved.length === 0){
+                withoutRemoved = [{key: 0, timeforfhow: "Add showtimes by -", placeforshow: '', name: 'You have not added any showtimes'}]
+
+            }
+            setTimes(withoutRemoved)
+            updateToken(response)
+            alert("Showtime removed succesfully!")
+          }).catch(error => {
+            alert(error.response.data.error ? error.response.data.error : error)
+          })
+
+
+    }
+
+    const selfExit = (userId, groupId) => {
+
+        axios.delete(url + '/group/deleteMembers', {
+          params: { id1: groupId, id2: userId },
+          headers: {Authorization: "Bearer " + user.access_token}
+        }
+        )
+        .then(response =>{
+            alert("You were removed succesfully!")
+            navigate('/GroupsPage');
+            updateToken(response)
+        }).catch(error => {
+            alert(error.response.data.error ? error.response.data.error : error)
+        })
     }
         
 
@@ -121,7 +161,9 @@ function SpecificGroupPage () {
 
         <div>
         <h1 >{group?.group_name || "No name recieved"}</h1>
-        <button className="info-button" onClick={e =>  window.location.href='/GroupsPage'}>All Groups</button>
+        <button className="info-button" onClick={e =>  navigate('/GroupsPage')}>All Groups</button>
+        <button className="info-button" onClick={() =>  navigate('/GroupMy')}>My Groups</button>
+
 
         <table id="groupTable">
                 <thead>
@@ -129,16 +171,27 @@ function SpecificGroupPage () {
                         <th>Movie name</th>
                         <th>Showtime</th>
                         <th>Place</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {times.map(time => (
 
-                        <tr >
+                        <tr key={time.key}>
                         
                             <td>{time.name}</td>
                             <td>{time.timeforfhow}</td>
                             <td>{time.placeforshow}</td>
+                            {time.key === 0 ?(
+                                <td>
+                                </td>
+                                ) :(
+                                <td>
+                                    <button onClick={e => removeShowTime(group.id, time.key)}>
+                                    Remove
+                                    </button>
+                                </td>
+                            )}
                             
                         </tr>
                     ))}
@@ -148,11 +201,17 @@ function SpecificGroupPage () {
 
             {isAdmin === true ? (
                 <button 
-                onClick={() =>  navigate('/GroupMembers',{ state: group})}
-                className="info-button">
-                Show members
-                </button>) : (
-                    <></>
+                    onClick={() =>  navigate('/GroupMembers',{ state: group})}
+                    className="info-button">
+                    Group settings
+                </button>
+                ) : (
+                    <button
+                        onClick={() => selfExit(user.id, group.id)}
+                        className="info-button">
+                        Leave group
+                    </button>
+
             )}
 
         </div>

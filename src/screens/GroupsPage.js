@@ -124,7 +124,7 @@ const handleButtonClick = (groupId) => {
         modal nested>
         {
                     close => (
-                        <div className='modal'>
+                        <div className='popup'>
                             <div className='content'>
                                 <form>
                                     <label for="newGroup">Please enter Group Name:</label>
