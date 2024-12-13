@@ -103,6 +103,17 @@ function Profile() {
       })
   }
 
+  const copyFavoritesUrl = async () => {
+    const favoritesUrl = "http://localhost:3000/favoritemovieslist/" + user.id
+
+    try {
+      await navigator.clipboard.writeText(favoritesUrl)
+      //console.log(favoritesUrl)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -135,6 +146,7 @@ function Profile() {
         <div id="middleProfile">
           <h2 id="usernameHeader">{user.username}</h2>
           <button id="visibilityButton" onClick={visibility ? makePrivate : makePublic}>{visibility ? "Make private" : "Make public"}</button>
+          <button id="shareFavoritesButton" onClick={copyFavoritesUrl}>Get link for favorite movies</button>
         </div>
 
         <div id="rightProfile"></div>

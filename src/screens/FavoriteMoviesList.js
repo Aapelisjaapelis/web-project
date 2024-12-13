@@ -16,10 +16,13 @@ function FavoriteMoviesList() {
 
   useEffect(() => {
     isPublic()
+  }, [])
+  
+  useEffect(() => {
     if (visibility === true || user.id === parseInt(userId)) {
       getFavMovies()
     }
-  }, [])
+  }, [visibility, user, userId])
 
   const isPublic = () => {
     axios
