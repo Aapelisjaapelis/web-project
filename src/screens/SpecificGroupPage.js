@@ -198,6 +198,12 @@ function SpecificGroupPage () {
                   
                 </tbody>
             </table>
+            
+            <button 
+            onClick={() =>  navigate('/GroupAddShowtimes',{ state: group})}
+            className="info-button">
+                Add showtimes
+            </button>
 
             {isAdmin === true ? (
                 <button 

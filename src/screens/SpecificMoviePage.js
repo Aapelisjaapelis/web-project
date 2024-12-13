@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+import axios, { all } from 'axios';
 import { useUser } from '../context/useUser.js';
 
 const url = process.env.REACT_APP_API_URL
@@ -20,7 +20,8 @@ function SpecificMoviePage() {
     const [ownRatingGiven, setOwnRatingGiven] = useState(false)
     const [othersReviews, setOthersReviews] = useState([])
     const [allReviews, setAllReviews] = useState([])
-    const { user } = useUser()
+    const [isFavorite, setIsFavorite] = useState(null)
+    const { user, updateToken } = useUser()
 
     useEffect(() => {
         const url = 'https://api.themoviedb.org/3/movie/' + movieId + '?language=en-US';
@@ -90,7 +91,9 @@ function SpecificMoviePage() {
                 ))}
 
                 {(() => {
-                    if(othersReviews.length === 0) {
+                    if(othersReviews.length === 0 && ownRatingGiven) {
+                        return (<p>There are currently no other reviews aside from yours.</p>)
+                    } else if (othersReviews.length === 0 && !ownRatingGiven) {
                         return (<p>There are currently no reviews.</p>)
                     }
                 })()}
@@ -151,7 +154,7 @@ function SpecificMoviePage() {
                 userId: user.id
             }, headers)
             .then(response => {
-                setOthersReviews([...othersReviews, {id:response.data.id, account_id:user.id, movie_id:movieId, rating:ratingValue, review_text:ratingText}])
+                setOthersReviews([...othersReviews, {id:response.data.id, username:user.username, account_id:user.id, movie_id:movieId, rating:ratingValue, review_text:ratingText}])
                 document.getElementById('ownRating').innerHTML = `<p>Review successfully sent</p>`
             })
         } catch (error){
@@ -168,6 +171,13 @@ function SpecificMoviePage() {
                     ratingValue += 1;
                 }
             }
+            
+            let strRatingText = ''
+            if(ratingText.length === 0 || !ratingText) {
+                strRatingText = document.getElementById('userRatingText').value
+                setRatingText(document.getElementById('userRatingText').value)
+            }
+
             //alert(ratingValue + ' ' + ratingText)
             const headers = {headers: {Authorization: "Bearer " + user.access_token}}
             axios.put(url + '/movie/updateReview',{
@@ -177,10 +187,85 @@ function SpecificMoviePage() {
             }, headers)
             .then(response => {
                 alert('Review successfully edited.')
+                for (let j = 0; j < allReviews.length; j++) {
+                    if(allReviews[j].account_id === user.id) {
+                        setAllReviews([...othersReviews, {id:response.data.id, username:user.username, account_id:user.id, movie_id:movieId, rating:ratingValue, review_text:strRatingText}])
+                    }
+                }
             })
         } catch (error){
             
         }
+    }
+
+    useEffect(() => {
+        if (user.access_token) {
+            const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+
+            axios
+              .get(url + "/favorites/isMovieFavorite/" + user.id + "/" + movieId, headers)
+              .then(response => {
+                if (response.data.favorite === "yes") {
+                    setIsFavorite(true)
+                    updateToken(response)
+                } else {
+                    setIsFavorite(false)
+                    updateToken(response)
+                }
+            })
+              .catch(error => {
+                console.log(error)
+            })
+        }
+    }, [])
+
+    const handleAddFavoriteClick = () => {
+        const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+
+        axios
+          .post(url + "/favorites/addFavorite", {
+            id: user.id,
+            movie_id: movieId,
+            movie_name: movieInfo.title,
+            poster_path: movieInfo.poster_path
+          }, headers)
+          .then(response => {
+            setIsFavorite(true)
+            updateToken(response)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+    }
+
+    const handleRemoveFavoriteClick = () => {
+        const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+
+        axios
+          .delete(url + "/favorites/removeFavorite/" + user.id + "/" + movieId, headers)
+          .then(response => {
+            setIsFavorite(false)
+            updateToken(response)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+    }
+
+    const AddOrRemoveButton = () => {
+        if (!user.access_token) {
+            return null
+        }
+        
+        return (
+            <div id="removeOrAddFavoriteMovieDiv">
+                {isFavorite ? (
+                    <button class="favoriteMovieButton" onClick={handleRemoveFavoriteClick}>Remove from favorites</button>
+                ) : (
+                    <button class="favoriteMovieButton" onClick={handleAddFavoriteClick}>Add to favorites</button>
+                )}
+            </div>
+        )        
     }
 
     return (
@@ -191,6 +276,7 @@ function SpecificMoviePage() {
                     <div className="flex-container">
                         <div className="left-side">
                             <img src={'https://image.tmdb.org/t/p/w500' + movieInfo.poster_path} alt='Movie poster'></img>
+                            <AddOrRemoveButton />
                             <h3>Release Date</h3>
                             <p>{movieInfo.release_date}</p>
                             <h3>Genres</h3>

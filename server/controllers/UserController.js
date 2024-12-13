@@ -58,13 +58,13 @@ const userLogin = async(req, res, next) => {
         const user = emailFromDb.rows[0]                                // Data from the user is stored into this variable
 
         if (emailFromDb.rowCount === 0) {                               // Check if an account with the given email exists
-            const error = new Error("Invalid credentials")
+            const error = new Error("Invalid email")
             error.statusCode = 401
             return next(error)
         }
 
         else if (!await compare(req.body.password, user.password)) {    // Check if the password matches
-            const error = new Error("Invalid credentials")
+            const error = new Error("Invalid password")
             error.statusCode = 401
             return next(error)
         }

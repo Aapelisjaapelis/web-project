@@ -1,5 +1,6 @@
 import { emptyOrRows } from '../helpers/utils.js'
-import { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests, selectGroupMovies, selectGroupAdminInfo, deleteshowtime, selectJoinRequests, deleteRequest, selectAllUsers, changeAdmin } from '../models/Groupmodel.js'
+import { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests, selectGroupMovies, selectGroupAdminInfo, deleteshowtime, selectJoinRequests, deleteRequest, selectAllUsers, changeAdmin, addNewGroupShowtime } from '../models/Groupmodel.js'
+
 
 const getGroups = async (req,res,next) => {
     try {
@@ -202,6 +203,44 @@ const removeMember = async (req,res,next) => {
         return next(error)
     }
 }
+const postShowTime = async (req,res,next) => {
+    try {
+        const groupId = req.body.groupId;
+        const movieId = req.body.movieId;
+        const finnkinoId = req.body.finnkinoId;
+        const finnkinoMovieId = req.body.finnkinoMovieId;
+        const finnkinoMovieName = req.body.finnkinoMovieName;
+
+        if (!finnkinoId || finnkinoId.length === 0) {
+            const error = newError('Showtime id not provided')
+            error.statusCode = 400
+            return next(error)
+        }
+
+        if (!finnkinoMovieId || finnkinoMovieId.length === 0) {
+            const error = newError('Showtime movie id not provided')
+            error.statusCode = 400
+            return next(error)
+        }
+
+        if (!finnkinoMovieName || finnkinoMovieName.length === 0) {
+            const error = newError('Showtime movie name not provided')
+            error.statusCode = 400
+            return next(error)
+        }
+
+        if (!groupId || groupId.length === 0) {
+            const error = newError('Group id not provided')
+            error.statusCode = 400
+            return next(error)
+        }
+
+        const result = await addNewGroupShowtime(groupId, movieId, finnkinoId, finnkinoMovieId, finnkinoMovieName)
+        return res.status(200).json(emptyOrRows({result}))
+    } catch (error) {
+        return next(error)
+    }
+}
 
 const removeShowtime = async (req,res,next) => {
     try{
@@ -223,4 +262,5 @@ const removeShowtime = async (req,res,next) => {
 }
 
 
-export { getGroups, getMyGroups, getMembers, removeMember,postNewGroup, postjoinrequest, getMoviesForGroup, getAdminInfo, removeShowtime, getJoin, postNewMember, removeJoinRequest, getAllUsers, postNewAdmin  }
+export { getGroups, getMyGroups, getMembers, removeMember,postNewGroup, postjoinrequest, getMoviesForGroup, getAdminInfo, removeShowtime, getJoin, postNewMember, removeJoinRequest, getAllUsers, postNewAdmin, postShowTime  }
+
