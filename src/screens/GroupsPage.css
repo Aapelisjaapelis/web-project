@@ -27,15 +27,12 @@
     margin: 5px;
 }
 
-
 #groupTable {
     margin: 20px auto;
     border: 1px solid #ddd;
     border-collapse: collapse;
     width: 100%;
     font-family: Arial, sans-serif;
-
-
 }
 #groupTable th, td {
     padding: 10px;
@@ -220,3 +217,56 @@ button {
   ::-webkit-scrollbar-thumb:hover {
     background: rgb(79, 35, 73); 
   }
+
+
+  @media screen and (max-width: 600px) {
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+        overflow: hidden;
+        border: none;
+
+    }
+    #groupTable, th, td {
+        border: none;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        margin-bottom: 20px;
+        border: none;
+    }
+
+    td {
+        border: 1px solid white;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    td:before {
+        position: absolute;
+        left: 6px;
+        content: attr(data-label);
+        font-weight: bold;
+    }
+
+    .createButton {
+        margin-top: 5px;
+        margin-left: 0px;
+    }
+    .info-button {
+        margin-top: 5px;
+
+    }
+
+}
