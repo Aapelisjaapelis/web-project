@@ -144,7 +144,7 @@ function Profile() {
         </div>
 
         <div id="middleProfile">
-          <h2 id="usernameHeader">{user.username}</h2>
+          <h2 id="usernameHeader">Username: {user.username}</h2>
           <button id="visibilityButton" onClick={visibility ? makePrivate : makePublic}>{visibility ? "Make private" : "Make public"}</button>
           <button id="shareFavoritesButton" onClick={copyFavoritesUrl}>Get link for favorite movies</button>
         </div>

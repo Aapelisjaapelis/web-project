@@ -39,7 +39,7 @@ function Navbar() {
                 ) : (
                     <>
                         <li className="navlist">
-                            <Link to="/login">Log in</Link>                 {/* Log in button is displayed when the user is not logged in */}
+                            <Link to="/login">Sign in</Link>                 {/* Log in button is displayed when the user is not logged in */}
                         </li>
                         <li className="navlist">
                             <Link to="/signup">Sign up</Link>               {/* Sign up button is displayed when the user is not logged in */}
