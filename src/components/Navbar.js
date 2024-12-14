@@ -16,8 +16,8 @@ function Navbar() {
     return (
         <nav>
             <div className={menu ? "responsive" : ""}>
-                    <Link className="navLink alwaysShow" to="/">Public movie list</Link>
-                    <Link className="navLink" to="/finnkinoshowtimes">Finnkino showtimes</Link>
+                <Link className="navLink alwaysShow" to="/">Public movie list</Link>
+                <Link className="navLink" to="/finnkinoshowtimes">Finnkino showtimes</Link>
                 <div className="dropdown">
                     <button class="dropbtn">Groups &nbsp;
                         <FontAwesomeIcon icon={faCaretDown} className="unchecked"/>
@@ -27,7 +27,6 @@ function Navbar() {
                         <Link className="navLink" to="/GroupMy">My groups</Link>
                     </div>
                 </div>
-                <Link className="navLink" to="/favoritemovieslist">Favorites</Link>
                 <Link className="navLink" to="/profile">Profile</Link>
                 {user.access_token ? (
                     <>

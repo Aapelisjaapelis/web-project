@@ -1,6 +1,6 @@
 import { hash, compare } from "bcrypt"
 import validator from "validator"
-import { createUser, selectUserByEmail, selectUserByUsername, changePassword, changeEmail, deleteAccount } from "../models/user.js"
+import { createUser, selectUserByEmail, selectUserByUsername, changePassword, changeEmail, deleteAccount, isPublic, setPublic, setPrivate } from "../models/User.js"
 import jwt from "jsonwebtoken"
 import passwordValidator from "password-validator"
 
@@ -163,6 +163,41 @@ const userDeleteAccount = async(req, res, next) => {
     }
 }
 
+const userVisibility = async(req, res, next) => {
+    try {
+        const result = await isPublic(req.params.id)
+        //console.log(result.rows[0])
+        
+        if (result.rows[0].is_public === false) {
+            return res.status(200).json({visibility: "private"})
+        }
 
-export { userRegistration, userLogin, userChangePassword, userChangeEmail, userDeleteAccount }
+        else {
+            return res.status(200).json({visibility: "public"})
+        }
+    }   catch (error) {
+        return next(error)
+    }
+}
+
+const changeToPublic = async(req, res, next) => {
+    try {
+        await setPublic(req.body.id)
+        return res.status(200).json({message: "Changed to public"})
+    } catch (error) {
+        return next(error)
+    }
+}
+
+const changeToPrivate = async(req, res, next) => {
+    try {
+        await setPrivate(req.body.id)
+        return res.status(200).json({message: "Changed to private"})
+    } catch (error) {
+        return next(error)
+    }
+}
+
+
+export { userRegistration, userLogin, userChangePassword, userChangeEmail, userDeleteAccount, userVisibility, changeToPublic, changeToPrivate }
 
