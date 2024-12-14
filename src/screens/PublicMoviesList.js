@@ -127,7 +127,12 @@ function PublicMoviesList() {
     .then(response => response.json())
     .then(json => {
       genreFiltering(json.results)
-      setPageCount(json.total_pages)
+      if(json.total_pages < 500) {
+        setPageCount(json.total_pages)
+      } else {
+        setPageCount(500)
+      }
+      
       //setMovies(json.results)
     })
     .catch(error => {

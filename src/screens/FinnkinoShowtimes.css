@@ -87,3 +87,37 @@
 .showtime-Button:hover::before {
     width: 100%;
 }
+
+.slider-container {
+    margin: 0 auto;
+    max-width: 1024px;
+    background-color: black;
+    color: white;
+}
+
+.slider-container ul {
+    background-color: black;
+}
+
+.slider-image-container img {
+    width: 100%;
+    height: auto;
+}
+
+@media only screen and (max-width: 1200px) {
+    .slider-container {
+        max-width: 800px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .slider-container {
+        max-width: 550px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .slider-container {
+        max-width: 400px;
+    }
+}
