@@ -138,20 +138,16 @@ const changeAdmin = () => {
       }).catch(error => {
         alert(error.response.data.error ? error.response.data.error : error)
       })
-    
-
-
   } else {
     alert("Please select a candidate.");
   }
 
 
 }
-  
-
   return (
+    <>
+    <Navbar/>
     <div className="group-body">
-      <Navbar/>
       <div>
         <h1 >{group?.group_name} Members</h1>
         <button className="info-button" onClick={() =>  navigate('/SpecificGroupPage',{ state: group})}>Group page</button>
@@ -294,7 +290,8 @@ const changeAdmin = () => {
           </Popup>
       </div>
     </div>
-  )
+    </>
+    )
 }
 
 export default GroupMembers;
