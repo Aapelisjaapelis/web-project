@@ -240,6 +240,8 @@ describe("Reviews", () => {
 
 describe("Favorites", () => {
     beforeAll(async () => {
+        await pool.query("Delete from favorites")
+        await pool.query("Alter sequence favorites_id_seq restart")
         await pool.query("Delete from account")
         await pool.query("Alter sequence account_account_id_seq restart")
 
@@ -253,7 +255,7 @@ describe("Favorites", () => {
         )
 
         await pool.query(
-            "INSERT INTO favorites(account_id, movie_id, movie_name, poster_path) VALUES (1, 6511, 'The Consequence', '/5b2rC6cgglPMab6LbQauTfBJmv2.jpg')",
+            "INSERT INTO favorites(account_id, movie_id, movie_name, poster_path) VALUES ($1, $2, $3, $4)",
                 [1, 6511, 'The Consequence', '/5b2rC6cgglPMab6LbQauTfBJmv2.jpg']
             )
     })
@@ -274,9 +276,10 @@ describe("Favorites", () => {
 
         const response = await request(app)
             .post("/favorites/addFavorite")
-            .send({id: 2, movie_id: 65436, movie_name: "Class Dismissed: How TV Frames the Working Class", poster_path: "/owklDSPj9KLl6MryrFun0pSUFW5.jpg"})
+            .send({id: 1, movie_id: 65436, movie_name: "Class Dismissed: How TV Frames the Working Class", poster_path: "/owklDSPj9KLl6MryrFun0pSUFW5.jpg"})
             .set('Authorization', `${token}`)
 
+        expect(loginResponse.statusCode).toBe(200)
         expect(response.statusCode).toBe(200)
         expect(response.body.message).toBe("Added to favorites")
     })
@@ -362,6 +365,8 @@ describe("Delete user", () => {
     })
 
     afterAll(async () => {
+        await pool.query("Delete from review")
+        await pool.query("Alter sequence review_id_seq restart")
         await pool.query("Delete from account")
         await pool.query("Alter sequence account_account_id_seq restart")
         await pool.end()

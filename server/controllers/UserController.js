@@ -183,7 +183,6 @@ const userDeleteAccount = async(req, res, next) => {
 const userVisibility = async(req, res, next) => {
     try {
         const result = await isPublic(req.params.id)
-        //console.log(result.rows[0])
         
         if (result.rows[0].is_public === false) {
             return res.status(200).json({visibility: "private"})
