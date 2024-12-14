@@ -23,7 +23,6 @@
     color: white;
     background-color: #444141;
     border-radius: 4px;
-
 }
 
 .selectCatalog::-webkit-scrollbar {
@@ -101,7 +100,12 @@
 
 .slider-image-container img {
     width: 100%;
+    max-width: 300px;
     height: auto;
+}
+
+.slick-dots li{
+    display: none;
 }
 
 @media only screen and (max-width: 1200px) {

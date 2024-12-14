@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "./FinnkinoShowtimes.css";
 import Navbar from "../components/Navbar.js"
 //Carousel
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import "./FinnkinoShowtimes.css";
 
 function FinnkinoShowtimes() {
   const [showtimes, setShowtimes] = useState([]);
@@ -15,18 +15,26 @@ function FinnkinoShowtimes() {
   //Carousel settings
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 5,
+    slidesToScroll: 5,
     initialSlide: 0,
     responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          infinite: true,
+          dots: true
+        }
+      },
       {
         breakpoint: 1200,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
-          infinite: true,
           dots: true
         }
       },
@@ -129,22 +137,46 @@ function FinnkinoShowtimes() {
 
     //Carousel for showtimes
     const ShowtimeCarousel = () => {
-      return (
-        <div className="slider-container">
-          <Slider {...settings}>
-            {showtimes.map(showtime => (
-              <div className="slider-image-container">
-                <div>
-                  <img src={showtime.Images.EventMediumImagePortrait} alt={showtime.Title}></img>
+      if (!showtimes || showtimes.length === 0){
+        return <div className="white">No showtimes found</div>
+      } else if (typeof(showtimes) === "object" && !Array.isArray(showtimes)) {
+        return(
+        <div className="slider-image-container">
+            <div>
+              <img src={showtimes.Images.EventMediumImagePortrait} alt={showtimes.Title}></img>
+            </div>
+            <p>{showtimes.Title}</p>
+            <p>{new Date(showtimes.dttmShowStart).getHours()}:{new Date(showtimes.dttmShowStart).getMinutes().toString().padStart(2, '0')}</p>
+            <p>{showtimes.Theatre}</p>
+        </div>)
+      } else {
+        if(showtimes.length < 4) {
+          settings.slidesToShow = showtimes.length
+          settings.slidesToScroll = showtimes.length
+          for (let i = 0; i < 4; i++) {
+            if(settings.responsive[i].settings.slidesToShow > showtimes.length) {
+              settings.responsive[i].settings.slidesToShow = showtimes.length
+              settings.slidesToScroll = showtimes.length
+            }
+          }
+        }
+        return (
+          <div className="slider-container">
+            <Slider {...settings}>
+              {showtimes.map(showtime => (
+                <div className="slider-image-container">
+                  <div>
+                    <img src={showtime.Images.EventMediumImagePortrait} alt={showtime.Title}></img>
+                  </div>
+                  <p>{showtime.Title}</p>
+                  <p>{new Date(showtime.dttmShowStart).getHours()}:{new Date(showtime.dttmShowStart).getMinutes().toString().padStart(2, '0')}</p>
+                  <p>{showtime.Theatre}</p>
                 </div>
-                <p>{showtime.Title}</p>
-                <p>{new Date(showtime.dttmShowStart).getHours()}:{new Date(showtime.dttmShowStart).getMinutes().toString().padStart(2, '0')}</p>
-                <p>{showtime.Theatre}</p>
-              </div>
-            ))}
-          </Slider>
-        </div>
-      )
+              ))}
+            </Slider>
+          </div>
+        )
+      }
     }
 
     return (
