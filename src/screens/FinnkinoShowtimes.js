@@ -120,10 +120,10 @@ function FinnkinoShowtimes() {
         console.log(error);
       })
   }
-
+  
   const CheckShowtimes = () => {
       if (!showtimes || showtimes.length === 0) {
-        return <div>No showtimes found</div>
+        return <div className="Kuukeliskaalkelis">No showtimes found</div>
       } else if (typeof(showtimes) === "object" && !Array.isArray(showtimes)) {
         return <div className="timeformovie" key={showtimes.ID}>{new Date(showtimes.dttmShowStart).getHours()}:{new Date(showtimes.dttmShowStart).getMinutes().toString().padStart(2, '0')} {showtimes.Title}</div>
       } else {
@@ -178,7 +178,7 @@ function FinnkinoShowtimes() {
         )
       }
     }
-
+    
     return (
       <>
         <Navbar/>
@@ -194,7 +194,6 @@ function FinnkinoShowtimes() {
             </select>
             <input className="dateChanger" type="date" onChange={e => changeDate(e.target.value)} />
   
-            
             <button className="showtime-Button" id="searchButton" onClick={() => getShowtimes(url)}>Search</button>
             <br /><br /><br /><br />
             <ShowtimeCarousel />

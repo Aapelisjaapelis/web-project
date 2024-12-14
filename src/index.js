@@ -31,8 +31,8 @@ root.render(
           <Route path="/signup" element={<Register/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/finnkinoshowtimes" element={<FinnkinoShowtimes/>}></Route>
+          <Route path="/favoritemovieslist/:userId" element={<FavoriteMoviesList/>}></Route>
           <Route element={<ProtectedRoute/>}>
-            <Route path="/favoritemovieslist" element={<FavoriteMoviesList/>}></Route>
             <Route path="/profile" element={<Profile/>}></Route>
             <Route path="/GroupsPage" element={<GroupsPage/>}></Route>
             <Route path="/GroupMy" element={<GroupMy/>}></Route>
@@ -41,7 +41,6 @@ root.render(
             <Route path="/GroupAddShowtimes" element={<GroupAddShowtimes/>}></Route>
             <Route path="/ChangePassword" element={<ChangePassword/>}></Route>
             <Route path="/ChangeEmail" element={<ChangeEmail/>}></Route>
-
           </Route>
         </Routes>
       </UserProvider>

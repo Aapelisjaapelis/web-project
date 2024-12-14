@@ -30,8 +30,6 @@ const addFavoriteMovie = async(req, res, next) => {
 
 const isMovieInFavorites = async(req, res, next) => {
     try {
-        console.log(req.params.id)
-        console.log(req.params.movieId)
         const result = await selectOneMovieFromFavorites(req.params.id, req.params.movieId)
         if (result.rowCount === 0) {
             return res.status(200).json({favorite: "no"})

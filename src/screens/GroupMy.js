@@ -31,9 +31,10 @@ function GroupMy () {
   
 
     return (
-
+    <>
+    <Navbar/>
     <div className="group-body">
-        <Navbar/>
+        
 
         <div>
         <h1 > My Groups</h1>
@@ -51,8 +52,8 @@ function GroupMy () {
                 <tbody>
                     {mygroups.map(mygroup => (
                         <tr key={mygroup.id}>
-                            <td>{mygroup.group_name}</td>
-                            <td>{mygroup.group_desc}</td>
+                            <td data-label="Group name" >{mygroup.group_name}</td>
+                            <td data-label="Group desc" >{mygroup.group_desc}</td>
                             <th>
                             <button 
                                     onClick={() =>  navigate('/SpecificGroupPage',{ state: mygroup})}
@@ -67,6 +68,7 @@ function GroupMy () {
             </table>
         </div>
     </div>
+    </>
     )
 }
 

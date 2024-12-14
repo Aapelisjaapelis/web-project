@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar.js"
 import ReactPaginate from 'react-paginate';
 import spider from '../pictures/spider.png'
 import { useNavigate } from 'react-router-dom'
+import Footer from "../components/Footer.js"
 
 function PublicMoviesList() {
   const [movies, setMovies] = useState([])
@@ -213,6 +214,8 @@ function PublicMoviesList() {
           }
       })()}
     </div>
+    
+    <Footer />
     </>
 
   );
