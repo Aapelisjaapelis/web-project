@@ -151,7 +151,7 @@ function Profile() {
                       <label for="newDesc">You are an admin in some groups, please go change the group admin</label><br/>
                     </div>
                     <div>
-                      <button id="submitDeleteAccount" onClick={e => navigate("/profile")}>Close</button>
+                      <button id="submitDeleteAccount" onClick={close}>Close</button>
                     </div>
                   </div>
                 )
