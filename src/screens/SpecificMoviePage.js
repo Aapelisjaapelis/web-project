@@ -155,9 +155,10 @@ function SpecificMoviePage() {
                 userId: user.id
             }, headers)
             .then(response => {
+                setAllReviews([...othersReviews, {id:response.data.id, username:user.username, account_id:user.id, movie_id:movieId, rating:ratingValue, review_text:ratingText}])
                 setOthersReviews([...othersReviews, {id:response.data.id, username:user.username, account_id:user.id, movie_id:movieId, rating:ratingValue, review_text:ratingText}])
                 document.getElementById('ownRating').innerHTML = `<p>Review successfully sent</p>`
-            })
+            }) 
         } catch (error){
             
         }
