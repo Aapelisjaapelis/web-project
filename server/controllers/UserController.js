@@ -1,6 +1,6 @@
 import { hash, compare } from "bcrypt"
 import validator from "validator"
-import { createUser, selectUserByEmail, selectUserByUsername, changePassword, changeEmail, deleteAccount, isPublic, setPublic, setPrivate } from "../models/User.js"
+import { createUser, selectUserByEmail, selectUserByUsername, changePassword, changeEmail, deleteAccount, isPublic, setPublic, setPrivate, checkIsAdmin } from "../models/User.js"
 import jwt from "jsonwebtoken"
 import passwordValidator from "password-validator"
 
@@ -154,9 +154,26 @@ const userChangeEmail = async(req, res, next) => {
     }
 }
 
+const userGetIsAdmin = async(req, res, next) => {
+    try {
+        const result = await checkIsAdmin(req.params.id)
+
+        if (result.rows[0].is_admin === false) {
+            return res.status(200).json({IsAdmin: "false"})
+        }
+
+        else {
+            return res.status(200).json({IsAdmin: "true"})
+        }
+    }   catch (error) {
+        return next(error)
+    }
+}
+
 const userDeleteAccount = async(req, res, next) => {
     try {
-
+        await deleteAccount(req.params.id)
+        return res.status(200).json({message: "Account deleted"})
 
     }   catch (error) {
         return next(error)
@@ -199,5 +216,5 @@ const changeToPrivate = async(req, res, next) => {
 }
 
 
-export { userRegistration, userLogin, userChangePassword, userChangeEmail, userDeleteAccount, userVisibility, changeToPublic, changeToPrivate }
+export { userRegistration, userLogin, userChangePassword, userChangeEmail, userDeleteAccount, userVisibility, changeToPublic, changeToPrivate, userGetIsAdmin }
 

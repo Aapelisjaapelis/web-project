@@ -5,6 +5,9 @@ import { hash } from "bcrypt"
 
 describe("Registration", () => {
     beforeAll(async () => {
+        await pool.query("Delete from account_moviegroup")
+        await pool.query("Delete from moviegroup")
+        await pool.query("Alter sequence moviegroup_id_seq restart")
         await pool.query("Delete from account")
         await pool.query("Alter sequence account_account_id_seq restart")
     })
@@ -107,7 +110,7 @@ describe("Login", () => {
         const username = "TestUser";
         const email = "testi@testi.com";
         const password = "Testitesti1";
-        const hashedPassword = await hash(password, 10); // Odotetaan hashin valmistumista
+        const hashedPassword = await hash(password, 10); 
         await pool.query(
             "INSERT INTO account (username, email, password, is_public) VALUES ($1, $2, $3, $4)",
             [username, email, hashedPassword, "false"]
@@ -163,7 +166,7 @@ describe("Reviews", () => {
         const username = "TestUser";
         const email = "testi@testi.com";
         const password = "Testitesti1";
-        const hashedPassword = await hash(password, 10); // Odotetaan hashin valmistumista
+        const hashedPassword = await hash(password, 10); 
         await pool.query(
             "INSERT INTO account (username, email, password, is_public) VALUES ($1, $2, $3, $4)",
             [username, email, hashedPassword, "false"]
@@ -181,7 +184,6 @@ describe("Reviews", () => {
         await pool.query("Alter sequence review_id_seq restart")
         await pool.query("Delete from account")
         await pool.query("Alter sequence account_account_id_seq restart")
-        await pool.end()
     })
 
     it("Should post a review", async () => {
@@ -216,7 +218,7 @@ describe("Reviews", () => {
         expect(response.statusCode).toBe(200)
     })
 
-    it("Should get all movies reviews", async () => {
+    it("Should edit a movie review", async () => {
         const loginResponse = await request(app)
             .post("/user/login")
             .send({email: "testi@testi.com", password: "Testitesti1"})
@@ -231,5 +233,48 @@ describe("Reviews", () => {
         expect(loginResponse.statusCode).toBe(200)
         expect(response.statusCode).toBe(200)
         expect(response.body.id).toBe(1)
+    })
+})
+
+describe("Delete user", () => {
+    beforeAll(async () => {
+        await pool.query("Delete from account")
+        await pool.query("Alter sequence account_account_id_seq restart")
+
+        const username = "TestUser";
+        const email = "testi@testi.com";
+        const password = "Testitesti1";
+        const hashedPassword = await hash(password, 10); 
+        await pool.query(
+            "INSERT INTO account (username, email, password, is_public) VALUES ($1, $2, $3, $4)",
+            [username, email, hashedPassword, "false"]
+        );
+
+        await pool.query(
+            "insert into review (account_id, movie_id, rating, review_text) values ($1, $2, $3, $4) returning *",
+            [1,1,5, 'TestReview']
+        );
+    })
+
+    afterAll(async () => {
+        await pool.query("Delete from account")
+        await pool.query("Alter sequence account_account_id_seq restart")
+        await pool.end()
+    })
+
+    it("Should delete the user", async () => {
+        const loginResponse = await request(app)
+        .post("/user/login")
+        .send({email: "testi@testi.com", password: "Testitesti1"})
+
+        const token = loginResponse.headers.authorization;
+
+        const response = await request(app)
+            .delete("/user/profile/1")
+            .set('Authorization', `${token}`);
+
+        expect(loginResponse.statusCode).toBe(200)
+        expect(response.statusCode).toBe(200)
+        expect(response.body.message).toBe("Account deleted")
     })
 })
