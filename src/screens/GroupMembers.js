@@ -54,8 +54,10 @@ function GroupMembers () {
    
 
     return (
+    <>
+    <Navbar/>
     <div className="group-body">
-        <Navbar/>
+        
         <div>
         <h1 >{group?.group_name} Members</h1>
         <button className="info-button" onClick={() =>  navigate('/SpecificGroupPage',{ state: group})}>Group page</button>
@@ -88,6 +90,7 @@ function GroupMembers () {
             </table>
             </div>
     </div>
+    </>
     )
 }
 

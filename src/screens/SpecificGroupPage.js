@@ -17,10 +17,10 @@ function SpecificGroupPage () {
 
 
     return (
-
-
+    <>
+    <Navbar/>
     <div className="group-body">
-        <Navbar/>
+        
 
         <div>
         <h1 >{group?.group_name || "No name recieved"}</h1>
@@ -63,6 +63,7 @@ function SpecificGroupPage () {
 
         </div>
     </div>
+    </>
     )
 }
 
