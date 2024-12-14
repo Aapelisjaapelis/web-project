@@ -141,7 +141,7 @@ function FinnkinoShowtimes() {
         return <div className="white">No showtimes found</div>
       } else if (typeof(showtimes) === "object" && !Array.isArray(showtimes)) {
         return(
-        <div className="slider-image-container">
+        <div className="slider-image-container white">
             <div>
               <img src={showtimes.Images.EventMediumImagePortrait} alt={showtimes.Title}></img>
             </div>
