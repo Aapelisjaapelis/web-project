@@ -41,7 +41,6 @@ root.render(
             <Route path="/GroupAddShowtimes" element={<GroupAddShowtimes/>}></Route>
             <Route path="/ChangePassword" element={<ChangePassword/>}></Route>
             <Route path="/ChangeEmail" element={<ChangeEmail/>}></Route>
-
           </Route>
         </Routes>
       </UserProvider>

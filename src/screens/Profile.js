@@ -9,14 +9,16 @@ import axios from "axios"
 const url = process.env.REACT_APP_API_URL   // The url is taken from .env
 
 function Profile() {
-  const {user, updateToken} = useUser()
+  const {user, updateToken, deleteAccount} = useUser()
   const [favMovies, setFavMovies] = useState([])      // A list of objects with id, name and poster path being the properties (favMovies.movie_id, favMovies.movie_name, favMovies.poster_path)
   const [visibility, setVisibility] = useState(null)
+  const [isAdmin, setIsAdmin] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
     isPublic()
     getFavMovies()
+    getIsAdmin()
   }, [])
 
   const isPublic = () => {
@@ -88,6 +90,18 @@ function Profile() {
       })
   }
 
+  const getIsAdmin = async() => {
+    const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+    try {
+      const response = await axios.get(url + '/user/isAdmin/' + user.id, headers)
+      console.log(response.data)
+      updateToken(response)
+      setIsAdmin(response.data.IsAdmin)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const makePublic = () => {
     const headers = {headers: {Authorization: "Bearer " + user.access_token}}
 
@@ -126,23 +140,41 @@ function Profile() {
           <button id="visibilityButton" onClick={visibility ? makePrivate : makePublic}>{visibility ? "Make private" : "Make public"}</button>
           <button id="changePassword" onClick={e =>  navigate("/changePassword")}>Change password</button>
           <button id="changeEmail" onClick={e =>  navigate("/changeEmail")}>Change email address</button>
-
-          <Popup trigger=
-                {<button id="deleteAccount">Delete account</button>}
+        {
+          isAdmin === "true" ? (
+            <Popup trigger={<button id="deleteAccount" >Delete account</button>}            
             modal nested>
-            {
+              {
                 close => (
-                    <div id="popupDiv">
-                        <div>
-                          <label for="newDesc">Are you sure you want to delete your account and all the information related</label><br/>
-                        </div>
-                        <div>
-                            <button id="submitDeleteAccount" onClick={e => navigate("/profile")}>Submit</button>
-                        </div>
+                  <div id="popupDiv">
+                    <div>
+                      <label for="newDesc">You are an admin in some groups, please go change the group admin</label><br/>
                     </div>
+                    <div>
+                      <button id="submitDeleteAccount" onClick={close}>Close</button>
+                    </div>
+                  </div>
                 )
-            }
+              }
+            </Popup>
+          ) : (
+            <Popup trigger={<button id="deleteAccount" >Delete account</button>}
+          modal nested>
+          {
+            close => (
+              <div id="popupDiv">
+                  <div>
+                    <label for="newDesc">Are you sure you want to delete your account and all the information related</label><br/>
+                  </div>
+                  <div>
+                      <button id="submitDeleteAccount" onClick={e => deleteAccount()}>Submit</button>
+                  </div>
+              </div>
+            )
+          }
           </Popup>
+          )
+        }
           </div>
         </div>
 

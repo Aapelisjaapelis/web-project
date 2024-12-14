@@ -89,6 +89,7 @@ function FinnkinoShowtimes() {
         )
       }
     }
+    
     return (
       <>
         <Navbar/>
