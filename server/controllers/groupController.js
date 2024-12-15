@@ -224,6 +224,7 @@ const postShowTime = async (req,res,next) => {
         const finnkinoId = req.body.finnkinoId;
         const finnkinoMovieId = req.body.finnkinoMovieId;
         const finnkinoMovieName = req.body.finnkinoMovieName;
+        const finnkinoMovieDate = req.body.finnkinoMovieDate;
 
         if (!finnkinoId || finnkinoId.length === 0) {
             const error = newError('Showtime id not provided')
@@ -243,6 +244,12 @@ const postShowTime = async (req,res,next) => {
             return next(error)
         }
 
+        if (!finnkinoMovieDate || finnkinoMovieDate.length === 0) {
+            const error = newError('Showtime date not provided')
+            error.statusCode = 400
+            return next(error)
+        }
+
         if (!groupId || groupId.length === 0) {
             const error = newError('Group id not provided')
             error.statusCode = 400
@@ -252,8 +259,9 @@ const postShowTime = async (req,res,next) => {
         if (!movieId || movieId.length === 0) {
             movieId = 0
         }
+        
 
-        const result = await addNewGroupShowtime(groupId, movieId, finnkinoId, finnkinoMovieId, finnkinoMovieName)
+        const result = await addNewGroupShowtime(groupId, movieId, finnkinoId, finnkinoMovieId, finnkinoMovieName, finnkinoMovieDate)
         return res.status(200).json(emptyOrRows({result}))
     } catch (error) {
         return next(error)

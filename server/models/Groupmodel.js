@@ -21,7 +21,7 @@ const selectGroupAdminInfo = async (userId, groupId) => {
 }
 
 const selectGroupMovies = async (groupId) => {
-    return await pool.query ( 'SELECT id, movie_name, finnkino_movie_id, finnkino_time_id FROM group_movies WHERE moviegroup_id = $1 ', [groupId])
+    return await pool.query ( 'SELECT id, movie_name, finnkino_movie_id, finnkino_time_id, finnkino_movie_date FROM group_movies WHERE moviegroup_id = $1 ', [groupId])
 }
 
 const selectJoinRequests = async(groupId) => {
@@ -60,8 +60,8 @@ const joinGroup = async(userId, groupId) => {
 const getJoinRequests = async(groupId) => {
     return await pool.query('SELECT account_id FROM group_invites WHERE moviegroup_id = $1',[groupId])
 }
-const addNewGroupShowtime = async(groupId, movieId, finnkinoId, finnkinoMovieId, finnkinoMovieName) => {
-    return await pool.query('INSERT INTO group_movies (moviegroup_id, movie_id, finnkino_time_id, finnkino_movie_id, movie_name) VALUES ($1, $2, $3, $4, $5) returning *',[groupId, movieId, finnkinoId, finnkinoMovieId, finnkinoMovieName])
+const addNewGroupShowtime = async(groupId, movieId, finnkinoId, finnkinoMovieId, finnkinoMovieName, finnkinoMovieDate) => {
+    return await pool.query('INSERT INTO group_movies (moviegroup_id, movie_id, finnkino_time_id, finnkino_movie_id, movie_name, finnkino_movie_date) VALUES ($1, $2, $3, $4, $5, $6) returning *',[groupId, movieId, finnkinoId, finnkinoMovieId, finnkinoMovieName, finnkinoMovieDate])
 }
 const changeAdmin = async(groupId, userId, adminstatus) => {
     return await pool.query('UPDATE account_moviegroup SET is_admin = $1 WHERE moviegroup_id = $2 AND account_id = $3 ',[adminstatus, groupId,userId])
