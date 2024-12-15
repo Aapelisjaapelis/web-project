@@ -76,7 +76,7 @@ function FavoriteMoviesList() {
       <Navbar />
       
       <div id="favoritesContainer">
-        {visibility || user.id === parseInt(userId) ? (
+        {visibility == null || visibility || user.id === parseInt(userId) ? (
           <>
             <h1 className="favoriteMoviesListHeader">Favorite movies</h1>
             {favMovies.length !== 0 ? <FavMovies /> : <p id="noFavoriteMovies">No favorite movies</p>}
