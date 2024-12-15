@@ -9,7 +9,7 @@ import { useUser } from '../context/useUser.js';
 import Footer from "../components/Footer.js"
 
 const url = process.env.REACT_APP_API_URL
-
+const api_key = process.env.REACT_APP_TMDB_API_KEY
 
 function SpecificMoviePage() {
     const location = useLocation();
@@ -30,7 +30,7 @@ function SpecificMoviePage() {
             method: 'GET',
             headers: {
                 accept: 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNDI4MDczZWUwMTU1OTE5MmNjZDdhMjg4ODYyNmJjYiIsIm5iZiI6MTczMTM5ODIxMC4yOTI3ODc2LCJzdWIiOiI2NzA5N2M2ZmUxZGI5ZWM0ODYyZThmMGMiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.nYj8DKtCcuy-kzpZGobAf5e8bY9YS0NQRG7rFRd_qss'
+                Authorization: api_key
             }    
          };
 

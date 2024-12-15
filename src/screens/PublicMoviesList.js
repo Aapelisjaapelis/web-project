@@ -6,6 +6,8 @@ import spider from '../pictures/spider.png'
 import { useNavigate } from 'react-router-dom'
 import Footer from "../components/Footer.js"
 
+const api_key = process.env.REACT_APP_TMDB_API_KEY
+
 function PublicMoviesList() {
   const [movies, setMovies] = useState([])
   const [genres, setGenres] = useState([])
@@ -120,7 +122,7 @@ function PublicMoviesList() {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNDI4MDczZWUwMTU1OTE5MmNjZDdhMjg4ODYyNmJjYiIsIm5iZiI6MTczMTM5ODIxMC4yOTI3ODc2LCJzdWIiOiI2NzA5N2M2ZmUxZGI5ZWM0ODYyZThmMGMiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.nYj8DKtCcuy-kzpZGobAf5e8bY9YS0NQRG7rFRd_qss'
+        Authorization: api_key
       }
     };
 
@@ -147,7 +149,7 @@ function PublicMoviesList() {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNDI4MDczZWUwMTU1OTE5MmNjZDdhMjg4ODYyNmJjYiIsIm5iZiI6MTczMjQ3OTI5Ni4xMDcwNzgsInN1YiI6IjY3MDk3YzZmZTFkYjllYzQ4NjJlOGYwYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XMU9KwMHWQ7GxQR4VEqrw84ziQPlvhELy3WldDH4B6Q'
+        Authorization: api_key
       }
     };
 

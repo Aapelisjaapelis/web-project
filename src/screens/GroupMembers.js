@@ -10,9 +10,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../context/useUser.js";
 
-
-const url = 'http://localhost:3001'
-
+const url = process.env.REACT_APP_API_URL
 
 function GroupMembers () {
 
