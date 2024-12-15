@@ -72,11 +72,13 @@ function SpecificGroupPage () {
             for (let i = 0; i < databasevalues.length; i++) {
                 let match = false;
                 try {
-
-                    const response = await fetch(url2 + databasevalues[i].finnkino_movie_id);
+                    console.log(databasevalues[i].finnkino_movie_date)
+                    const response = await fetch(url2 + databasevalues[i].finnkino_movie_id + "&dt=" + databasevalues[i].finnkino_movie_date);
                     const xml = await response.text();
                     const json = parseXML(xml);
                     
+                    console.log(json)
+
                     for(let j=0; j < json.Schedule.Shows.Show.length; j++) {
                     
                         if(json.Schedule.Shows.Show[j].ID == databasevalues[i].finnkino_time_id) {

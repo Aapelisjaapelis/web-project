@@ -120,6 +120,17 @@ function GroupAddShowtimes () {
       console.log(showtimeArr)
       console.log(movieId)
 
+      let strChosenDate = ""
+      if(chosenDate.length === 0) {
+        const year = new Date().getFullYear();
+        const month = new Date().getMonth() + 1;
+        const day = new Date().getDate();
+        setChosenDate(day + "." + month + "." + year)
+        strChosenDate = day + "." + month + "." + year
+      } else {
+        strChosenDate = chosenDate
+      }
+
       //Check if showtime has been given at all. 
       if(showtimeArr.length < 3) {
         alert("Please choose a sufficient showtime.")
@@ -130,7 +141,8 @@ function GroupAddShowtimes () {
               movieId: movieId, 
               finnkinoId: showtimeArr[0],
               finnkinoMovieId: showtimeArr[1],
-              finnkinoMovieName: showtimeArr[2]
+              finnkinoMovieName: showtimeArr[2],
+              finnkinoMovieDate: strChosenDate
           }, headers)
           .then(response => {
             navigate("/SpecificGroupPage",{ state: group})

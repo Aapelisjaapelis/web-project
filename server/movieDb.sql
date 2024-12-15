@@ -65,5 +65,6 @@ create table group_movies (
     movie_name varchar(100) not null,
     finnkino_time_id serial not null,
     finnkino_movie_id serial not null,
+    finnkino_movie_date varchar(15) not null,
     foreign key (moviegroup_id) references moviegroup(id)
 );
