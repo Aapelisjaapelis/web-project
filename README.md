@@ -19,6 +19,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### .env template
 #### pic 1
 REACT_APP_API_URL =
+REACT_APP_TMDB_API_KEY =
 
 #### pic 2
 PORT = 3001
