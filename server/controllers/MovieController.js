@@ -11,13 +11,6 @@ const getReviews = async (req, res, next) => {
     const id = req.params.movieId
     const result = await getAllReviews(id)
 
-    if(result.rowCount === 0) {
-      const error = new Error('No reviews found for this movie.')
-      error.statusCode = 400
-      return next(error)
-    } 
-  
-
     return res.status(200).json(emptyOrRows(result))
   } catch (error) {
     return next(error)
