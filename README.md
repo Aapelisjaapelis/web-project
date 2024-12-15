@@ -18,16 +18,16 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### .env template
 #### pic 1
-REACT_APP_API_URL =
+REACT_APP_API_URL =<br/>
 REACT_APP_TMDB_API_KEY =
 
 #### pic 2
-PORT = 3001
-DB_USER = postgres
-DB_HOST = localhost
-DB_NAME = 
-DB_PASSWORD = 
-DB_PORT = 5432
+PORT = 3001<br/>
+DB_USER = postgres<br/>
+DB_HOST = localhost<br/>
+DB_NAME =<br/> 
+DB_PASSWORD =<br/> 
+DB_PORT = 5432<br/>
 JWT_SECRET_KEY = key
 
 ## Available Scripts
