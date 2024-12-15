@@ -93,6 +93,7 @@ img {
     flex-direction: row;
     list-style-type: none;
     background-color: #0d0713;
+    max-width: 100%;
 }
 
 .searchForm ul li {

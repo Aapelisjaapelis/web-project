@@ -147,11 +147,14 @@ function Profile() {
               {
                 close => (
                   <div id="popupDiv">
-                    <div>
-                      <label for="newDesc">You are an admin in some groups, please go change the group admin</label><br/>
-                    </div>
-                    <div>
-                      <button id="submitDeleteAccount" onClick={close}>Close</button>
+                     <div className='content'>
+
+                      <div>
+                        <p>You are an admin in some groups, please go change the group admin</p><br/>
+                      </div>
+                      <div>
+                        <button id="submitDeleteAccount" onClick={close}>Close</button>
+                      </div>
                     </div>
                   </div>
                 )
@@ -163,12 +166,14 @@ function Profile() {
           {
             close => (
               <div id="popupDiv">
+                <div className='content'>
                   <div>
-                    <label for="newDesc">Are you sure you want to delete your account and all the information related</label><br/>
+                    <label for="newDesc">Are you sure you want to delete your account and all the information related?</label><br/>
                   </div>
                   <div>
                       <button id="submitDeleteAccount" onClick={e => deleteAccount()}>Submit</button>
                   </div>
+                </div>
               </div>
             )
           }
