@@ -372,6 +372,22 @@ describe("Delete user", () => {
         await pool.end()
     })
 
+    it("Should not delete a user which id does not exist", async () => {
+        const loginResponse = await request(app)
+        .post("/user/login")
+        .send({email: "testi@testi.com", password: "Testitesti1"})
+
+        const token = loginResponse.headers.authorization;
+
+        const response = await request(app)
+            .delete("/user/profile/3")
+            .set('Authorization', `${token}`);
+
+        expect(loginResponse.statusCode).toBe(200)
+        expect(response.statusCode).toBe(400)
+        expect(response.body.message).toBe("Account not found")
+    })
+
     it("Should delete the user", async () => {
         const loginResponse = await request(app)
         .post("/user/login")
