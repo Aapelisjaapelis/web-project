@@ -74,7 +74,9 @@ export default function UserProvider({children}) {
 
     const deleteAccount = async () => {
 
-        await axios.delete(url + "/user/deleteAccount/" + user.id)
+        const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+        const response = await axios.delete(url + "/user/profile/" + user.id, headers)
+        alert(response.data.message)
         sessionStorage.clear()
         setUser({id: "", username: "", email: "", password: "", access_token: ""})
     }

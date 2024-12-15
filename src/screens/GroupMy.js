@@ -31,9 +31,10 @@ function GroupMy () {
   
 
     return (
-
+    <>
+    <Navbar/>
     <div className="group-body">
-        <Navbar/>
+        
 
         <div>
         <h1 > My Groups</h1>
@@ -76,6 +77,7 @@ function GroupMy () {
             </table>
         </div>
     </div>
+    </>
     )
 }
 

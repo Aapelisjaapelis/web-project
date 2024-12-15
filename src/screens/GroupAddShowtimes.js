@@ -159,7 +159,11 @@ function GroupAddShowtimes () {
       fetch(url, options)
       .then(response => response.json())
       .then(json => {
-        setPageCount(json.total_pages)
+        if(json.total_pages < 500) {
+          setPageCount(json.total_pages)
+        } else {
+          setPageCount(500)
+        }
         setMovies(json.results)
       })
       .catch(error => {

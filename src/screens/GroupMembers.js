@@ -139,7 +139,7 @@ const changeAdmin = () => {
       }).catch(error => {
         alert(error.response.data.error ? error.response.data.error : error)
       })
-    
+
   } else {
     alert("Please select a candidate.");
   }
@@ -161,11 +161,10 @@ const groupDeletion = () => {
   }
 
 }
-  
-
   return (
+    <>
+    <Navbar/>
     <div className="group-body">
-      <Navbar/>
       <div>
         <h1 >{group?.group_name} Settings</h1>
         <div className="littleInfo">
@@ -347,7 +346,8 @@ const groupDeletion = () => {
           </Popup>
       </div>
     </div>
-  )
+    </>
+    )
 }
 
 export default GroupMembers;

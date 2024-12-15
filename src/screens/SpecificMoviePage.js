@@ -6,6 +6,7 @@ import { faStar, faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { useLocation } from 'react-router-dom';
 import axios, { all } from 'axios';
 import { useUser } from '../context/useUser.js';
+import Footer from "../components/Footer.js"
 
 const url = process.env.REACT_APP_API_URL
 
@@ -154,9 +155,10 @@ function SpecificMoviePage() {
                 userId: user.id
             }, headers)
             .then(response => {
+                setAllReviews([...othersReviews, {id:response.data.id, username:user.username, account_id:user.id, movie_id:movieId, rating:ratingValue, review_text:ratingText}])
                 setOthersReviews([...othersReviews, {id:response.data.id, username:user.username, account_id:user.id, movie_id:movieId, rating:ratingValue, review_text:ratingText}])
                 document.getElementById('ownRating').innerHTML = `<p>Review successfully sent</p>`
-            })
+            }) 
         } catch (error){
             
         }
@@ -355,6 +357,8 @@ function SpecificMoviePage() {
                         </div>
                     </div>
             </div>
+
+            <Footer/>
         </>
     );
 }

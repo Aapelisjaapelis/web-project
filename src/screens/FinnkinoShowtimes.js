@@ -1,12 +1,60 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "./FinnkinoShowtimes.css";
 import Navbar from "../components/Navbar.js"
+//Carousel
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import "./FinnkinoShowtimes.css";
 
 function FinnkinoShowtimes() {
   const [showtimes, setShowtimes] = useState([]);
   const [areas, setAreas] = useState([]);
   const [areaID, setAreaID] = useState("");
   const [date, setDate] = useState("");
+
+  //Carousel settings
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 900,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
 
   const url = "https://www.finnkino.fi/xml/Schedule/?area=" + areaID + "&dt=" + date;
 
@@ -44,7 +92,6 @@ function FinnkinoShowtimes() {
       .then(response => response.text())
       .then(xml => {
         const json = parseXML(xml);
-        console.log(json.TheatreAreas.TheatreArea);
         setAreas(json.TheatreAreas.TheatreArea);
         getShowtimes();
       })
@@ -63,13 +110,11 @@ function FinnkinoShowtimes() {
   }
   
   const getShowtimes = () => {
-    console.log(url);
     fetch(url)
       .then(response => response.text())
       .then(xml => {
         const json = parseXML(xml);
         setShowtimes(json.Schedule.Shows.Show);
-        console.log(json.Schedule.Shows.Show);
       })
       .catch(error => {
         console.log(error);
@@ -89,6 +134,51 @@ function FinnkinoShowtimes() {
         )
       }
     }
+
+    //Carousel for showtimes
+    const ShowtimeCarousel = () => {
+      if (!showtimes || showtimes.length === 0){
+        return <div className="white">No showtimes found</div>
+      } else if (typeof(showtimes) === "object" && !Array.isArray(showtimes)) {
+        return(
+        <div className="slider-image-container white">
+            <div>
+              <img src={showtimes.Images.EventMediumImagePortrait} alt={showtimes.Title}></img>
+            </div>
+            <p>{showtimes.Title}</p>
+            <p>{new Date(showtimes.dttmShowStart).getHours()}:{new Date(showtimes.dttmShowStart).getMinutes().toString().padStart(2, '0')}</p>
+            <p>{showtimes.Theatre}</p>
+        </div>)
+      } else {
+        if(showtimes.length < 4) {
+          settings.slidesToShow = showtimes.length
+          settings.slidesToScroll = showtimes.length
+          for (let i = 0; i < 4; i++) {
+            if(settings.responsive[i].settings.slidesToShow > showtimes.length) {
+              settings.responsive[i].settings.slidesToShow = showtimes.length
+              settings.slidesToScroll = showtimes.length
+            }
+          }
+        }
+        return (
+          <div className="slider-container">
+            <Slider {...settings}>
+              {showtimes.map(showtime => (
+                <div className="slider-image-container">
+                  <div>
+                    <img src={showtime.Images.EventMediumImagePortrait} alt={showtime.Title}></img>
+                  </div>
+                  <p>{showtime.Title}</p>
+                  <p>{new Date(showtime.dttmShowStart).getHours()}:{new Date(showtime.dttmShowStart).getMinutes().toString().padStart(2, '0')}</p>
+                  <p>{showtime.Theatre}</p>
+                </div>
+              ))}
+            </Slider>
+          </div>
+        )
+      }
+    }
+    
     return (
       <>
         <Navbar/>
@@ -104,12 +194,9 @@ function FinnkinoShowtimes() {
             </select>
             <input className="dateChanger" type="date" onChange={e => changeDate(e.target.value)} />
   
-            
             <button className="showtime-Button" id="searchButton" onClick={() => getShowtimes(url)}>Search</button>
-            <div className="Showtimeslist">
-  
-            <CheckShowtimes />
-            </div>
+            <br /><br /><br /><br />
+            <ShowtimeCarousel />
           </div>
         </div>
       </>

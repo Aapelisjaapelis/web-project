@@ -2,6 +2,18 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+## Getting started
+1. First clone the repository on your computer
+2. Start by opening the project with your chosen code editor
+3. Copy the movieDb.sql to your database (for exampe pgadmin)
+4. Open terminal in the project folder and write "cd server" then "npm i"
+5. Then open new terminal and write "npm i" (base path)
+6. Then start server by "npm run devStart" in the server folder
+7. Start the local site by "npm start" (base path)
+8. Now you have succesfully started the project!
+
+
 ## Available Scripts
 
 In the project directory, you can run:

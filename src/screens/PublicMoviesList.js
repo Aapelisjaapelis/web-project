@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar.js"
 import ReactPaginate from 'react-paginate';
 import spider from '../pictures/spider.png'
 import { useNavigate } from 'react-router-dom'
+import Footer from "../components/Footer.js"
 
 function PublicMoviesList() {
   const [movies, setMovies] = useState([])
@@ -127,7 +128,12 @@ function PublicMoviesList() {
     .then(response => response.json())
     .then(json => {
       genreFiltering(json.results)
-      setPageCount(json.total_pages)
+      if(json.total_pages < 500) {
+        setPageCount(json.total_pages)
+      } else {
+        setPageCount(500)
+      }
+      
       //setMovies(json.results)
     })
     .catch(error => {
@@ -208,6 +214,8 @@ function PublicMoviesList() {
           }
       })()}
     </div>
+    
+    <Footer />
     </>
 
   );

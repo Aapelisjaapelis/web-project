@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import "./Navbar.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown, faBars } from '@fortawesome/free-solid-svg-icons';
 import { useUser } from "../context/useUser" 
 
 function Navbar() {
@@ -13,41 +15,35 @@ function Navbar() {
 
     return (
         <nav>
-
-            <button id="menuButton" onClick={showDropdownMenu}>Menu</button>    {/* Menu button is displayed when the maximum width of the screen is 1250px */}
-
-            <ul className={menu ? "show" : ""}>
-                <li className="navlist">
-                    <Link to="/">Public movie list</Link>
-                </li>
-                <li className="navlist">
-                    <Link to="/finnkinoshowtimes">Finnkino showtimes</Link>
-                </li>
-                <li className="navlist">
-                    <Link to="/groupspage">Groups</Link>
-                </li>
-                <li className="navlist"> 
-                    <Link to="/profile">Profile</Link>
-                </li>
-            </ul>
-            
-            <ul className={menu ? "show" : ""}>
+            <div className={menu ? "responsive" : ""}>
+                <Link className="navLink alwaysShow" to="/">Public movie list</Link>
+                <Link className="navLink" to="/finnkinoshowtimes">Finnkino showtimes</Link>
+                <div className="dropdown">
+                    <button class="dropbtn">Groups &nbsp;
+                        <FontAwesomeIcon icon={faCaretDown} className="unchecked"/>
+                    </button>
+                    <div className="dropdown-content">
+                        <Link className="navLink" to="/groupspage">All groups</Link>
+                        <Link className="navLink" to="/GroupMy">My groups</Link>
+                    </div>
+                </div>
+                <Link className="navLink" to="/profile">Profile</Link>
                 {user.access_token ? (
-                    <li className="navlist">
-                        <Link to="/" onClick={signOut}>Sign out</Link>      {/* Sign out button is displayed when the user is logged in (logged in = when the user has a token) */}
-                    </li>
-                ) : (
                     <>
-                        <li className="navlist">
-                            <Link to="/login">Sign in</Link>                 {/* Log in button is displayed when the user is not logged in */}
-                        </li>
-                        <li className="navlist">
-                            <Link to="/signup">Sign up</Link>               {/* Sign up button is displayed when the user is not logged in */}
-                        </li>
+                        <Link className={menu ? "navLink" : "navRight navLink"} to="/" onClick={signOut}>Sign out</Link>      {/* Sign out button is displayed when the user is logged in (logged in = when the user has a token) */}
                     </>
+                ) : (
+                    <div className={menu ? "" : "navRight"}>
+                        <Link className="navLink" to="/login">Sign in</Link>                 {/* Log in button is displayed when the user is not logged in */}
+                        <Link className="navLink" to="/signup">Sign up</Link>               {/* Sign up button is displayed when the user is not logged in */}
+                    </div>
                 )}
-            </ul>
-
+                <div className="navRight icon" onClick={showDropdownMenu}>
+                    <FontAwesomeIcon icon={faBars} className="unchecked navLink"/>
+                </div>
+            </div>
+        
+            
         </nav>
     )
 }
