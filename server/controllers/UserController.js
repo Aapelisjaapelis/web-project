@@ -1,6 +1,6 @@
 import { hash, compare } from "bcrypt"
 import validator from "validator"
-import { createUser, selectUserByEmail, selectUserByUsername, changePassword, changeEmail, deleteAccount, isPublic, setPublic, setPrivate, checkIsAdmin } from "../models/User.js"
+import { createUser, selectUserByEmail, selectUserByUsername, changePassword, changeEmail, deleteAccount, isPublic, setPublic, setPrivate, checkIsAdmin, selectUserById } from "../models/User.js"
 import jwt from "jsonwebtoken"
 import passwordValidator from "password-validator"
 
@@ -172,9 +172,18 @@ const userGetIsAdmin = async(req, res, next) => {
 
 const userDeleteAccount = async(req, res, next) => {
     try {
-        await deleteAccount(req.params.id)
-        return res.status(200).json({message: "Account deleted"})
-
+        const accountFromDb = await selectUserById(req.params.id)
+        console.log(accountFromDb)
+        if (accountFromDb.rowCount != 0) {                             // Check if the account exists
+            await deleteAccount(req.params.id)
+            return res.status(200).json({message: "Account deleted"})
+        }
+        
+        else {
+            const error = new Error("Account not found")
+            error.statusCode = 400
+            return next(error)
+        }
     }   catch (error) {
         return next(error)
     }
