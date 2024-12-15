@@ -22,8 +22,16 @@ insert into account_moviegroup (account_id, moviegroup_id, is_admin) values('3',
 
 insert into account_moviegroup (account_id, moviegroup_id, is_admin) values('1', '4', 'True');
 
+/*Prosedure for deleting group*/
 
+CREATE PROCEDURE deleteGroup (group_id INT)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+DELETE FROM group_invites WHERE moviegroup_id = group_id;
+DELETE FROM group_movies WHERE moviegroup_id = group_id;
+DELETE FROM account_moviegroup WHERE moviegroup_id = group_id;
+DELETE FROM moviegroup WHERE id = group_id;
 
-INSERT INTO group_movies(moviegroup_id, movie_name, finnkino_time_id, finnkino_movie_id) VALUES (1, 'Solo Leveling ReAwakening','2146523' ,'304845');
-INSERT INTO group_movies(moviegroup_id, movie_name, finnkino_time_id, finnkino_movie_id) VALUES (1, 'Viimeiset päivät','2148425','304764' );
-INSERT INTO group_movies(moviegroup_id, movie_name, finnkino_time_id, finnkino_movie_id) VALUES (1, 'Viimeiset päivät','2146752','304764' );
+END;
+$$;

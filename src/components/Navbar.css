@@ -12,7 +12,7 @@ ul {
     display: flex;
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
+    background-color: #472d6496;
 }
 
 .navlist {
@@ -24,7 +24,7 @@ ul {
 nav a {
     text-decoration: none;
     white-space: nowrap;
-    color: #000000;
+    color: #EEEEEE;
 
     padding: 24px;
     font-size: 24px;

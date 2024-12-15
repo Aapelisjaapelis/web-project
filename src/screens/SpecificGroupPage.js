@@ -2,6 +2,8 @@ import React, { useCallback, useState, useEffect } from "react";
 import "./GroupsPage.css";
 import Navbar from "../components/Navbar.js"
 import axios from "axios";
+import roska from "../pictures/Roska.png";
+import settings from "../pictures/settings.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../context/useUser.js";
 
@@ -92,7 +94,7 @@ function SpecificGroupPage () {
             }
         }
         else{
-            showtimes.push({key: 0, timeforfhow: "Add showtimes by -", placeforshow: '', name: 'You have not added any showtimes'})
+            showtimes.push({key: 0, timeforfhow: "Add showtimes by pressing add showtimes.", placeforshow: '-', name: 'You have not added any showtimes'})
         }
         setTimes(showtimes);
 
@@ -125,7 +127,7 @@ function SpecificGroupPage () {
           .then(response =>{
             let withoutRemoved = times.filter((time)=> time.key !==showtimeId )
             if( withoutRemoved.length === 0){
-                withoutRemoved = [{key: 0, timeforfhow: "Add showtimes by -", placeforshow: '', name: 'You have not added any showtimes'}]
+                withoutRemoved = [{key: 0, timeforfhow: "Add showtimes by pressing add showtimes.", placeforshow: '-', name: 'You have not added any showtimes'}]
 
             }
             setTimes(withoutRemoved)
@@ -161,6 +163,9 @@ function SpecificGroupPage () {
 
         <div>
         <h1 >{group?.group_name || "No name recieved"}</h1>
+        <div className="littleInfo">
+            <p>You can add showtimes by clicking add showtimes.</p>
+        </div>
         <button className="info-button" onClick={e =>  navigate('/GroupsPage')}>All Groups</button>
         <button className="info-button" onClick={() =>  navigate('/GroupMy')}>My Groups</button>
 
@@ -187,8 +192,8 @@ function SpecificGroupPage () {
                                 </td>
                                 ) :(
                                 <td>
-                                    <button onClick={e => removeShowTime(group.id, time.key)}>
-                                    Remove
+                                    <button className="removebutton" onClick={e => removeShowTime(group.id, time.key)}>
+                                    <img src={roska} alt="Remove" width={25} height={25}/>
                                     </button>
                                 </td>
                             )}
@@ -209,7 +214,8 @@ function SpecificGroupPage () {
                 <button 
                     onClick={() =>  navigate('/GroupMembers',{ state: group})}
                     className="info-button">
-                    Group settings
+                        <span className="button-text">Group settings</span>
+                        <img src={settings} width={20} height={20} className="button-icon" />
                 </button>
                 ) : (
                     <button

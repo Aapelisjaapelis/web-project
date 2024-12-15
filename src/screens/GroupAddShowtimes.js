@@ -178,7 +178,7 @@ function GroupAddShowtimes () {
       <>
       <Navbar/>
         <div className="showtimes-body">
-            <div>
+            <div className="showtimes-body2">
                 <h1>Add Showtimes</h1>
                 <br />
                 <h3>Finnkino showtime</h3>
@@ -224,6 +224,7 @@ function GroupAddShowtimes () {
                   }}
                   ></input>
                   <ReactPaginate
+                    className="counting"
                     breakLabel="..."
                     nextLabel=">"
                     onPageChange={(e) => setPage(e.selected + 1)}

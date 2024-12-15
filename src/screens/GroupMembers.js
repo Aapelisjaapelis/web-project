@@ -2,7 +2,7 @@ import React from "react";
 import "./GroupsPage.css";
 import Navbar from "../components/Navbar.js";
 import axios from "axios";
-
+import roska from "../pictures/Roska.png";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
@@ -25,6 +25,7 @@ function GroupMembers () {
   const [joins, setJoinReq] = useState([])
   const [candidates, setCandidates] = useState([])
   const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const [userSure, setSure] = useState(false);
 
 
   useEffect(() => {
@@ -64,7 +65,7 @@ function GroupMembers () {
         if(response.data.length >0){
           setJoinReq(response.data)}
         else {
-          setJoinReq([{account_id: 0 , username: "There is no more join requests", email: ''}])
+          setJoinReq([{account_id: 0 , username: "There is no more join requests", email: '-'}])
         }
           updateToken(response)
       }).catch(error => {
@@ -82,7 +83,7 @@ function GroupMembers () {
         setMembers(response.data)
         let withoutRemoved = joins.filter((join)=> join.account_id !==accountId )
         if( withoutRemoved.length === 0){
-            withoutRemoved = [{account_id: 0 , username: "There is no more join requests", email: ''}]
+            withoutRemoved = [{account_id: 0 , username: "There is no more join requests", email: '-'}]
         }
         setJoinReq(withoutRemoved)
         updateToken(response)
@@ -99,7 +100,7 @@ const denyRequest = (groupId, accountId) => {
     .then(response => {
       let withoutRemoved = joins.filter((join)=> join.account_id !==accountId )
       if( withoutRemoved.length === 0){
-          withoutRemoved = [{account_id: 0 , username: "There is no more join requests", email: ''}]
+          withoutRemoved = [{account_id: 0 , username: "There is no more join requests", email: '-'}]
 
       }
       setJoinReq(withoutRemoved)
@@ -139,12 +140,25 @@ const changeAdmin = () => {
         alert(error.response.data.error ? error.response.data.error : error)
       })
     
-
-
   } else {
     alert("Please select a candidate.");
   }
+}
 
+const groupDeletion = () => {
+  if(userSure === true) {
+    const headers = {headers: {Authorization: "Bearer " + user.access_token}}
+    axios.delete(url + '/group/deleteGroup/'+group.id, headers)
+      .then(response => {
+        alert("Group was removed succesfully!")
+        navigate('/GroupMy');
+        updateToken(response)
+      }).catch(error => {
+        alert(error.response.data.error ? error.response.data.error : error)
+      })
+  }else {
+    alert("Please confirm you are sure!");
+  }
 
 }
   
@@ -153,7 +167,10 @@ const changeAdmin = () => {
     <div className="group-body">
       <Navbar/>
       <div>
-        <h1 >{group?.group_name} Members</h1>
+        <h1 >{group?.group_name} Settings</h1>
+        <div className="littleInfo">
+            <p>In the settings you can remove members, acces join requests, change ownership and delete group.</p>
+        </div>
         <button className="info-button" onClick={() =>  navigate('/SpecificGroupPage',{ state: group})}>Group page</button>
         <Popup 
             trigger = {<button className="info-button">
@@ -171,7 +188,13 @@ const changeAdmin = () => {
               (close) => (
                 <div className='popup'>
                   <div className='content'>
-                    <table>
+                  <div className="header-container">
+                    <h2>Join Requests</h2>
+                    <div className="closepopup">
+                      <button className="info-button" onClick={close}>X</button>
+                    </div>
+                  </div>
+                    <table id="popuptable">
                       <thead>
                         <tr>
                           <th>Member name</th>
@@ -188,12 +211,12 @@ const changeAdmin = () => {
                             {join.account_id !== 0  ? (
                               <>
                             <td>
-                              <button className="info-button" onClick={() => acceptRequest(group.id, join.account_id)}>
+                              <button className="tablepopupbuttonYes" onClick={() => acceptRequest(group.id, join.account_id)}>
                                 Accept
                               </button>
                             </td>
                             <td>
-                              <button className="info-button"  onClick={() => denyRequest(group.id, join.account_id)}>
+                              <button className="tablepopupbuttonNo"  onClick={() => denyRequest(group.id, join.account_id)}>
                                 Decline
                               </button>
                             </td>
@@ -206,11 +229,6 @@ const changeAdmin = () => {
                       </tbody>
                     </table>
                   </div>
-                    <div>
-                      <button className="info-button" onClick={close}>
-                        X
-                      </button>
-                    </div>
                 </div>
               )
           }
@@ -234,8 +252,9 @@ const changeAdmin = () => {
                   ):(
                   <button 
                     onClick={() => deleteMember(group.id, member.account_id)} 
-                    className="info-button">
-                    Remove member
+                    className="removebutton">
+                    <img src={roska} alt="Remove" width={20} height={20}/>
+
                   </button>
                   )}
                   </td>
@@ -244,7 +263,7 @@ const changeAdmin = () => {
             </tbody>
         </table>
         <Popup 
-            trigger = {<button className="info-button">
+            trigger = {<button className="dangerousbutton">
               Change Admin
             </button>}
             modal nested
@@ -256,7 +275,9 @@ const changeAdmin = () => {
               (close) => (
                 <div className='popup'>
                   <div className='content'>
-                    <table>
+                  <h2 className="header-container ">Change Admin</h2>
+
+                    <table id="popuptable">
                       <thead>
                         <tr>
                           <th>Username</th>
@@ -278,7 +299,6 @@ const changeAdmin = () => {
                         ))}
                       </tbody>
                     </table>
-                  </div>
                     <div>
                       <p>Enter is final and can not be changed later!</p>
                       <button className="info-button" onClick={changeAdmin}>
@@ -288,6 +308,39 @@ const changeAdmin = () => {
                         Cancel
                       </button>
                     </div>
+                  </div>
+
+                </div>
+              )
+          }
+          </Popup>
+
+          <Popup 
+            trigger = {<button className="deletegroup">
+              Delete group
+            </button>}
+            modal nested
+            >
+            {
+              (close) => (
+                <div className='popup'>
+                  <div className='content'>
+                    <h2>Are you sure?</h2>
+                    <p>Are you sure you want to delete this group? If yes, check the dot and press continue.</p>
+                    <p>Yes I am sure:</p>
+                    <input type="radio" value="true" name="sure" onChange={() => setSure(true)}></input>
+
+                    <div>
+                      <p>Enter is final and can not be changed later!</p>
+                      <button className="info-button" onClick={e => groupDeletion()}>
+                        Enter
+                      </button>
+                      <button className="info-button" onClick={close}>
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+
                 </div>
               )
           }

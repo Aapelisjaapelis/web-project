@@ -14,17 +14,28 @@
     margin-top: 16px;
     font-size: 16px;
     font-weight: bold;
-    color: white;
+    color: #ead8ed;
 }
 
 .registerinput {
     margin-top: 8px;
     font-size: 16px;
+    background-color: #EEEEEE;
 }
 
 #signUpButton {
     font-weight: bold;
     margin-top: 24px;
-    background-color: aqua;
+    background-color: #ae87ca74;
     padding: 4px 8px;
+    border-radius: 4px;
+}
+#signUpButton:hover {
+    font-weight: bold;
+    margin-top: 24px;
+    background-color: #ae87caae;
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: rgb(42, 6, 47);
+
 }
