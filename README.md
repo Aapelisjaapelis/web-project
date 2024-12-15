@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## REST API documentation
+[DOCUMENTATION](https://documenter.getpostman.com/view/33042916/2sAYHzFhxc)
 
 ## Getting started
 1. First clone the repository on your computer
