@@ -3,13 +3,21 @@ import { emptyOrRows } from '../helpers/utils.js'
 
 const getReviews = async (req, res, next) => {
   try {
-    if(!req.params.movieId) {
+    if(!req.params.movieId || req.params.movieId.length === 0 || isNaN(req.params.movieId)) {
       const error = new Error('Movie id is missing.')
       error.statusCode = 400
       return next(error)
     }
-    const id = parseInt(req.params.movieId)
+    const id = req.params.movieId
     const result = await getAllReviews(id)
+
+    if(result.rowCount === 0) {
+      const error = new Error('No reviews found for this movie.')
+      error.statusCode = 400
+      return next(error)
+    } 
+  
+
     return res.status(200).json(emptyOrRows(result))
   } catch (error) {
     return next(error)
