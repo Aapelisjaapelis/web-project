@@ -8,8 +8,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 2. Start by opening the project with your chosen code editor
 3. Copy the movieDb.sql to your database (for exampe pgadmin)
 4. Run the procedures to database (deleteUserProcedure.sql)
-5. Make .env to root that has localhost and serverport (pic1)
-6. Make .env to server- folder that has the database info (pic 2)
+5. Make .env to root that has localhost and serverport (template 1)
+6. Make .env to server- folder that has the database info (template 2)
 7. Open terminal in the project folder and write "cd server" then "npm i"
 8. Then open new terminal and write "npm i" (base path)
 9. Then start server by "npm run devStart" in the server folder
@@ -17,11 +17,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 11. Now you have succesfully started the project!
 
 ### .env template
-#### pic 1
+#### template 1
 REACT_APP_API_URL =<br/>
 REACT_APP_TMDB_API_KEY =
 
-#### pic 2
+#### template 2
 PORT = 3001<br/>
 DB_USER = postgres<br/>
 DB_HOST = localhost<br/>
