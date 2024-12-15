@@ -64,7 +64,7 @@ function SpecificMoviePage() {
                     }
                 }
             }).catch(error => {
-                alert(error.response.data.error ? error.response.data.error : error)
+                console.log(error.response.data.error ? error.response.data.error : error)
             })
     }
 
