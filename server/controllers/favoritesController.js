@@ -3,8 +3,16 @@ import { emptyOrRows } from '../helpers/utils.js'
 
 const getMyFavoriteMovies = async(req, res, next) => {
     try {
-        const result = await selectMyFavoriteMovies(req.params.id)
-        return res.status(200).json(emptyOrRows(result))
+        if(!req.params.id || req.params.id.length === 0 || isNaN(req.params.id)) {
+            const error = new Error("No account id provided")
+            error.statusCode = 400
+            return next(error)
+        }
+
+        else {
+            const result = await selectMyFavoriteMovies(req.params.id)
+            return res.status(200).json(emptyOrRows(result))
+        }
     } catch (error) {
         return next(error)
     }

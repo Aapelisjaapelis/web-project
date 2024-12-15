@@ -172,18 +172,27 @@ const userGetIsAdmin = async(req, res, next) => {
 
 const userDeleteAccount = async(req, res, next) => {
     try {
-        const accountFromDb = await selectUserById(req.params.id)
-        console.log(accountFromDb)
-        if (accountFromDb.rowCount != 0) {                             // Check if the account exists
-            await deleteAccount(req.params.id)
-            return res.status(200).json({message: "Account deleted"})
-        }
-        
-        else {
-            const error = new Error("Account not found")
+
+        if(!req.params.id || req.params.id.length === 0 || isNaN(req.params.id)) {     // Check if the id is empty or not a number
+            const error = new Error("No account id provided")
             error.statusCode = 400
             return next(error)
         }
+
+        const accountFromDb = await selectUserById(req.params.id)
+        console.log(accountFromDb)
+
+        if (accountFromDb.rowCount === 0) {                                // Check if the account exists
+            const error = new Error("Account not found")
+            error.statusCode = 400
+            return next(error)
+        } 
+        
+        else {                      
+            await deleteAccount(req.params.id)
+            return res.status(200).json({message: "Account deleted"})
+        }
+
     }   catch (error) {
         return next(error)
     }
