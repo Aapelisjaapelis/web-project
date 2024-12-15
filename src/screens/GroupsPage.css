@@ -3,8 +3,12 @@
     justify-content: center;
     align-items: center; 
     margin: 50px;
-
     text-align: right;
+}
+
+.littleInfo {
+    color: #eeeeeec6;
+    text-align: center;
 }
 
 .groupFormSelect {
@@ -29,36 +33,186 @@
 
 #groupTable {
     margin: 20px auto;
-    border: 1px solid #ddd;
+    border: 1px solid #1e1e1e;
     border-collapse: collapse;
     width: 100%;
     font-family: Arial, sans-serif;
 }
 #groupTable th, td {
-    padding: 10px;
+    padding: 13px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #1e1e1e;
 }
 
 #groupTable th {
-    background-color: #f4f4f4;
+    background-color: #3B1E54;
+    color: #EEEEEE;
 }
 
 #groupTable tr:nth-child(odd) {
-    background-color: #444141;
+    background-color: #9B7EBD;
 }
 
 #groupTable tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #D4BEE4;
 }
 #groupTable tr:hover {
-    background-color:  rgb(105, 47, 97);
+    background-color:  rgb(81, 40, 87);
+    color: #c6c6c6ee;
 }
 
-.info-button {
-    background-color: #444141;
+/*Popup*/
+
+.popup-content {
+    padding: 0 !important; 
+    border: none !important; 
+    background-color: transparent !important;
+    z-index: 1000; /* Content above overlay */
+    position: relative;
+}
+
+.popup {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+     
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+
+
+}
+.content {
+    width: auto; 
+    max-width: 600px;
+    background-color: #0d0713; 
+    padding: 20px; 
+    border-radius: 8px; 
+    text-align: left; 
+    color: #EEEEEE;   
+    box-sizing: border-box; 
+}
+.popupform {
+    color: #EEEEEE;   
+}
+ 
+.input {
+    background-color: #351650;
+    color: #9B7EBD;
+}
+#popuptable {
+    margin: 20px auto;
+    border: 1px solid #1e1e1e;
+    border-collapse: collapse;
+    width: 100%;
+}
+#popuptable th, td {
+    padding: 13px;
+    text-align: left;
+    border-bottom: 1px solid #1e1e1e;
+}
+#popuptable th, td {
+    padding: 13px;
+    text-align: left;
+    border-bottom: 1px solid #1e1e1e;
+}
+
+#popuptable th {
+    background-color: #3B1E54;
+}
+
+#popuptable tr:nth-child(odd) {
+    background-color: #9B7EBD;
+}
+
+#popuptable tr:nth-child(even) {
+    background-color: #D4BEE4;
+}
+#popuptable tr:hover {
+    background-color:  rgb(81, 40, 87);
+}
+
+.closepopup {
+    text-align: right;
+}
+
+/*Popup buttons*/
+.tablepopupbuttonYes {
+    background-color: #87ca88bb;
     border-radius: 4px;
-    color: #fff;
+    color: #EEEEEE;
+    cursor: pointer;
+    padding: 8px 23px;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: none;
+    margin-right: 15px;
+}
+.tablepopupbuttonYes:hover {
+    background-color: #4e8b4fbb;
+    transition: all 250ms;
+    color: #00fe50;
+
+}
+.tablepopupbuttonNo {
+    background-color: #d84eacc5;
+    border-radius: 4px;
+    color: #EEEEEE;
+    cursor: pointer;
+    padding: 8px 23px;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: none;
+    margin-right: 15px;
+}
+.tablepopupbuttonNo:hover {
+    background-color: #a93b86c5;
+    transition: all 250ms;
+    color: #ff0e87;
+
+}
+
+.popupbutton {
+    background-color: #ae87ca74;
+    border-radius: 4px;
+    color: #EEEEEE;
+    cursor: pointer;
+    padding: 8px 23px;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: none;
+    margin-right: 15px;
+ 
+}
+
+.popupbutton:hover {
+    background-color: #be94dcc5;
+    transition: all 250ms;
+    color: #000;
+}
+
+.header-container {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin: 0px;
+    margin-bottom: 10px;
+}
+
+
+
+
+/*Buttons*/
+
+.info-button {
+    background-color: #ae87ca74;
+    border-radius: 4px;
+    color: #EEEEEE;
     cursor: pointer;
     padding: 8px 23px;
     font-size: 18px;
@@ -69,9 +223,100 @@
 }
 
 .info-button:hover {
-    background-image: linear-gradient(90deg, #53cbef 0%, #dcc66c 50%, #ffa3b6 75%, #53cbef 100%);
-    animation: slidernbw 5s linear infinite;
+    background-color: #be94dcc5;
+    transition: all 250ms;
     color: #000;
+}
+
+.deletegroup {
+    background-color: #ae87ca74;
+    border-radius: 4px;
+    color: #800606;
+    cursor: pointer;
+    padding: 8px 23px;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: none;
+    margin-left: 5px;
+}
+.deletegroup:hover {
+    background-color: #c5353ee1;
+    transition: all 250ms;
+    color: #000;
+}
+
+.removebutton {
+    background-color: #7424544a;
+    border-radius: 4px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    padding: 10px 15px;
+
+}
+.removebutton:hover {
+    background-color: #39132a8e;
+}
+
+.dangerousbutton{
+    background-color: #ae87ca74;
+    border-radius: 4px;
+    color: #f0b4b4;
+    cursor: pointer;
+    padding: 8px 23px;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: none;
+    margin-left: 5px;
+
+}
+.dangerousbutton:hover {
+    background-color: #dc94d6c5;
+    transition: all 250ms;
+    color: #860707;
+}
+
+.myGroupsButton {
+    background-color: #ae87ca74;
+    border-radius: 4px;
+    color: #EEEEEE;
+    cursor: pointer;
+    padding: 8px 23px;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: none;
+    margin-left: 5px;
+}
+.myGroupsButton:hover {
+    background-image: linear-gradient(90deg, #F29F58 0%, #AB4459 50%, #742454 75%, #6A1E55 100%);
+    transition: all 250ms;
+    color: rgba(255, 255, 255, 0.667);
+}
+
+.button-icon {
+    margin-bottom: -4px;
+}
+
+.tablebutton {
+    background-color: #4f1a56b9;
+    color: #e4e4e4d4;
+    border-radius: 4px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    padding: 8px 23px;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+
+}
+
+.tablebutton:hover {
+    background-color: #8f32c18e;
+    color: #ffffff;
 }
 
 /* From Uiverse.io by OliverZeros */ 
@@ -94,7 +339,7 @@ button {
 
 .createButton .button-bg {
     border-color: rgba(255, 208, 116);
-    background-color: #444141;
+    background-color: #ae87ca74;
 }
 
 .createButton .button-inner,
@@ -196,30 +441,148 @@ button {
     transform: scale(1);
 }
 
-/* width */
+/* scrollbar */
 ::-webkit-scrollbar {
     width: 20px;
   }
   
-  /* Track */
   ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey; 
     border-radius: 10px;
   }
-   
-  /* Handle */
+
   ::-webkit-scrollbar-thumb {
     background: rgb(105, 47, 97); 
     border-radius: 10px;
   }
   
-  /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: rgb(79, 35, 73); 
   }
 
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 660px) {
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+        overflow: hidden;
+        border: none;
+
+    }
+    #groupTable, th, td {
+        border: none;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        margin-bottom: 20px;
+        border: none;
+    }
+
+    td {
+        border: 1px solid white;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    td:before {
+        position: absolute;
+        left: 6px;
+        content: attr(data-label);
+        font-weight: bold;
+    }    
+
+    .popupbutton {
+        margin: 0px;
+        margin-top: 10px;
+    }
+
+    #popuptable {
+        width: auto;
+    }
+
+    #popuptable td {
+        width: 250px;
+    }
+
+    .content {
+        width: auto;
+
+    }
+
+    .deletegroup {
+        margin-top: 5px;
+    }
+
+    .info-button {
+        margin-left: 10px;
+    }
+
+    .showtimes-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    .showtimes-body2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .selectCatalog, .dateChanger, .showtime-Button {
+        width: auto;
+        height: auto;
+        margin-top: 5px;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    .groupFormSelect {
+        width: 50%;
+    }
+
+    
+    .timeformovie {
+        width: auto;
+        font-size: 8px;
+
+        box-sizing: border-box;
+    }
+
+    .movieSelectionDiv {
+        display: block;
+        justify-content: center;
+    }
+    
+    .searchForm {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        width: 50%;
+    }
+
+    .counting {
+        display: flex;
+    }
+
+}
+
+@media screen and (max-width: 420px){
 
     table,
     thead,
@@ -269,4 +632,15 @@ button {
 
     }
 
+    .popupbutton {
+        margin: 0px;
+        margin-top: 10px;
+    }    
+
+    .showtimes-body {
+        width: 100%;
+    }
+
+
+    
 }

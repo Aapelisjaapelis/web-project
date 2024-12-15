@@ -104,7 +104,10 @@ const handleButtonClick = (groupId) => {
     <div className="group-body" >
         <div>
         <h1 >All Groups</h1>
-        <button className="info-button" onClick={e =>  navigate('/GroupMy')}>My Groups</button>
+        <div className="littleInfo">
+            <p>To join group click join. My groups page has your groups.</p>
+        </div>
+        <button className="myGroupsButton" onClick={e =>  navigate('/GroupMy')}>My Groups</button>
         <Popup trigger=
 
                 {<button class="createButton">
@@ -121,25 +124,33 @@ const handleButtonClick = (groupId) => {
                     </span>
                 </button>}
 
-        modal nested>
+        modal nested
+        
+        >
         {
                     close => (
                         <div className='popup'>
                             <div className='content'>
-                                <form>
+                            <h2 className="header-container ">Create group</h2>
+
+                                <form className="popupform">
                                     <label for="newGroup">Please enter Group Name:</label>
                                     <br/>
-                                    <input type="text" id="newGroup" name="newGroup"/><br/>
+                                    <input className="input" type="text" id="newGroup" name="newGroup"/><br/>
                                     <label for="newDesc">Please enter a description for the group:</label><br/>
-                                    <input type="text" id="newDesc" name="newDesc" /><br/><br/>
+                                    <input  className="input" type="text" id="newDesc" name="newDesc" /><br/><br/>
                                    
                                 </form> 
 
-                            </div>
-                            <div>
-                                <button className="info-button" onClick={e => handleCreateClick(close)}>
-                                        Submit
-                                </button>
+                                <div>
+                                
+                                    <button className="popupbutton" onClick={e => handleCreateClick(close)}>
+                                            Submit
+                                    </button>
+                                    <button className="popupbutton" onClick={close}>
+                                            Cancel
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     )
@@ -151,7 +162,7 @@ const handleButtonClick = (groupId) => {
                 <thead>
                     <tr>
                         <th>Group name</th>
-                        <th>Group desc</th>
+                        <th>Group description</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -159,14 +170,19 @@ const handleButtonClick = (groupId) => {
                     {groups.map(group => (
                         <tr key={group.id}>
                             <td data-label="Group name" >{group.group_name}</td>
-                            <td data-label="Group desc" >{group.group_desc}</td>
-                            <th>
+                            {group.group_desc === '' ? (
+                                <td data-label="Group desc" >No desc</td>
+
+                            ) : (
+                                <td data-label="Group desc" >{group.group_desc}</td>
+                            )}
+                            <td>
                             <button 
                                     onClick={() => handleButtonClick(group.id)} 
-                                    className="info-button">
-                                    Liity
+                                    className="tablebutton">
+                                    Join
                                 </button>
-                            </th>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

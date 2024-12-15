@@ -1,5 +1,5 @@
 import { emptyOrRows } from '../helpers/utils.js'
-import { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests, selectGroupMovies, selectGroupAdminInfo, deleteshowtime, selectJoinRequests, deleteRequest, selectAllUsers, changeAdmin, addNewGroupShowtime } from '../models/Groupmodel.js'
+import { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, getJoinRequests, selectGroupMovies, selectGroupAdminInfo, deleteshowtime, selectJoinRequests, deleteRequest, selectAllUsers, changeAdmin, addNewGroupShowtime, deleteGroup } from '../models/Groupmodel.js'
 
 
 const getGroups = async (req,res,next) => {
@@ -183,6 +183,20 @@ const removeJoinRequest = async (req,res,next) => {
     }
 }
 
+const removeGroup = async (req,res,next) => {
+
+    try {
+
+        const result = await deleteGroup(req.params.id)
+
+        return res.status(200).json({result })
+
+    } catch (error) {
+        return next(error)
+    }
+    
+
+}
 
 
 const removeMember = async (req,res,next) => {
@@ -266,5 +280,5 @@ const removeShowtime = async (req,res,next) => {
 }
 
 
-export { getGroups, getMyGroups, getMembers, removeMember,postNewGroup, postjoinrequest, getMoviesForGroup, getAdminInfo, removeShowtime, getJoin, postNewMember, removeJoinRequest, getAllUsers, postNewAdmin, postShowTime  }
+export { getGroups, getMyGroups, getMembers, removeMember,postNewGroup, postjoinrequest, getMoviesForGroup, getAdminInfo, removeShowtime, getJoin, postNewMember, removeJoinRequest, getAllUsers, postNewAdmin, postShowTime, removeGroup  }
 

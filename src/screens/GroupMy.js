@@ -38,13 +38,16 @@ function GroupMy () {
 
         <div>
         <h1 > My Groups</h1>
+        <div className="littleInfo">
+            <p>Here are all your groups. To see more info, click view.</p>
+        </div>
         <button className="info-button" onClick={e =>  navigate('/GroupsPage')}>All Groups</button>
 
         <table id="groupTable">
                 <thead>
                     <tr>
-                        <th>Ryhmän nimi</th>
-                        <th>Ryhmän kuvaus</th>
+                        <th>Group name</th>
+                        <th>Group description</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -53,15 +56,21 @@ function GroupMy () {
                     {mygroups.map(mygroup => (
                         <tr key={mygroup.id}>
                             <td data-label="Group name" >{mygroup.group_name}</td>
-                            <td data-label="Group desc" >{mygroup.group_desc}</td>
-                            <th>
+                            {mygroup.group_desc === '' ? (
+                                <td data-label="Group desc" >No desc</td>
+
+                            ) : (
+                                <td data-label="Group desc" >{mygroup.group_desc}</td>
+                            )}
+
+                            <td>
                             <button 
                                     onClick={() =>  navigate('/SpecificGroupPage',{ state: mygroup})}
-                                    className="info-button">
+                                    className="tablebutton">
                                     View
                                 </button>
 
-                            </th>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

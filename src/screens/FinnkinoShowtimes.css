@@ -12,20 +12,20 @@
 }
 
 .timeformovie {
-    color: white;
+    color: #EEEEEE;
     font-family: Arial, sans-serif;
     margin-bottom: 5px;
 }
 
 .Kuukeliskaalkelis {
-    color: white;
+    color: #EEEEEE;
 }
 
 .selectCatalog {
     margin-right: 5px;
     font-size: 16px;
-    color: white;
-    background-color: #444141;
+    color: #EEEEEE;
+    background-color: #372f38e7;
     border-radius: 4px;
 }
 
@@ -33,21 +33,21 @@
     width: 10px;
 }
 .selectCatalog::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #6666667a;
 }
 .selectCatalog::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #8c488fc4;
 }
 .selectCatalog::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #3c253e;
 }
 
 
 .dateChanger {
     margin-right: 5px;
     font-size: 16px;
-    color: white;
-    background-color: #444141;
+    color: #EEEEEE;
+    background-color: #372f38e7;
     border-radius: 4px;
 }
 
@@ -55,9 +55,9 @@
     padding: 5px 11px;
     border: none;
     border-radius: 15px;
-    color: white;
+    color: #EEEEEE;
     z-index: 1;
-    background: #444141;
+    background: #372f38e7;
     position: relative;
     text-align: center;
     font-weight: bold;
@@ -78,7 +78,7 @@
     height: 100%;
     width: 0;
     border-radius: 15px;
-    background-color: #212121;
+    background-color: #310434b2;
     z-index: -1;
     transition: all 250ms
 }

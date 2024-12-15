@@ -1,6 +1,6 @@
 import { Router } from "express"
 import { auth } from '../helpers/auth.js'
-import { getGroups, getMyGroups, getMembers, removeMember, postNewGroup, postjoinrequest,getMoviesForGroup, getAdminInfo,removeShowtime, getJoin, postNewMember, removeJoinRequest, getAllUsers, postNewAdmin, postShowTime } from '../controllers/groupController.js'
+import { getGroups, getMyGroups, getMembers, removeMember, postNewGroup, postjoinrequest,getMoviesForGroup, getAdminInfo,removeShowtime, getJoin, postNewMember, removeJoinRequest, getAllUsers, postNewAdmin, postShowTime, removeGroup } from '../controllers/groupController.js'
 
 const router = Router()
 
@@ -18,6 +18,7 @@ router.post('/changeAdmin', auth, postNewAdmin )
 router.delete('/deleteJoinRequest', auth, removeJoinRequest)
 router.delete('/deleteMembers',auth,removeMember)
 router.delete('/deleteShowtime', auth, removeShowtime)
+router.delete('/deleteGroup/:id',auth,removeGroup)
 router.post('/addShowtime',auth,postShowTime)
 
 

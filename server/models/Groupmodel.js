@@ -42,6 +42,9 @@ const deleteshowtime = async (groupId, showtimeId) => {
 const deleteRequest = async (groupId, userId) => {
     return await pool.query('DELETE FROM group_invites WHERE moviegroup_id = $1 AND account_id = $2', [groupId, userId])
 }
+const deleteGroup = async (groupId) => {
+    return await pool.query('CALL deleteGroup($1);',[groupId])
+}
 
 const createNewGroup = async (newGroup, newDesc) => {
     return await pool.query('INSERT INTO moviegroup (group_name, group_desc) VALUES ($1,$2) returning *', [newGroup, newDesc])
@@ -64,4 +67,4 @@ const changeAdmin = async(groupId, userId, adminstatus) => {
     return await pool.query('UPDATE account_moviegroup SET is_admin = $1 WHERE moviegroup_id = $2 AND account_id = $3 ',[adminstatus, groupId,userId])
 }
 
-export { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, selectJoinRequests,selectGroupMovies, selectGroupAdminInfo, deleteshowtime, deleteRequest, getJoinRequests, selectAllUsers, changeAdmin, addNewGroupShowtime }
+export { selectGroupByID, selectGroupByMe, selectAllMembers, deleteMember, createNewGroup, addNewMember, joinGroup, checkIfMember, selectJoinRequests,selectGroupMovies, selectGroupAdminInfo, deleteshowtime, deleteRequest, getJoinRequests, selectAllUsers, changeAdmin, addNewGroupShowtime, deleteGroup }
