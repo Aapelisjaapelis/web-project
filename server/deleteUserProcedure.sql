@@ -14,7 +14,7 @@ WHERE account_id=userid;
 DELETE FROM account
 WHERE account_id=userid;
 
-END $$
+END $$;
 
 CREATE PROCEDURE deleteGroup (group_id INT)
 LANGUAGE plpgsql
